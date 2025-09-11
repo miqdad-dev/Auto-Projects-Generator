@@ -340,8 +340,9 @@ def build_prompt(field: str, today: str, language: str) -> str:
         f"Tests are mandatory: JUnit for Java (Maven/Gradle) or pytest for Python; for JS use a standard test runner.\n"
         f"For frontend/web: produce a static site with an index.html (root or docs/) and clear build steps.\n"
         f"For data engineering: include sample data and a pipeline with validation.\n"
-        f"For machine learning: include a small dataset sample and a train/eval script with metrics.\n"
+        f"For machine learning: prefer real datasets (e.g., Kaggle). Provide a script to download using the Kaggle API (do not commit large datasets). Include a small sample for tests and a train/eval script with metrics. Document KAGGLE_USERNAME/KAGGLE_KEY usage.\n"
         f"For games: deliver a playable loop and basic controls.\n"
+        f"When external APIs or assets are needed (e.g., for games), integrate public endpoints/libraries and document keys/limits. Provide an offline fallback for tests.\n"
     )
     return f"{codex}\n{extra}"
 
@@ -952,6 +953,59 @@ def detect_and_run_tests(project_root: pathlib.Path) -> bool:
     return True
 
 
+def prepare_data_and_assets(project_root: pathlib.Path) -> None:
+    """Optionally fetch datasets or build assets before tests if enabled.
+
+    Controlled by env ENABLE_DATA_FETCH ("1" to enable). Non-fatal on failure.
+    Looks for common entry points: Makefile targets, Python/JS scripts.
+    """
+    flag = (os.getenv("ENABLE_DATA_FETCH", "0").strip().lower() in ("1", "true", "yes"))
+    if not flag:
+        return
+
+    def try_run(cmd: list[str]) -> bool:
+        try:
+            return run_ok(cmd, cwd=project_root)
+        except Exception:
+            return False
+
+    # Makefile targets commonly used
+    mk = project_root / "Makefile"
+    if mk.exists():
+        content = mk.read_text(encoding="utf-8", errors="ignore")
+        if re.search(r"^\s*data:\s*$", content, flags=re.MULTILINE):
+            try_run(["make", "data"])
+        if re.search(r"^\s*assets:\s*$", content, flags=re.MULTILINE):
+            try_run(["make", "assets"])
+        if re.search(r"^\s*prepare:\s*$", content, flags=re.MULTILINE):
+            try_run(["make", "prepare"])
+
+    # Python data download scripts
+    for p in [
+        project_root / "scripts" / "download_data.py",
+        project_root / "data" / "download.py",
+        project_root / "tools" / "fetch_data.py",
+    ]:
+        if p.exists():
+            try_run(["python", str(p)])
+
+    # Node package.json scripts
+    pkg = project_root / "package.json"
+    if pkg.exists():
+        try:
+            pkgj = json.loads(pkg.read_text(encoding="utf-8"))
+            scripts = (pkgj.get("scripts") or {})
+            pm = select_pkg_manager(project_root)
+            if "data" in scripts:
+                try_run(node_run_cmd(pm, "data"))
+            if "assets" in scripts:
+                try_run(node_run_cmd(pm, "assets"))
+            if "prepare" in scripts:
+                try_run(node_run_cmd(pm, "prepare"))
+        except Exception:
+            pass
+
+
 def select_pkg_manager(project_root: pathlib.Path) -> str:
     if (project_root / "pnpm-lock.yaml").exists():
         return "pnpm"
@@ -1248,6 +1302,12 @@ def main() -> int:
     except Exception:
         pass
 
+    # Optionally fetch datasets/assets before tests
+    try:
+        prepare_data_and_assets(project_root)
+    except Exception:
+        pass
+
     # Gate push on tests passing
     print("Running tests to validate project before push...")
     if not detect_and_run_tests(project_root):
@@ -1285,8 +1345,8 @@ def main() -> int:
         git_email = os.getenv("GIT_AUTHOR_EMAIL", "dev@users.noreply.github.com")
         git_init_and_push(project_root, token_remote, git_user, git_email)
         print(f"Created and pushed: https://github.com/{gh_owner}/{project_name}")
-        # Enable GitHub Pages if static site detected
-        if pages_path:
+        # Enable GitHub Pages if static site detected and repo is public
+        if pages_path and (gh_visibility.lower() == "public"):
             try:
                 gh_enable_pages(gh_token, gh_api, gh_owner, project_name, "main", pages_path)
                 print(f"Pages enabled at: https://{gh_owner}.github.io/{project_name}/")

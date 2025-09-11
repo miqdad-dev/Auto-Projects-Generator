@@ -11,6 +11,7 @@ Automates creation of a new mini-hard project every 5 hours and daily using Open
 - Schedules via GitHub Actions to run daily at 09:00 UTC and every 5 hours.
 - If a static site is detected (e.g., `index.html` at root or in `docs/`), the generator enables GitHub Pages so you can preview at `https://<owner>.github.io/<repo>/`.
 - Node frontends: supports npm, Yarn, and pnpm (auto-detected via lockfile). It installs deps, runs the `build` script when present, and copies common outputs (`dist`, `build`, `out`, `public`) into `docs/` before commit. For Next.js projects, it attempts `next build` + `next export -o out` and publishes `out` to `docs/`.
+ - Data & ML: projects aim to use real datasets (e.g., Kaggle) with download scripts; large datasets are not committed. Tests use a tiny offline sample. When enabled, the workflow can run those download scripts before tests.
 
 ## Requirements
 - Python 3.11+
@@ -47,6 +48,7 @@ Automates creation of a new mini-hard project every 5 hours and daily using Open
 - Add repo secrets: `OPENAI_API_KEY` (and optionally `ANTHROPIC_API_KEY`), and `GH_PAT` (PAT with `repo` scope).
 - Add repo variables: `PROVIDER` (e.g., `openai`), `MODEL_NAME` (e.g., `gpt-4o`), optionally `GITHUB_OWNER`, `GITHUB_VISIBILITY`.
 - Workflow at `.github/workflows/auto.yml` handles scheduling and will create separate repos instead of committing here.
+ - For automatic GitHub Pages enablement, your PAT should allow Pages updates (for fine‑grained tokens: grant Pages read/write in addition to Administration and Contents). Pages is only enabled automatically for public repos; private repos require manual enablement under Settings → Pages.
 
 ## Output
 - No files are added to this repo by the workflow.

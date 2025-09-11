@@ -42,6 +42,9 @@ jobs:
           GH_PAT: ${{ secrets.GH_PAT }}
           GITHUB_OWNER: miqdad-dev
           GITHUB_VISIBILITY: ${{ vars.GITHUB_VISIBILITY || 'public' }}
+          ENABLE_DATA_FETCH: ${{ vars.ENABLE_DATA_FETCH || '1' }}
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
         run: |
           python scripts/generate_next.py
       
