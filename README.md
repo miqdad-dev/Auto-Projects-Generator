@@ -4,10 +4,11 @@ Automates creation of a new mini-hard project every 5 hours and daily using Open
 
 ## Overview
 - Reads `codex.md` to instruct an LLM to emit a complete, runnable project as fenced filename blocks.
-- Chooses a random domain among: frontend web/app, backend API, CLI/desktop app, data engineering, machine learning/AI, and game development. Data engineering, ML/AI, and games are weighted ~10x more frequent than the others over time.
+- Focuses on two fields for now: Data Engineering and Machine Learning/AI. These generate complex, production‑grade projects daily, suitable for enterprise use.
 - Biases the implementation language toward Java and Python (OOP), but may sometimes use JS/TS, Go, or Rust when appropriate.
 - Parses the model output and writes files to a temporary workspace.
 - Creates a new GitHub repo named `<project-slug>-MM-DD-YYYY`; the README title inside the project is just the project name (no dates). The generator instructs the model to keep the top-level folder name clean (no dates), and it appends the date to the repo name automatically.
+- Updates a public dashboard in this repo under `docs/` with links to each project (and preview URLs when available). Enable GitHub Pages for this repo (Settings → Pages → Deploy from branch: `main` and folder: `/docs`) so it’s visible at `https://<owner>.github.io/<this-repo>/`.
 - Schedules via GitHub Actions to run daily at 09:00 UTC and every 12 hours.
 - If a static site is detected (e.g., `index.html` at root or in `docs/`), the generator enables GitHub Pages so you can preview at `https://<owner>.github.io/<repo>/`.
 - Node frontends: supports npm, Yarn, and pnpm (auto-detected via lockfile). It installs deps, runs the `build` script when present, and copies common outputs (`dist`, `build`, `out`, `public`) into `docs/` before commit. For Next.js projects, it attempts `next build` + `next export -o out` and publishes `out` to `docs/`.

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Projects Dashboard</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 2rem; color: #222; }
+      header { display: flex; justify-content: space-between; align-items: baseline; }
+      h1 { margin: 0 0 0.5rem; font-size: 1.8rem; }
+      .meta { color: #666; font-size: 0.9rem; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-top: 1rem; }
+      .card { border: 1px solid #e5e5e5; border-radius: 8px; padding: 12px 14px; background: #fff; }
+      .card h3 { margin: 0 0 6px; font-size: 1.1rem; }
+      .tags { font-size: 0.85rem; color: #555; }
+      .links a { margin-right: 10px; text-decoration: none; color: #0366d6; }
+      footer { margin-top: 2rem; color: #777; font-size: 0.9rem; }
+      .pill { display: inline-block; padding: 2px 8px; border: 1px solid #ddd; border-radius: 999px; margin-right: 6px; font-size: 0.75rem; background: #fafafa; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>Auto Projects Dashboard</h1>
+        <div class="meta">Daily complex projects in Data Engineering and Machine Learning/AI.</div>
+      </div>
+      <div class="meta"><a href="projects.json">projects.json</a></div>
+    </header>
+    <section id="content">
+      <div class="grid" id="grid"></div>
+    </section>
+    <footer>
+      Public preview links work for frontends/games. Backend/data projects link to code and docs.
+    </footer>
+    <script>
+      async function load() {
+        try {
+          const res = await fetch('projects.json', {cache: 'no-store'});
+          const items = await res.json();
+          const grid = document.getElementById('grid');
+          grid.innerHTML = '';
+          for (const p of items.slice().reverse()) {
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.innerHTML = `
+              <h3>${p.name}</h3>
+              <div class="tags">
+                <span class="pill">${p.field}</span>
+                <span class="pill">${p.language || 'n/a'}</span>
+                <span class="pill">${new Date(p.ts * 1000).toISOString().slice(0,10)}</span>
+              </div>
+              <div class="links">
+                <a href="https://github.com/${p.owner}/${p.repo}" target="_blank">GitHub</a>
+                ${p.pages_url ? `<a href="${p.pages_url}" target="_blank">Preview</a>` : ''}
+              </div>
+              <div class="meta">${p.description || ''}</div>
+            `;
+            grid.appendChild(div);
+          }
+        } catch (e) {
+          document.getElementById('content').innerHTML = '<p>Failed to load projects.json</p>';
+        }
+      }
+      load();
+    </script>
+  </body>
+  </html>
+

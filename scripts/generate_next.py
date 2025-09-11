@@ -14,22 +14,14 @@ from datetime import datetime, timezone
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 FIELDS = [
-    "frontend web/app",
-    "backend api",
-    "app (cli/desktop)",
     "data engineering",
     "machine learning/ai",
-    "game dev",
 ]
 
 # Default field weights: data/ML/games are ~10x more likely
 FIELD_WEIGHTS_DEFAULT = {
-    "frontend web/app": 1,
-    "backend api": 1,
-    "app (cli/desktop)": 1,
     "data engineering": 10,
     "machine learning/ai": 10,
-    "game dev": 10,
 }
 
 # Weighted language preferences: mostly Java and Python for OOP
@@ -1122,6 +1114,35 @@ def gh_enable_pages(token: str, api: str, owner: str, repo: str, branch: str, pa
         pass
 
 
+def update_dashboard(owner: str, repo_name: str, field: str, language: str, pages_url: str | None, description: str | None) -> None:
+    """Append the new project to docs/projects.json in this repo.
+    The workflow will commit and push changes after generation.
+    """
+    docs_dir = REPO_ROOT / "docs"
+    docs_dir.mkdir(parents=True, exist_ok=True)
+    projects_file = docs_dir / "projects.json"
+    items = []
+    if projects_file.exists():
+        try:
+            items = json.loads(projects_file.read_text(encoding="utf-8"))
+            if not isinstance(items, list):
+                items = []
+        except Exception:
+            items = []
+    entry = {
+        "owner": owner,
+        "repo": repo_name,
+        "name": repo_name,
+        "field": field,
+        "language": language,
+        "pages_url": pages_url,
+        "description": description or "",
+        "ts": int(time.time()),
+    }
+    items.append(entry)
+    projects_file.write_text(json.dumps(items, indent=2), encoding="utf-8")
+
+
 def gh_get_owner(token: str, api: str) -> str:
     import requests
     r = requests.get(f"{api}/user", headers=github_headers(token), timeout=20)
@@ -1344,14 +1365,22 @@ def main() -> int:
         git_user = os.getenv("GIT_AUTHOR_NAME", "dev")
         git_email = os.getenv("GIT_AUTHOR_EMAIL", "dev@users.noreply.github.com")
         git_init_and_push(project_root, token_remote, git_user, git_email)
-        print(f"Created and pushed: https://github.com/{gh_owner}/{project_name}")
+        repo_url = f"https://github.com/{gh_owner}/{project_name}"
+        print(f"Created and pushed: {repo_url}")
+        preview_url = None
         # Enable GitHub Pages if static site detected and repo is public
         if pages_path and (gh_visibility.lower() == "public"):
             try:
                 gh_enable_pages(gh_token, gh_api, gh_owner, project_name, "main", pages_path)
-                print(f"Pages enabled at: https://{gh_owner}.github.io/{project_name}/")
+                preview_url = f"https://{gh_owner}.github.io/{project_name}/"
+                print(f"Pages enabled at: {preview_url}")
             except Exception:
                 print("Could not enable GitHub Pages automatically. You can enable it in repo settings.")
+        # Update dashboard in this repo
+        try:
+            update_dashboard(gh_owner, project_name, field, language, preview_url, description)
+        except Exception as de:
+            print(f"Dashboard update failed: {de}")
     except Exception as e:
         print(f"GitHub push failed: {e}")
         return 2
