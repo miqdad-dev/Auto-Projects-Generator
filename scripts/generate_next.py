@@ -486,6 +486,165 @@ MIT
 
 ## Acknowledgments
 Inspired by classic particle demos and the elegance of small, dependency-free visualizations.
+    """)
+
+    # Overwrite with Kaggle-capable setup (uses uciml/iris by default)
+    _w(project_root / "requirements.txt", "pandas==2.2.2\npytest==8.3.3\npyyaml==6.0.2\nkaggle==1.6.17\n")
+    _w(project_root / "scripts" / "download_data.py", """
+import os, sys
+from pathlib import Path
+from kaggle.api.kaggle_api_extended import KaggleApi
+
+def main():
+    dataset = os.getenv("KAGGLE_DATASET", "uciml/iris")
+    outdir = Path("data/raw")
+    outdir.mkdir(parents=True, exist_ok=True)
+    api = KaggleApi(); api.authenticate()
+    api.dataset_download_files(dataset, path=str(outdir), unzip=True)
+    print(f"Downloaded {dataset} into {outdir}")
+
+if __name__ == "__main__":
+    main()
+""")
+    # Kaggle enhancements: overwrite requirements, add downloader, Makefile, EDA
+    _w(project_root / "requirements.txt", "pandas==2.2.2\npytest==8.3.3\npyyaml==6.0.2\nkaggle==1.6.17\n")
+    _w(project_root / "scripts" / "download_data.py", """
+import os
+from pathlib import Path
+from kaggle.api.kaggle_api_extended import KaggleApi
+
+def main():
+    dataset = os.getenv("KAGGLE_DATASET", "uciml/iris")
+    outdir = Path("data/raw")
+    outdir.mkdir(parents=True, exist_ok=True)
+    api = KaggleApi(); api.authenticate()
+    api.dataset_download_files(dataset, path=str(outdir), unzip=True)
+    print(f"Downloaded {dataset} into {outdir}")
+
+if __name__ == "__main__":
+    main()
+""")
+    _w(project_root / "Makefile", """
+.PHONY: data assets prepare run test eda
+
+data:
+	python scripts/download_data.py
+
+assets:
+	@echo "no assets"
+
+prepare: data assets
+	@echo "prepared"
+
+run:
+	python pipeline/transform.py
+
+test:
+	python -m pytest -q
+
+eda:
+	@echo "Open eda/EDA.ipynb in Jupyter or VS Code"
+""")
+    _w(project_root / "eda" / "EDA.ipynb", """
+{
+ "cells": [
+  {"cell_type":"markdown","metadata":{},"source":["# EDA\n","Load data from data/raw if present, else use the local sample.\n"]},
+  {"cell_type":"code","execution_count":null,"metadata":{},"outputs":[],"source":[
+    "import pandas as pd\n",
+    "from pathlib import Path\n",
+    "raw = Path('data/raw')\n",
+    "csv = None\n",
+    "if raw.exists():\n",
+    "    for p in raw.glob('*.csv'):\n",
+    "        csv = p; break\n",
+    "df = pd.read_csv(csv) if csv else pd.read_csv('data/input.csv')\n",
+    "df.head()\n"
+  ]}
+ ],
+ "metadata": {
+  "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
+  "language_info": {"name": "python"}
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
+""")
+    _w(project_root / "pipeline" / "transform.py", """
+import os
+import pandas as pd
+from pathlib import Path
+
+def load_default() -> pd.DataFrame:
+    # Fallback local sample
+    return pd.read_csv(Path("data/input.csv"))
+
+def load_from_kaggle() -> pd.DataFrame | None:
+    # Expect a CSV like iris.csv under data/raw
+    raw = Path("data/raw")
+    if not raw.exists():
+        return None
+    # Try common names
+    for name in ["Iris.csv", "iris.csv", "IRIS.csv"]:
+        p = raw / name
+        if p.exists():
+            return pd.read_csv(p)
+    # Fallback: pick first CSV
+    for p in raw.glob("*.csv"):
+        try:
+            return pd.read_csv(p)
+        except Exception:
+            pass
+    return None
+
+def transform(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
+    # Simple engineered column for demo
+    for c in df.columns:
+        if pd.api.types.is_numeric_dtype(df[c]):
+            df[c"_z"] = (df[c] - df[c].mean()) / (df[c].std() or 1)
+    return df
+
+def run():
+    df = load_from_kaggle() or load_default()
+    out = transform(df)
+    Path("data").mkdir(exist_ok=True)
+    out.to_csv("data/output.csv", index=False)
+
+if __name__ == "__main__":
+    run()
+""")
+    _w(project_root / "README.md", "# " + title + "\n\n" + """
+Data engineering pipeline using Kaggle datasets when available (defaults to uciml/iris), with an offline sample for tests.
+
+## Overview
+Realistic ETL on tabular data with reproducible transforms and tests. Fetches a Kaggle dataset when credentials are set, otherwise uses a local sample.
+
+## Setup
+```bash
+python -m pip install -r requirements.txt
+```
+
+## (Optional) Download Kaggle Dataset
+Set secrets or env vars and run the script:
+```bash
+export KAGGLE_USERNAME=your_user
+export KAGGLE_KEY=your_key
+python scripts/download_data.py  # downloads to data/raw/
+```
+
+## Run
+```bash
+python pipeline/transform.py
+```
+
+## Test
+```bash
+python -m pytest -q
+```
+
+## Notes
+- Defaults to dataset uciml/iris; change with `KAGGLE_DATASET` env var.
+- Output written to data/output.csv
 """)
 
 
@@ -716,15 +875,55 @@ MIT
 
 
 def fallback_ml(project_root: pathlib.Path, title: str) -> None:
-    _w(project_root / "requirements.txt", "scikit-learn==1.5.2\nnumpy==1.26.4\npytest==8.3.3\n")
+    _w(project_root / "requirements.txt", "scikit-learn==1.5.2\nnumpy==1.26.4\npandas==2.2.2\nkaggle==1.6.17\npytest==8.3.3\n")
+    _w(project_root / "scripts" / "download_data.py", """
+import os
+from pathlib import Path
+from kaggle.api.kaggle_api_extended import KaggleApi
+
+def main():
+    dataset = os.getenv("KAGGLE_DATASET", "uciml/iris")
+    outdir = Path("data/raw")
+    outdir.mkdir(parents=True, exist_ok=True)
+    api = KaggleApi(); api.authenticate()
+    api.dataset_download_files(dataset, path=str(outdir), unzip=True)
+    print(f"Downloaded {dataset} into {outdir}")
+
+if __name__ == "__main__":
+    main()
+""")
     _w(project_root / "ml" / "train.py", """
-from sklearn.datasets import load_iris
+import os
+import pandas as pd
+from pathlib import Path
+from sklearn.datasets import load_iris as sk_load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
+def load_data():
+    raw = Path("data/raw")
+    if raw.exists():
+        for name in ["Iris.csv", "iris.csv", "IRIS.csv"]:
+            p = raw / name
+            if p.exists():
+                df = pd.read_csv(p)
+                # Common Iris schema has species column
+                label_col = None
+                for c in df.columns:
+                    if c.lower() in ("species", "class", "label", "target"):
+                        label_col = c
+                        break
+                if label_col is None:
+                    return None, None
+                X = df.drop(columns=[label_col]).select_dtypes(include=["number"]).values
+                y = df[label_col].astype("category").cat.codes.values
+                return X, y
+    # Fallback to sklearn dataset
+    return sk_load_iris(return_X_y=True)
+
 def train_and_eval(random_state: int = 42) -> float:
-    X, y = load_iris(return_X_y=True)
+    X, y = load_data()
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=random_state)
     clf = LogisticRegression(max_iter=1000)
     clf.fit(X_train, y_train)
@@ -764,51 +963,140 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """)
     _w(project_root / "README.md", "# " + title + "\n\n" + """
-
-Logistic regression classifier on the Iris dataset with reproducible train/eval and an accuracy threshold test.
+Machine learning training pipeline that uses a Kaggle dataset when available (defaults to uciml/iris) with an offline fallback.
 
 ## Overview
-Problem: provide a minimal, reproducible ML baseline with explicit metrics and tests. Solution: a scikit-learn pipeline that trains a classifier and asserts a minimum accuracy, ensuring changes don’t silently degrade performance.
+Reproducible train/eval with real data via Kaggle if credentials are present. Falls back to scikit-learn's iris dataset to keep tests green without network.
 
-## Features
-- Deterministic data split and training
-- Accuracy metric printing and test gating
-- Simple, dependency-light implementation
-
-## Getting Started
-### Prerequisites
-- Python 3.11+
-
-### Installation
+## Setup
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-### Usage
+## (Optional) Download Kaggle Dataset
+```bash
+export KAGGLE_USERNAME=your_user
+export KAGGLE_KEY=your_key
+python scripts/download_data.py  # downloads to data/raw/
+```
+
+## Train & Evaluate
 ```bash
 python ml/train.py
 ```
 
-## Configuration
-Modify `random_state` or model hyperparameters in `ml/train.py`.
-
-## Examples
-Example output:
-```
-{"accuracy": 0.96}
+## Test
+```bash
+python -m pytest -q
 ```
 
-## Testing
-- Framework: pytest
-- Run: `python -m pytest -q`
-- Test criterion: accuracy >= 0.85
+## Notes
+- Change dataset with `KAGGLE_DATASET` env var.
+- Uses numeric columns as features; infers label column by common names (species/class/label/target).
+""")
+    # Kaggle enhancements for ML: overwrite requirements, add downloader, Makefile, EDA, Kaggle-aware training
+    _w(project_root / "requirements.txt", "scikit-learn==1.5.2\nnumpy==1.26.4\npandas==2.2.2\nkaggle==1.6.17\npytest==8.3.3\n")
+    _w(project_root / "scripts" / "download_data.py", """
+import os
+from pathlib import Path
+from kaggle.api.kaggle_api_extended import KaggleApi
 
-## Roadmap / Future Work
-- Add model persistence and CLI args
-- Add cross-validation and feature scaling
+def main():
+    dataset = os.getenv("KAGGLE_DATASET", "uciml/iris")
+    outdir = Path("data/raw")
+    outdir.mkdir(parents=True, exist_ok=True)
+    api = KaggleApi(); api.authenticate()
+    api.dataset_download_files(dataset, path=str(outdir), unzip=True)
+    print(f"Downloaded {dataset} into {outdir}")
 
-## License
-MIT
+if __name__ == "__main__":
+    main()
+""")
+    _w(project_root / "Makefile", """
+.PHONY: data assets prepare run test eda
+
+data:
+	python scripts/download_data.py
+
+assets:
+	@echo "no assets"
+
+prepare: data assets
+	@echo "prepared"
+
+run:
+	python ml/train.py
+
+test:
+	python -m pytest -q
+
+eda:
+	@echo "Open eda/EDA.ipynb in Jupyter or VS Code"
+""")
+    _w(project_root / "eda" / "EDA.ipynb", """
+{
+ "cells": [
+  {"cell_type":"markdown","metadata":{},"source":["# EDA\n","Preview the dataset from data/raw if available.\n"]},
+  {"cell_type":"code","execution_count":null,"metadata":{},"outputs":[],"source":[
+    "import pandas as pd\n",
+    "from pathlib import Path\n",
+    "raw = Path('data/raw')\n",
+    "csv = None\n",
+    "if raw.exists():\n",
+    "    for p in raw.glob('*.csv'):\n",
+    "        csv = p; break\n",
+    "df = pd.read_csv(csv) if csv else pd.DataFrame()\n",
+    "df.head()\n"
+  ]}
+ ],
+ "metadata": {
+  "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
+  "language_info": {"name": "python"}
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
+""")
+    # Overwrite training to use Kaggle data if present
+    _w(project_root / "ml" / "train.py", """
+import os
+import pandas as pd
+from pathlib import Path
+from sklearn.datasets import load_iris as sk_load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+
+def load_data():
+    raw = Path("data/raw")
+    if raw.exists():
+        for name in ["Iris.csv", "iris.csv", "IRIS.csv"]:
+            p = raw / name
+            if p.exists():
+                df = pd.read_csv(p)
+                label_col = None
+                for c in df.columns:
+                    if c.lower() in ("species", "class", "label", "target"):
+                        label_col = c
+                        break
+                if label_col is None:
+                    break
+                X = df.drop(columns=[label_col]).select_dtypes(include=["number"]).values
+                y = df[label_col].astype("category").cat.codes.values
+                return X, y
+    return sk_load_iris(return_X_y=True)
+
+def train_and_eval(random_state: int = 42) -> float:
+    X, y = load_data()
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=random_state)
+    clf = LogisticRegression(max_iter=1000)
+    clf.fit(X_train, y_train)
+    pred = clf.predict(X_test)
+    return accuracy_score(y_test, pred)
+
+if __name__ == "__main__":
+    acc = train_and_eval()
+    print({"accuracy": acc})
 """)
 
 
