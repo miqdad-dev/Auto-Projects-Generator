@@ -3,7 +3,6 @@ name: Auto Generate Projects
 on:
   schedule:
     - cron: "0 9 * * *"       # daily at 09:00 UTC
-    - cron: "0 */12 * * *"    # every 12 hours
   workflow_dispatch:
 
 jobs:
@@ -27,6 +26,12 @@ jobs:
 
       - name: Enable Corepack (Yarn/pnpm)
         run: corepack enable
+
+      - name: Setup Java (for enterprise backends)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
       - name: Install dependencies
         run: |
