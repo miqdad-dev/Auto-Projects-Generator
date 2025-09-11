@@ -88,6 +88,13 @@ def github_headers(token: str) -> dict:
     }
 
 
+def _is_masked_or_empty(value: str | None) -> bool:
+    if value is None:
+        return True
+    v = value.strip().strip('"').strip("'")
+    return v == "" or v == "***"
+
+
 FENCE_RE = re.compile(r"(`{3,})([^\n\r`]+)\r?\n(.*?)\r?\n\1", re.DOTALL)
 
 
@@ -318,7 +325,6 @@ def gh_repo_exists(token: str, api: str, owner: str, name: str) -> bool:
 
 def gh_create_repo(token: str, api: str, owner: str, name: str, description: str, visibility: str) -> dict:
     import requests
-    url = f"{api}/user/repos"
     payload = {
         "name": name,
         "description": description,
@@ -328,10 +334,35 @@ def gh_create_repo(token: str, api: str, owner: str, name: str, description: str
         "has_wiki": False,
         "auto_init": False,
     }
-    r = requests.post(url, headers=github_headers(token), json=payload, timeout=30)
+    # Try to create under the authenticated user
+    url_user = f"{api}/user/repos"
+    r = requests.post(url_user, headers=github_headers(token), json=payload, timeout=30)
     if r.status_code == 422 and "name already exists" in r.text.lower():
         raise FileExistsError(name)
-    r.raise_for_status()
+    if r.status_code == 403 and owner:
+        # Fallback: attempt org route if owner is an organization
+        url_org = f"{api}/orgs/{owner}/repos"
+        r2 = requests.post(url_org, headers=github_headers(token), json=payload, timeout=30)
+        if r2.status_code == 422 and "name already exists" in r2.text.lower():
+            raise FileExistsError(name)
+        try:
+            r2.raise_for_status()
+        except requests.HTTPError as e:
+            raise RuntimeError(
+                "GitHub repo creation forbidden. Ensure GH_PAT has permissions: "
+                "Classic token with 'repo' scope or Fine-grained token with "
+                "Administration (Read/Write) and Contents (Read/Write), and access to the target owner."
+            ) from e
+        return r2.json()
+    try:
+        r.raise_for_status()
+    except requests.HTTPError as e:
+        if r.status_code == 403:
+            raise RuntimeError(
+                "GitHub repo creation forbidden. Ensure GH_PAT has permissions: "
+                "Classic token with 'repo' scope or Fine-grained token with Administration (Read/Write) and Contents (Read/Write)."
+            ) from e
+        raise
     return r.json()
 
 
@@ -375,9 +406,12 @@ def main() -> int:
     # Resolve GitHub settings
     gh_api = os.getenv("GITHUB_API", "https://api.github.com")
     gh_token = os.getenv("GH_PAT") or os.getenv("GITHUB_TOKEN")
-    if not gh_token:
-        raise RuntimeError("Missing GH_PAT or GITHUB_TOKEN for repo creation")
-    gh_owner = os.getenv("GITHUB_OWNER") or gh_get_owner(gh_token, gh_api)
+    if _is_masked_or_empty(gh_token):
+        raise RuntimeError("Missing or invalid GH_PAT: add a real Personal Access Token in Actions secrets as GH_PAT (with repo permissions)")
+    # Prefer explicit owner to avoid calling /user when token scopes are limited
+    gh_owner = os.getenv("GITHUB_OWNER")
+    if not gh_owner:
+        gh_owner = gh_get_owner(gh_token, gh_api)
     gh_visibility = os.getenv("GITHUB_VISIBILITY", "public")
 
     # Temp base dir for the new repo (not inside this repo)
