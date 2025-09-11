@@ -14,14 +14,28 @@ from datetime import datetime, timezone
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 FIELDS = [
-    "data engineering",
-    "machine learning/ai",
+    "backend api", "frontend web/app", "systems programming", "data engineering", 
+    "machine learning/ai", "distributed systems", "devops/infrastructure", 
+    "databases", "networking", "security", "compilers/interpreters", 
+    "robotics/iot", "game dev", "scripting/automation"
 ]
 
-# Default field weights: data/ML/games are ~10x more likely
+# Default field weights: data/ML get higher priority for advanced projects
 FIELD_WEIGHTS_DEFAULT = {
-    "data engineering": 10,
-    "machine learning/ai": 10,
+    "data engineering": 15,
+    "machine learning/ai": 15,
+    "backend api": 5,
+    "frontend web/app": 5,
+    "systems programming": 3,
+    "distributed systems": 4,
+    "devops/infrastructure": 4,
+    "databases": 4,
+    "networking": 2,
+    "security": 3,
+    "compilers/interpreters": 2,
+    "robotics/iot": 2,
+    "game dev": 6,
+    "scripting/automation": 3,
 }
 
 # Weighted language preferences: mostly Java and Python for OOP

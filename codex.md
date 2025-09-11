@@ -64,6 +64,76 @@ QUALITY BAR
 * Non-trivial logic (algorithms, concurrency, state machines, streaming, parsers, protocol, indexing, etc.).
 * Keep dependencies minimal. README must be accurate from a clean clone. LOC target: 200–600. Tests must run and be included.
 
+SPECIAL REQUIREMENTS FOR DATA ENGINEERING / MACHINE LEARNING PROJECTS:
+
+When the selected field is "data engineering" or "machine learning/ai", create a HIGHLY ADVANCED, full-stack project with:
+
+**Modern Stack Requirements:**
+- Python 3.11+
+- Apache Kafka (real-time streaming) 
+- Apache Spark (ETL & processing)
+- Airflow or Prefect (orchestration)
+- FastAPI or Flask (API layer)
+- PostgreSQL or MongoDB (storage)
+- Docker + Docker Compose
+- MLflow or Weights & Biases (model tracking)
+
+**Professional Structure (root folder: <short-slug> - NO DATES):**
+```
+src/               # Core application code
+├── ingestion/     # Data ingestion modules
+├── processing/    # ETL and data processing
+├── models/        # ML model definitions
+├── api/           # FastAPI service code
+└── monitoring/    # Monitoring and logging
+data/              # Data storage directories
+├── raw/           # Raw ingested data
+├── processed/     # Cleaned and transformed data
+└── models/        # Trained model artifacts
+notebooks/         # Jupyter notebooks
+├── eda/           # Exploratory data analysis
+└── experiments/   # ML experiments
+configs/           # Configuration files
+tests/             # Unit and integration tests
+├── unit/          # Unit tests
+└── integration/   # Integration tests
+pipeline/          # Pipeline definitions
+└── airflow/       # Airflow DAGs
+deployment/        # Deployment configurations
+├── docker-compose.yml
+└── kubernetes/    # K8s manifests
+```
+
+**End-to-End Flow Requirements:**
+1. Real-time data ingestion from external APIs (financial/social media)
+2. Clean, transform, validate data using Spark
+3. Store in PostgreSQL with proper schema design
+4. Train ML models (time series forecasting, classification, or NLP)
+5. Serve predictions via REST API with Swagger docs
+6. Monitor pipeline, log metrics, handle errors gracefully
+7. Orchestrate with Airflow DAGs for end-to-end workflow management
+
+**Core Files Must Include:**
+- requirements.txt + pyproject.toml
+- Dockerfile + docker-compose.yml with all services (Kafka, Spark, Airflow, PostgreSQL, MLflow)
+- Makefile with commands for setup, test, run, deploy
+- .env.example for configuration
+- pytest configuration with 85%+ coverage target
+- GitHub Actions CI/CD workflow for testing and deployment
+- CLI interface using Typer for operations
+- Comprehensive README with architecture diagrams, setup instructions, API docs
+
+**Quality Standards:**
+- Enterprise-grade architecture with proper separation of concerns
+- Production-ready error handling, logging, and monitoring
+- Comprehensive test coverage (unit + integration tests)
+- Professional documentation with architecture diagrams
+- Docker-based deployment with all services
+- CLI interface for operations and management
+- LOC target: 1500-3000+ (complex, production-grade codebase)
+
+Apply these advanced requirements ONLY when the field is data engineering or machine learning/ai. For other fields, use the standard requirements above.
+
 DELIVERABLES
 
 * Provide ALL files (source, README, tests, scripts, workflow, requirements, Makefile/Dockerfile, etc.) ONLY as fenced filename blocks exactly like:
