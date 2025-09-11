@@ -763,7 +763,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """)
-    _w(project_root / "README.md", f"""# {title}
+    _w(project_root / "README.md", "# " + title + "\n\n" + """
 
 Logistic regression classifier on the Iris dataset with reproducible train/eval and an accuracy threshold test.
 
@@ -837,7 +837,7 @@ from src.cli import solve
 def test_solve():
     assert solve('hello world') == 'olleh dlrow'
 """)
-    _w(project_root / "README.md", f"""# {title}
+    _w(project_root / "README.md", "# " + title + "\n\n" + """
 
 Command-line text transformer with tests.
 
