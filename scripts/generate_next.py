@@ -22,6 +22,16 @@ FIELDS = [
     "game dev",
 ]
 
+# Default field weights: data/ML/games are ~10x more likely
+FIELD_WEIGHTS_DEFAULT = {
+    "frontend web/app": 1,
+    "backend api": 1,
+    "app (cli/desktop)": 1,
+    "data engineering": 10,
+    "machine learning/ai": 10,
+    "game dev": 10,
+}
+
 # Weighted language preferences: mostly Java and Python for OOP
 LANGS = [
     "python", "python", "python",  # heavier weight
@@ -68,11 +78,34 @@ def slugify(text: str) -> str:
 
 def choose_field() -> str:
     plan = os.getenv("TOPIC_PLAN", "").strip()
+    # Start from either a planned subset or full set
     if plan:
-        choices = [x.strip() for x in plan.split(",") if x.strip()]
-        if choices:
-            return random.choice(choices)
-    return random.choice(FIELDS)
+        base = [x.strip() for x in plan.split(",") if x.strip()]
+        # Keep only known fields to avoid typos
+        candidates = [f for f in FIELDS if f in base]
+        if not candidates:
+            candidates = FIELDS[:]
+    else:
+        candidates = FIELDS[:]
+
+    # Optional override via FIELD_WEIGHTS env: "field:weight,field:weight"
+    weights_env = os.getenv("FIELD_WEIGHTS", "").strip()
+    weights_map = FIELD_WEIGHTS_DEFAULT.copy()
+    if weights_env:
+        for pair in weights_env.split(","):
+            if ":" in pair:
+                k, v = pair.split(":", 1)
+                k = k.strip()
+                try:
+                    w = int(v.strip())
+                    if k in weights_map and w > 0:
+                        weights_map[k] = w
+                except ValueError:
+                    pass
+
+    weights = [weights_map.get(f, 1) for f in candidates]
+    # Use random.choices for weighted selection
+    return random.choices(candidates, weights=weights, k=1)[0]
 
 
 def choose_language() -> str:

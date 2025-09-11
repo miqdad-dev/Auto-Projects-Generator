@@ -4,7 +4,7 @@ Automates creation of a new mini-hard project every 5 hours and daily using Open
 
 ## Overview
 - Reads `codex.md` to instruct an LLM to emit a complete, runnable project as fenced filename blocks.
-- Chooses a random domain among: frontend web/app, backend API, CLI/desktop app, data engineering, machine learning/AI, and game development.
+- Chooses a random domain among: frontend web/app, backend API, CLI/desktop app, data engineering, machine learning/AI, and game development. Data engineering, ML/AI, and games are weighted ~10x more frequent than the others over time.
 - Biases the implementation language toward Java and Python (OOP), but may sometimes use JS/TS, Go, or Rust when appropriate.
 - Parses the model output and writes files to a temporary workspace.
 - Creates a new GitHub repo named `<project-slug>-MM-DD-YYYY`; the README title inside the project is just the project name (no dates). The generator instructs the model to keep the top-level folder name clean (no dates), and it appends the date to the repo name automatically.
@@ -35,6 +35,7 @@ Automates creation of a new mini-hard project every 5 hours and daily using Open
 - `GH_PAT` — GitHub Personal Access Token with `repo` scope (required for CI repo creation)
 - `GITHUB_OWNER` — GitHub username/owner (optional; auto-detected if omitted)
 - `GITHUB_VISIBILITY` — `public` or `private` (default: `public`)
+ - `FIELD_WEIGHTS` (optional) — CSV `field:weight` pairs to override selection bias (e.g., `data engineering:12,machine learning/ai:12,game dev:12`). When unset, defaults bias data/ML/games to ~10x.
 
 ## Output Quality Guarantees
 - Strong, professional README in each generated project: overview, exact run commands, examples, architecture and tradeoffs, limitations, testing, and troubleshooting.
