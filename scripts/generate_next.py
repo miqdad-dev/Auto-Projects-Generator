@@ -279,13 +279,15 @@ def call_openai(model: str, prompt: str) -> str:
     if not api_key:
         raise RuntimeError("Missing OPENAI_API_KEY")
     client = OpenAI(api_key=api_key)
+    max_out = int(os.getenv("OUTPUT_TOKENS", "6000"))
     resp = client.chat.completions.create(
         model=model or "gpt-4o",
         messages=[
             {"role": "system", "content": "You are an elite code generator."},
             {"role": "user", "content": prompt},
         ],
-        temperature=0.7,
+        temperature=0.4,
+        max_tokens=max_out,
     )
     return resp.choices[0].message.content or ""
 
@@ -298,10 +300,11 @@ def call_anthropic(model: str, prompt: str) -> str:
         raise RuntimeError("Missing ANTHROPIC_API_KEY")
     client = anthropic.Anthropic(api_key=api_key)
     model = model or "claude-3-5-sonnet-latest"
+    max_out = int(os.getenv("OUTPUT_TOKENS", "8000"))
     msg = client.messages.create(
         model=model,
-        max_tokens=4000,
-        temperature=0.7,
+        max_tokens=max_out,
+        temperature=0.4,
         messages=[{"role": "user", "content": prompt}],
     )
     parts = []
@@ -316,33 +319,29 @@ def build_prompt(field: str, today: str, language: str) -> str:
     codex = codex_path.read_text(encoding="utf-8") if codex_path.exists() else ""
     extra = (
         f"\n\nField for this run: {field}. Today's UTC date: {today}.\n"
-        f"Primary implementation language: {language}. Favor OOP design, especially for Java/Python.\n"
+        f"Primary implementation language: {language}. Favor SOLID OOP and clean architecture, especially for Java/Python.\n"
         f"Output files for a new folder named <short-slug> (no dates in folder names).\n"
         f"Do not include any references to automation or generators in the files.\n"
         f"Do not include workflows that schedule generation of projects.\n"
-        f"README must be professional and comprehensive and follow this structure exactly: \n"
-        f"1) Title & Tagline (project name + one-line purpose)\n"
-        f"2) Badges (optional)\n"
-        f"3) Overview: what it does, the problem it solves, why it exists\n"
-        f"4) Features: bullet list of capabilities\n"
-        f"5) Getting Started: prerequisites, installation steps, and precise usage commands\n"
-        f"6) Configuration: environment variables and an example .env\n"
-        f"7) Workflow / Automation (only for this project itself, not how it was created): CI/CD, scheduled jobs if relevant\n"
-        f"8) Examples / Screenshots: code snippets or structure examples\n"
-        f"9) Testing: how to run tests and which framework\n"
-        f"10) Deployment/Hosting: how to run in production or host (e.g., Pages/Docker/cloud)\n"
-        f"11) Roadmap / Future Work (optional)\n"
-        f"12) Contributing (optional)\n"
-        f"13) License (explicit, e.g., MIT)\n"
-        f"14) Acknowledgments (optional)\n"
-        f"The README should highlight the problem, the approach to fix it, and how the solution works in clear, expert language.\n"
-        f"Ensure non-trivial logic (state machines, concurrency, parsing, algorithms, or similar).\n"
-        f"Tests are mandatory: JUnit for Java (Maven/Gradle) or pytest for Python; for JS use a standard test runner.\n"
-        f"For frontend/web: produce a static site with an index.html (root or docs/) and clear build steps.\n"
-        f"For data engineering: include sample data and a pipeline with validation.\n"
-        f"For machine learning: prefer real datasets (e.g., Kaggle). Provide a script to download using the Kaggle API (do not commit large datasets). Include a small sample for tests and a train/eval script with metrics. Document KAGGLE_USERNAME/KAGGLE_KEY usage.\n"
-        f"For games: deliver a playable loop and basic controls.\n"
-        f"When external APIs or assets are needed (e.g., for games), integrate public endpoints/libraries and document keys/limits. Provide an offline fallback for tests.\n"
+        f"COMPLEX MODE: Deliver a production-grade, scalable project that solves a realistic problem with layered architecture and multiple modules.\n"
+        f"REQUIREMENTS (apply as relevant to the chosen field):\n"
+        f"- Clear domain layering (domain/services/adapters) and separation of concerns.\n"
+        f"- Non-trivial algorithms or data structures (e.g., graph traversal, binary search tree, dynamic programming, streaming, concurrency).\n"
+        f"- External API integration (document endpoints, keys, rate limits) with graceful fallback/offline mode for tests.\n"
+        f"- Persistence when appropriate (schema and migrations); prefer Postgres with SQL or an embedded store for tests.\n"
+        f"- Caching, pagination, and input validation.\n"
+        f"- Containerization (Dockerfile or docker-compose) and exact run commands.\n"
+        f"- Robust tests across layers: unit + integration; mocking external calls.\n"
+        f"- Seed data/fixtures and example invocations.\n"
+        f"- Security basics (e.g., parameter sanitization, auth stubs where relevant).\n"
+        f"README must be professional and comprehensive with: Overview, Problem Statement, Architecture (with diagram text), Setup, Config (.env example), Usage, API/CLI docs, Examples, Testing, Deployment/Hosting (cloud and local), Ops (logs/metrics), Tradeoffs, and Troubleshooting.\n"
+        f"FIELD-SPECIFIC NOTES:\n"
+        f"- Frontend: SPA with routing and state management; offline/PWA basics; build to docs/; complex components (e.g., tree/table with filters).\n"
+        f"- Backend API: REST (and optional streaming/websocket) with background jobs; clean modular services; include OpenAPI docs.\n"
+        f"- App (CLI/Desktop): multi-command CLI or desktop app with config files; robust error handling; packaging notes.\n"
+        f"- Data Engineering: ETL/ELT pipeline with validation; partitioning/metadata; sampling; schema evolution notes; use realistic data sources.\n"
+        f"- Machine Learning/AI: use a public dataset (e.g., Kaggle) via a download script (do not commit large data); include EDA notes, training with metrics, evaluation, and reproducibility (seeds).\n"
+        f"- Game Dev: implement a real gameplay loop with input handling, basic physics or AI (pathfinding, FSM), levels or scoring; export a web build for Pages if possible.\n"
     )
     return f"{codex}\n{extra}"
 

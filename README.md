@@ -8,7 +8,7 @@ Automates creation of a new mini-hard project every 5 hours and daily using Open
 - Biases the implementation language toward Java and Python (OOP), but may sometimes use JS/TS, Go, or Rust when appropriate.
 - Parses the model output and writes files to a temporary workspace.
 - Creates a new GitHub repo named `<project-slug>-MM-DD-YYYY`; the README title inside the project is just the project name (no dates). The generator instructs the model to keep the top-level folder name clean (no dates), and it appends the date to the repo name automatically.
-- Schedules via GitHub Actions to run daily at 09:00 UTC and every 5 hours.
+- Schedules via GitHub Actions to run daily at 09:00 UTC and every 12 hours.
 - If a static site is detected (e.g., `index.html` at root or in `docs/`), the generator enables GitHub Pages so you can preview at `https://<owner>.github.io/<repo>/`.
 - Node frontends: supports npm, Yarn, and pnpm (auto-detected via lockfile). It installs deps, runs the `build` script when present, and copies common outputs (`dist`, `build`, `out`, `public`) into `docs/` before commit. For Next.js projects, it attempts `next build` + `next export -o out` and publishes `out` to `docs/`.
  - Data & ML: projects aim to use real datasets (e.g., Kaggle) with download scripts; large datasets are not committed. Tests use a tiny offline sample. When enabled, the workflow can run those download scripts before tests.
@@ -31,6 +31,7 @@ Automates creation of a new mini-hard project every 5 hours and daily using Open
 ## Environment Variables
 - `PROVIDER` in `{openai,anthropic}` (default: `openai`)
 - `MODEL_NAME` (default: `gpt-4o` for OpenAI; `claude-3-5-sonnet-latest` for Anthropic)
+- `OUTPUT_TOKENS` (optional) — Max response tokens for the model (default: 6000 for OpenAI, 8000 for Anthropic) to support larger, more complex projects.
 - `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` (as applicable)
 - Optional `TOPIC_PLAN` — CSV list to bias selection (e.g., `security,compilers,networking`).
 - `GH_PAT` — GitHub Personal Access Token with `repo` scope (required for CI repo creation)
