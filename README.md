@@ -4,10 +4,13 @@ Automates creation of a new mini-hard project every 5 hours and daily using Open
 
 ## Overview
 - Reads `codex.md` to instruct an LLM to emit a complete, runnable project as fenced filename blocks.
-- Chooses a random domain (backend, frontend, systems, etc.) and creates a dated folder `YYYY-MM-DD-<slug>`.
+- Chooses a random domain among: frontend web/app, backend API, CLI/desktop app, data engineering, machine learning/AI, and game development.
+- Biases the implementation language toward Java and Python (OOP), but may sometimes use JS/TS, Go, or Rust when appropriate.
 - Parses the model output and writes files to a temporary workspace.
 - Creates a new GitHub repo named after the top-level project folder emitted by the model (or a date+slug if missing), pushes the project there.
 - Schedules via GitHub Actions to run daily at 09:00 UTC and every 5 hours.
+- If a static site is detected (e.g., `index.html` at root or in `docs/`), the generator enables GitHub Pages so you can preview at `https://<owner>.github.io/<repo>/`.
+- Node frontends: supports npm, Yarn, and pnpm (auto-detected via lockfile). It installs deps, runs the `build` script when present, and copies common outputs (`dist`, `build`, `out`, `public`) into `docs/` before commit. For Next.js projects, it attempts `next build` + `next export -o out` and publishes `out` to `docs/`.
 
 ## Requirements
 - Python 3.11+
@@ -22,6 +25,7 @@ Automates creation of a new mini-hard project every 5 hours and daily using Open
 - Run generator: `python scripts/generate_next.py`
 - A new repository will be created under your GitHub account and pushed automatically.
   The push happens only if tests pass; otherwise the run aborts without creating the repo or pushing.
+ - For frontends or static games, it will try to prepare a `docs/` site and enable GitHub Pages automatically. If Pages cannot be enabled via API due to token permissions, you can enable it manually in the repo’s Settings → Pages (Deploy from a branch: `main` and `/docs`).
 
 ## Environment Variables
 - `PROVIDER` in `{openai,anthropic}` (default: `openai`)
@@ -31,6 +35,12 @@ Automates creation of a new mini-hard project every 5 hours and daily using Open
 - `GH_PAT` — GitHub Personal Access Token with `repo` scope (required for CI repo creation)
 - `GITHUB_OWNER` — GitHub username/owner (optional; auto-detected if omitted)
 - `GITHUB_VISIBILITY` — `public` or `private` (default: `public`)
+
+## Output Quality Guarantees
+- Strong, professional README in each generated project: overview, exact run commands, examples, architecture and tradeoffs, limitations, testing, and troubleshooting.
+- Non-trivial logic (e.g., state machines, parsers, concurrency, or algorithms).
+- Tests included and runnable: JUnit for Java projects (Maven/Gradle), pytest for Python, or an appropriate JS test runner.
+- For data engineering, includes small sample data and validation; for ML/AI, includes dataset sample and train/eval scripts with metrics; for games, includes a playable loop.
 
 ## CI Setup
 - Add repo secrets: `OPENAI_API_KEY` (and optionally `ANTHROPIC_API_KEY`), and `GH_PAT` (PAT with `repo` scope).

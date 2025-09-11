@@ -7,26 +7,29 @@ import random
 import pathlib
 import subprocess
 import tempfile
+import shutil
 from datetime import datetime, timezone
 
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 FIELDS = [
-    "backend api",
     "frontend web/app",
-    "systems programming",
+    "backend api",
+    "app (cli/desktop)",
     "data engineering",
     "machine learning/ai",
-    "distributed systems",
-    "devops/infrastructure",
-    "databases",
-    "networking",
-    "security",
-    "compilers/interpreters",
-    "robotics/iot",
     "game dev",
-    "scripting/automation",
+]
+
+# Weighted language preferences: mostly Java and Python for OOP
+LANGS = [
+    "python", "python", "python",  # heavier weight
+    "java", "java", "java",         # heavier weight
+    "typescript",
+    "javascript",
+    "go",
+    "rust",
 ]
 
 NOUNS = [
@@ -70,6 +73,10 @@ def choose_field() -> str:
         if choices:
             return random.choice(choices)
     return random.choice(FIELDS)
+
+
+def choose_language() -> str:
+    return random.choice(LANGS)
 
 def next_unique_name(base: str, exists_checker) -> str:
     candidate = base
@@ -170,14 +177,22 @@ def call_anthropic(model: str, prompt: str) -> str:
     return "".join(parts)
 
 
-def build_prompt(field: str, today: str) -> str:
+def build_prompt(field: str, today: str, language: str) -> str:
     codex_path = REPO_ROOT / "codex.md"
     codex = codex_path.read_text(encoding="utf-8") if codex_path.exists() else ""
     extra = (
         f"\n\nField for this run: {field}. Today's UTC date: {today}.\n"
+        f"Primary implementation language: {language}. Favor OOP design, especially for Java/Python.\n"
         f"Output files for a new folder named {today}-<short-slug>.\n"
         f"Do not include any references to automation or generators in the files.\n"
         f"Do not include workflows that schedule generation of projects.\n"
+        f"README quality must be professional and comprehensive: overview, quickstart, exact commands, examples, architecture, tradeoffs, limitations, testing instructions, and troubleshooting.\n"
+        f"Ensure non-trivial logic (state machines, concurrency, parsing, algorithms, or similar).\n"
+        f"Tests are mandatory: JUnit for Java (Maven/Gradle) or pytest for Python; for JS use a standard test runner.\n"
+        f"For frontend/web: produce a static site with an index.html (root or docs/) and clear build steps.\n"
+        f"For data engineering: include sample data and a pipeline with validation.\n"
+        f"For machine learning: include a small dataset sample and a train/eval script with metrics.\n"
+        f"For games: deliver a playable loop and basic controls.\n"
     )
     return f"{codex}\n{extra}"
 
@@ -262,10 +277,10 @@ def detect_and_run_tests(project_root: pathlib.Path) -> bool:
             pkgj = json.loads(pkg.read_text(encoding="utf-8"))
             scripts = (pkgj.get("scripts") or {})
             if "test" in scripts and isinstance(scripts["test"], str):
-                install_cmd = ["npm", "ci"] if (project_root / "package-lock.json").exists() else ["npm", "install", "--no-audit", "--no-fund"]
-                if not run_ok(install_cmd, cwd=project_root):
+                pm = select_pkg_manager(project_root)
+                if not node_install(project_root, pm):
                     return False
-                return run_ok(["npm", "test", "--silent"], cwd=project_root)
+                return run_ok(node_run_cmd(pm, "test"), cwd=project_root)
         except Exception:
             return False
 
@@ -308,6 +323,122 @@ def detect_and_run_tests(project_root: pathlib.Path) -> bool:
 
     # If no tests detected, consider success
     return True
+
+
+def select_pkg_manager(project_root: pathlib.Path) -> str:
+    if (project_root / "pnpm-lock.yaml").exists():
+        return "pnpm"
+    if (project_root / "yarn.lock").exists():
+        return "yarn"
+    return "npm"
+
+
+def node_install(project_root: pathlib.Path, pm: str) -> bool:
+    if pm == "pnpm":
+        # Rely on corepack providing pnpm; if not present, try to install
+        if not run_ok(["pnpm", "-v"]):
+            if not run_ok(["npm", "i", "-g", "pnpm"]):
+                return False
+        return run_ok(["pnpm", "install", "--frozen-lockfile"], cwd=project_root)
+    if pm == "yarn":
+        # Corepack should handle yarn
+        return run_ok(["yarn", "install", "--frozen-lockfile"], cwd=project_root)
+    # npm
+    if (project_root / "package-lock.json").exists():
+        return run_ok(["npm", "ci"], cwd=project_root)
+    return run_ok(["npm", "install", "--no-audit", "--no-fund"], cwd=project_root)
+
+
+def node_run_cmd(pm: str, script: str) -> list[str]:
+    if pm == "pnpm":
+        return ["pnpm", "run", script]
+    if pm == "yarn":
+        return ["yarn", script]
+    return ["npm", "run", script]
+
+
+def node_bin(project_root: pathlib.Path, name: str) -> pathlib.Path:
+    # Return path to local node bin in node_modules
+    p = project_root / "node_modules" / ".bin" / name
+    if os.name == "nt":
+        cmd = p.with_suffix(".cmd")
+        return cmd if cmd.exists() else p
+    return p
+
+
+def prepare_static_site(project_root: pathlib.Path) -> str | None:
+    """Detect or build static site content for GitHub Pages.
+
+    Returns the pages path ("/" or "/docs") if a static site is ready, else None.
+    """
+    root_index = project_root / "index.html"
+    docs_index = project_root / "docs" / "index.html"
+    if root_index.exists():
+        return "/"
+    if docs_index.exists():
+        return "/docs"
+
+    # Try Node build into docs/
+    pkg = project_root / "package.json"
+    if pkg.exists():
+        try:
+            pkgj = json.loads(pkg.read_text(encoding="utf-8"))
+            scripts = (pkgj.get("scripts") or {})
+            pm = select_pkg_manager(project_root)
+            if not node_install(project_root, pm):
+                return None
+
+            # If "build" exists, run it
+            if "build" in scripts and isinstance(scripts["build"], str):
+                if not run_ok(node_run_cmd(pm, "build"), cwd=project_root):
+                    return None
+
+            # Next.js static export if Next is present
+            deps = {**(pkgj.get("dependencies") or {}), **(pkgj.get("devDependencies") or {})}
+            if "next" in deps:
+                next_path = node_bin(project_root, "next")
+                if next_path.exists():
+                    # Try build then export to out/
+                    if not run_ok([str(next_path), "build"], cwd=project_root):
+                        return None
+                    # Next export; default out dir is out/
+                    if not run_ok([str(next_path), "export", "-o", "out"], cwd=project_root):
+                        return None
+
+            # Common output dirs
+            for out in ("docs", "dist", "build", "out", "public"):
+                out_dir = project_root / out
+                if out_dir.exists() and any(out_dir.iterdir()):
+                    # Ensure docs/ contains site
+                    docs_dir = project_root / "docs"
+                    if out_dir.name != "docs":
+                        if docs_dir.exists():
+                            shutil.rmtree(docs_dir)
+                        shutil.copytree(out_dir, docs_dir)
+                    # Validate index
+                    idx = docs_dir / "index.html"
+                    if idx.exists():
+                        return "/docs"
+        except Exception:
+            return None
+    return None
+
+
+def gh_enable_pages(token: str, api: str, owner: str, repo: str, branch: str, path: str) -> None:
+    import requests
+    payload = {"source": {"branch": branch, "path": path}}
+    url_create = f"{api}/repos/{owner}/{repo}/pages"
+    r = requests.post(url_create, headers=github_headers(token), json=payload, timeout=30)
+    if r.status_code in (201, 204):
+        return
+    # If already exists or forbidden, try update endpoint
+    url_update = f"{api}/repos/{owner}/{repo}/pages"
+    r2 = requests.put(url_update, headers=github_headers(token), json=payload, timeout=30)
+    # Do not raise; if it fails, user can enable manually
+    try:
+        r2.raise_for_status()
+    except Exception:
+        pass
 
 
 def gh_get_owner(token: str, api: str) -> str:
@@ -399,8 +530,9 @@ def main() -> int:
     provider = (os.getenv("PROVIDER") or "openai").strip().lower()
     model = os.getenv("MODEL_NAME") or ("gpt-4o" if provider == "openai" else "claude-3-5-sonnet-latest")
 
-    # Choose field
+    # Choose field and language
     field = choose_field()
+    language = choose_language()
     today = utc_date()
 
     # Resolve GitHub settings
@@ -418,7 +550,7 @@ def main() -> int:
     tmpdir = pathlib.Path(tempfile.mkdtemp(prefix="autogen-"))
 
     # Build prompt
-    prompt = build_prompt(field, today)
+    prompt = build_prompt(field, today, language)
 
     # Call provider
     try:
@@ -473,6 +605,9 @@ def main() -> int:
         print("Tests failed or could not be executed; skipping push.")
         return 3
 
+    # Prepare GitHub Pages if this is a static site
+    pages_path = prepare_static_site(project_root)
+
     # Create GitHub repo and push contents
     # Derive description from README title if available to avoid automation hints
     description = f"{project_name}"
@@ -501,6 +636,13 @@ def main() -> int:
         git_email = os.getenv("GIT_AUTHOR_EMAIL", "dev@users.noreply.github.com")
         git_init_and_push(project_root, token_remote, git_user, git_email)
         print(f"Created and pushed: https://github.com/{gh_owner}/{project_name}")
+        # Enable GitHub Pages if static site detected
+        if pages_path:
+            try:
+                gh_enable_pages(gh_token, gh_api, gh_owner, project_name, "main", pages_path)
+                print(f"Pages enabled at: https://{gh_owner}.github.io/{project_name}/")
+            except Exception:
+                print("Could not enable GitHub Pages automatically. You can enable it in repo settings.")
     except Exception as e:
         print(f"GitHub push failed: {e}")
         return 2
