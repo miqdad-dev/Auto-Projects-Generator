@@ -38,5 +38,15 @@
     "pages_url": null,
     "description": "Data Romeo",
     "ts": 1757598030
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-india-09-11-2025",
+    "name": "data-india-09-11-2025",
+    "field": "data engineering",
+    "language": "python",
+    "pages_url": null,
+    "description": "Data India",
+    "ts": 1757603056
   }
 ]
