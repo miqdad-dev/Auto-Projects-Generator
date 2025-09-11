@@ -442,7 +442,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """)
-    _w(project_root / "README.md", f"""# {title}
+    _w(project_root / "README.md", "# " + title + "\n\n" + """
 
 An interactive HTML5 canvas demo showcasing a small particle system. This project demonstrates how to structure and host a static site problem: build a smooth, responsive animation with zero dependencies and deploy it reliably on GitHub Pages.
 
@@ -551,7 +551,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """)
-    _w(project_root / "README.md", f"""# {title}
+    _w(project_root / "README.md", "# " + title + "\n\n" + """
 
 Reliable FastAPI microservice for bounded computation with a clean API and test coverage.
 
@@ -667,7 +667,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """)
-    _w(project_root / "README.md", f"""# {title}
+    _w(project_root / "README.md", "# " + title + "\n\n" + """
 
 Deterministic CSV-to-CSV transformation pipeline with validation and tests.
 
