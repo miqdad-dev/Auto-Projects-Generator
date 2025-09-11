@@ -126,6 +126,107 @@ def extract_top_folder(blocks: list[tuple[str, str]]) -> str | None:
     return None
 
 
+DATE_ORDERS = {"MDY", "DMY", "YMD"}
+
+
+def format_repo_date(order: str) -> str:
+    now = datetime.now(timezone.utc)
+    y, m, d = now.year, now.month, now.day
+    order = (order or "MDY").upper()
+    if order not in DATE_ORDERS:
+        order = "MDY"
+    if order == "DMY":
+        return f"{d:02d}-{m:02d}-{y}"
+    if order == "YMD":
+        return f"{y}-{m:02d}-{d:02d}"
+    return f"{m:02d}-{d:02d}-{y}"
+
+
+def strip_date_from_name(name: str) -> str:
+    # Remove common leading or trailing date patterns
+    n = name
+    n = re.sub(r"^\d{4}-\d{2}-\d{2}-", "", n)  # 2025-09-10-foo
+    n = re.sub(r"-(\d{4}-\d{2}-\d{2})$", "", n)  # foo-2025-09-10
+    n = re.sub(r"^\d{2}-\d{2}-\d{4}-", "", n)  # 10-09-2025-foo
+    n = re.sub(r"-(\d{2}-\d{2}-\d{4})$", "", n)  # foo-10-09-2025
+    n = re.sub(r"^\d{2}-\d{2}-\d{2}-", "", n)  # 10-09-25-foo
+    n = re.sub(r"-(\d{2}-\d{2}-\d{2})$", "", n)  # foo-10-09-25
+    return n
+
+
+def ensure_readme_quality(project_root: pathlib.Path, project_title: str, field: str, language: str) -> None:
+    rd = project_root / "README.md"
+    if not rd.exists():
+        rd.write_text(f"# {project_title}\n\n", encoding="utf-8")
+    text = rd.read_text(encoding="utf-8", errors="ignore")
+    lines = text.splitlines()
+    # Force H1 to be just project title (no dates)
+    if lines and lines[0].startswith("# "):
+        lines[0] = f"# {project_title}"
+    else:
+        lines.insert(0, f"# {project_title}")
+
+    content = "\n".join(lines)
+    missing = []
+    required_sections = [
+        "Overview", "Features", "Architecture", "Setup", "Configuration",
+        "Usage", "Examples", "Testing", "Deployment", "Hosting", "Troubleshooting"
+    ]
+    for sec in required_sections:
+        if f"## {sec}" not in content:
+            missing.append(sec)
+
+    if missing or len(content) < 800:
+        guide = (
+            f"\n\n## Overview\n\n"
+            f"{project_title} is a {field} project implemented in {language.capitalize()}. "
+            f"It focuses on clear object-oriented design, maintainability, and practical examples.\n\n"
+            f"## Features\n\n"
+            f"- Clear project structure and modular components\n"
+            f"- Non-trivial core logic (state machines, parsing, or algorithms)\n"
+            f"- Comprehensive tests and examples\n\n"
+            f"## Architecture\n\n"
+            f"- Components: describe key modules/classes and responsibilities\n"
+            f"- Data flow: outline request/response or pipeline stages\n"
+            f"- Tradeoffs: briefly note choices (performance vs. simplicity, etc.)\n\n"
+            f"## Setup\n\n"
+            f"1. Ensure you have the required runtime (e.g., Java 17, Python 3.11, or Node 20).\n"
+            f"2. Install dependencies (see below).\n\n"
+            f"### Dependencies\n\n"
+            f"- Java: Maven `mvn -q -DskipTests install` or Gradle `./gradlew build`\n"
+            f"- Python: `python -m pip install -r requirements.txt`\n"
+            f"- Node: `npm install` or `yarn install` or `pnpm install`\n\n"
+            f"## Configuration\n\n"
+            f"- Provide environment variables or config files as needed.\n"
+            f"- Example: `.env` or `config.yaml`.\n\n"
+            f"## Usage\n\n"
+            f"Provide exact commands. For example:\n\n"
+            f"- Java (Maven): `mvn -q exec:java`\n"
+            f"- Java (Gradle): `./gradlew run`\n"
+            f"- Python CLI: `python -m package.module --help`\n"
+            f"- Web: `npm run dev` and open http://localhost:3000\n\n"
+            f"## Examples\n\n"
+            f"Show minimal inputs/outputs or curl examples for APIs.\n\n"
+            f"## Testing\n\n"
+            f"- Java: `mvn -q test` or `./gradlew test`\n"
+            f"- Python: `pytest -q`\n"
+            f"- Node: `npm test` / `yarn test` / `pnpm test`\n\n"
+            f"## Deployment\n\n"
+            f"- Docker: provide a `Dockerfile` or `docker-compose.yml` if applicable.\n"
+            f"- Cloud: describe minimal steps for common providers (Heroku/Fly.io/Render).\n"
+            f"- Data/ML: how to run pipelines or training jobs with parameters.\n\n"
+            f"## Hosting\n\n"
+            f"- Static web: publish `docs/` via GitHub Pages (Settings → Pages).\n"
+            f"- Backend: deploy with Docker or a PaaS; expose port and configure env vars.\n\n"
+            f"## Troubleshooting\n\n"
+            f"- Common build errors and how to resolve them.\n"
+            f"- Environment/version mismatches.\n"
+        )
+        content = content.rstrip() + guide
+
+    rd.write_text(content, encoding="utf-8")
+
+
 def is_safe_relpath(path: str) -> bool:
     p = pathlib.Path(path)
     if p.is_absolute():
@@ -183,10 +284,25 @@ def build_prompt(field: str, today: str, language: str) -> str:
     extra = (
         f"\n\nField for this run: {field}. Today's UTC date: {today}.\n"
         f"Primary implementation language: {language}. Favor OOP design, especially for Java/Python.\n"
-        f"Output files for a new folder named {today}-<short-slug>. If you choose to name the folder differently, prefer <project-slug>-MM-DD.\n"
+        f"Output files for a new folder named <short-slug> (no dates in folder names).\n"
         f"Do not include any references to automation or generators in the files.\n"
         f"Do not include workflows that schedule generation of projects.\n"
-        f"README quality must be professional and comprehensive: overview, quickstart, exact commands, examples, architecture, tradeoffs, limitations, testing instructions, and troubleshooting.\n"
+        f"README must be professional and comprehensive and follow this structure exactly: \n"
+        f"1) Title & Tagline (project name + one-line purpose)\n"
+        f"2) Badges (optional)\n"
+        f"3) Overview: what it does, the problem it solves, why it exists\n"
+        f"4) Features: bullet list of capabilities\n"
+        f"5) Getting Started: prerequisites, installation steps, and precise usage commands\n"
+        f"6) Configuration: environment variables and an example .env\n"
+        f"7) Workflow / Automation (only for this project itself, not how it was created): CI/CD, scheduled jobs if relevant\n"
+        f"8) Examples / Screenshots: code snippets or structure examples\n"
+        f"9) Testing: how to run tests and which framework\n"
+        f"10) Deployment/Hosting: how to run in production or host (e.g., Pages/Docker/cloud)\n"
+        f"11) Roadmap / Future Work (optional)\n"
+        f"12) Contributing (optional)\n"
+        f"13) License (explicit, e.g., MIT)\n"
+        f"14) Acknowledgments (optional)\n"
+        f"The README should highlight the problem, the approach to fix it, and how the solution works in clear, expert language.\n"
         f"Ensure non-trivial logic (state machines, concurrency, parsing, algorithms, or similar).\n"
         f"Tests are mandatory: JUnit for Java (Maven/Gradle) or pytest for Python; for JS use a standard test runner.\n"
         f"For frontend/web: produce a static site with an index.html (root or docs/) and clear build steps.\n"
@@ -201,7 +317,7 @@ def mm_dd_from_date_str(date_str: str) -> str | None:
     m = re.match(r"^(\d{4})-(\d{2})-(\d{2})$", date_str)
     if not m:
         return None
-    return f"{m.group(2)}-{m.group(3)}"
+    return f"{m.group(2)}-{m.group(3)}-{m.group(1)}"
 
 
 def extract_date_and_slug_from_folder(name: str) -> tuple[str | None, str | None]:
@@ -271,27 +387,79 @@ function step(){
   ctx.globalAlpha=1.0;requestAnimationFrame(step)
 }step();
 """)
+    _w(project_root / "LICENSE", """
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+""")
     _w(project_root / "README.md", f"""# {title}
 
-A small interactive HTML5 canvas demo published via GitHub Pages.
+An interactive HTML5 canvas demo showcasing a small particle system. This project demonstrates how to structure and host a static site problem: build a smooth, responsive animation with zero dependencies and deploy it reliably on GitHub Pages.
 
-## Quick Start
-- Open `docs/index.html` in a browser, or after pushing, visit `https://<owner>.github.io/<repo>/`.
+## Overview
+This project addresses the problem of delivering a lightweight, portable interactive visual without any framework or backend. It uses a minimal, dependency-free JavaScript loop to animate particles spawned by user clicks. The solution focuses on clarity, performance, and ease of hosting.
 
 ## Features
-- Particle system with simple physics and fade-out lifecycle.
-- Responsive canvas and minimal, dependency-free JS.
+- Dependency-free interactive animation (HTML/CSS/JS only)
+- Particle physics loop with fade-out lifecycle
+- Responsive canvas sizing and simple styling
+- Ready for static hosting (GitHub Pages)
 
-## Development
-- Edit `docs/app.js` and `docs/style.css` and refresh the page.
-- No build tooling required; static assets only.
+## Getting Started
+### Prerequisites
+- A modern web browser
 
-## Deployment
-- The generator publishes `docs/` and enables GitHub Pages. If disabled, do this manually:
-  - Settings → Pages → Deploy from a branch: `main`, folder: `/docs`.
+### Installation
+1. Clone the repo
+   - `git clone <this repo>`
+   - `cd <repo>`
+2. No build step required
 
-## Troubleshooting
-- If the page shows 404 after enabling Pages, wait 1–2 minutes and refresh.
+### Usage
+- Open `docs/index.html` in a browser
+- Click anywhere on the canvas to spawn particles
+
+## Configuration
+No runtime configuration required. You can tweak constants in `docs/app.js` (e.g., particle count, velocity, gravity).
+
+## Examples / Screenshots
+- See `docs/index.html` and `docs/app.js` for clean, commented code.
+
+## Testing
+This static demo is visual; no runtime tests are included. For CI validation, you could add a link checker or lighthouse CI later.
+
+## Deployment / Hosting
+- GitHub Pages: Settings → Pages → Deploy from a branch: `main`, folder: `/docs`
+- After enabling, visit: `https://<owner>.github.io/<repo>/`
+
+## Roadmap / Future Work
+- Add UI toggles for particle physics
+- Add FPS meter and performance profiling
+
+## Contributing
+Issues and PRs are welcome. Please describe the problem and proposed solution clearly.
+
+## License
+MIT
+
+## Acknowledgments
+Inspired by classic particle demos and the elegance of small, dependency-free visualizations.
 """)
 
 
@@ -328,33 +496,84 @@ def test_fib():
     assert c.get('/fibonacci/0').json()['value']==0
     assert c.get('/fibonacci/7').json()['value']==13
 """)
+    _w(project_root / "LICENSE", """
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+""")
     _w(project_root / "README.md", f"""# {title}
 
-Production-ready FastAPI microservice with healthcheck and a compute endpoint.
+Reliable FastAPI microservice for bounded computation with a clean API and test coverage.
 
-## Architecture
-- FastAPI application (`app/main.py`).
-- Endpoints:
-  - `GET /health` — liveness probe.
-  - `GET /fibonacci/{{n}}` — returns nth Fibonacci number (validated 0..1000).
+## Overview
+Problem: expose a safe, performant compute endpoint (e.g., Fibonacci) with input validation, health checks, and tests. Solution: a minimal FastAPI service with clear routing, validation, and an extensible structure for more endpoints.
 
-## Local Run
-- Install: `python -m pip install -r requirements.txt`
-- Start: `uvicorn app.main:app --reload --port 8000`
-- Test: `python -m pytest -q`
+## Features
+- `GET /health` liveness endpoint
+- `GET /fibonacci/{{n}}` computation with input guard (0..1000)
+- Pytest-based tests with TestClient
 
-## Usage Examples
-- `curl http://localhost:8000/health`
-- `curl http://localhost:8000/fibonacci/10`
+## Getting Started
+### Prerequisites
+- Python 3.11+
 
-## Deployment
-- Dockerfile can be added; typical command:
-  - `uvicorn app.main:app --host 0.0.0.0 --port 8000`
-- Hosting options: Fly.io, Render, Railway, or containers on cloud providers.
+### Installation
+```bash
+python -m pip install -r requirements.txt
+```
 
-## Observability & Hardening
-- Add logging middleware, rate limits, and request validation.
-- Configure timeouts and retries at the client side.
+### Run
+```bash
+uvicorn app.main:app --reload --port 8000
+```
+
+### Test
+```bash
+python -m pytest -q
+```
+
+## Configuration
+No secrets required for local use. For production, consider environment variables for logging level, timeouts, or CORS.
+
+## Examples
+```bash
+curl http://localhost:8000/health
+curl http://localhost:8000/fibonacci/10
+```
+
+## Deployment / Hosting
+- Container entrypoint: `uvicorn app.main:app --host 0.0.0.0 --port 8000`
+- Host on Fly.io, Render, Railway, or any container platform.
+
+## Testing
+- Framework: pytest with `fastapi.testclient`
+- Run: `python -m pytest -q`
+
+## Roadmap / Future Work
+- Add metrics and tracing (OpenTelemetry)
+- Add rate limiting and auth
+
+## Contributing
+PRs welcome; include tests and rationale.
+
+## License
+MIT
 """)
 
 
@@ -393,21 +612,80 @@ def test_transform():
     out = transform(df)
     assert list(out['double']) == [10,12]
 """)
+    _w(project_root / "LICENSE", """
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+""")
     _w(project_root / "README.md", f"""# {title}
 
-Data pipeline that reads CSV input, applies a deterministic transform, and writes CSV output, with tests.
+Deterministic CSV-to-CSV transformation pipeline with validation and tests.
 
-## Run
-- `python -m pip install -r requirements.txt`
-- `python -m pytest -q`
-- `python pipeline/transform.py` (writes `data/output.csv`)
+## Overview
+Problem: reliably transform tabular data with reproducible logic and test coverage. Solution: a small, explicit pipeline that loads, transforms, and saves CSV using pandas, with unit tests to prevent regressions.
 
-## Architecture
-- `pipeline/transform.py` contains load/transform/save stages.
-- Input data in `data/input.csv`; output in `data/output.csv`.
+## Features
+- Load/transform/save pattern
+- Deterministic computation and unit tests
+- Simple configuration via CLI arguments
 
-## Extending
-- Add schema validation, incremental processing, and logging.
+## Getting Started
+### Prerequisites
+- Python 3.11+
+
+### Installation
+```bash
+python -m pip install -r requirements.txt
+```
+
+### Usage
+```bash
+python pipeline/transform.py  # reads data/input.csv and writes data/output.csv
+```
+
+## Configuration
+Environment variables are not required. Adjust file paths by editing the script or adding CLI flags.
+
+## Examples
+Input (`data/input.csv`):
+```
+id,value
+1,10
+2,20
+```
+Output (`data/output.csv`):
+```
+id,value,double
+1,10,20
+2,20,40
+```
+
+## Testing
+- Framework: pytest
+- Run: `python -m pytest -q`
+
+## Roadmap / Future Work
+- Add schema validation (pydantic/cerberus)
+- Add incremental processing and logging
+
+## License
+MIT
 """)
 
 
@@ -438,18 +716,73 @@ def test_accuracy_threshold():
     acc = train_and_eval()
     assert acc >= 0.85
 """)
+    _w(project_root / "LICENSE", """
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+""")
     _w(project_root / "README.md", f"""# {title}
 
-Logistic regression classifier on the Iris dataset with train/eval and a minimum accuracy test.
+Logistic regression classifier on the Iris dataset with reproducible train/eval and an accuracy threshold test.
 
-## Run
-- `python -m pip install -r requirements.txt`
-- `python -m pytest -q`
-- `python ml/train.py`
+## Overview
+Problem: provide a minimal, reproducible ML baseline with explicit metrics and tests. Solution: a scikit-learn pipeline that trains a classifier and asserts a minimum accuracy, ensuring changes don’t silently degrade performance.
 
-## Notes
-- Deterministic split via `random_state`.
-- Extend with feature scaling, pipelines, and model persistence.
+## Features
+- Deterministic data split and training
+- Accuracy metric printing and test gating
+- Simple, dependency-light implementation
+
+## Getting Started
+### Prerequisites
+- Python 3.11+
+
+### Installation
+```bash
+python -m pip install -r requirements.txt
+```
+
+### Usage
+```bash
+python ml/train.py
+```
+
+## Configuration
+Modify `random_state` or model hyperparameters in `ml/train.py`.
+
+## Examples
+Example output:
+```
+{"accuracy": 0.96}
+```
+
+## Testing
+- Framework: pytest
+- Run: `python -m pytest -q`
+- Test criterion: accuracy >= 0.85
+
+## Roadmap / Future Work
+- Add model persistence and CLI args
+- Add cross-validation and feature scaling
+
+## License
+MIT
 """)
 
 
@@ -830,25 +1163,25 @@ def main() -> int:
     # Derive project name from blocks' top folder if present, else synthesize
     top_folder = extract_top_folder(blocks) if blocks else None
 
-    # Determine repo name as <slug>-MM-DD (no year)
+    # Determine repo name as <slug>-MM-DD-YYYY
     # Prefer slug/date from the model's top folder if present
     repo_base: str
     if top_folder:
         d, s = extract_date_and_slug_from_folder(top_folder)
         if s:
-            mmdd = mm_dd_from_date_str(d) if d else None
-            if not mmdd:
-                mmdd = datetime.now(timezone.utc).strftime("%m-%d")
-            repo_base = f"{s}-{mmdd}"
+            mdy = mm_dd_from_date_str(d) if d else None
+            if not mdy:
+                mdy = datetime.now(timezone.utc).strftime("%m-%d-%Y")
+            repo_base = f"{s}-{mdy}"
         else:
             # No recognizable date-then-slug; treat the folder as slug
             s = slugify(top_folder)
-            mmdd = datetime.now(timezone.utc).strftime("%m-%d")
-            repo_base = f"{s}-{mmdd}"
+            mdy = datetime.now(timezone.utc).strftime("%m-%d-%Y")
+            repo_base = f"{s}-{mdy}"
     else:
         s = slugify(f"{field.split()[0]}-{random.choice(NOUNS)}")
-        mmdd = datetime.now(timezone.utc).strftime("%m-%d")
-        repo_base = f"{s}-{mmdd}"
+        mdy = datetime.now(timezone.utc).strftime("%m-%d-%Y")
+        repo_base = f"{s}-{mdy}"
 
     # Ensure unique name on GitHub
     def exists_checker(name: str) -> bool:
@@ -874,6 +1207,13 @@ def main() -> int:
 
     # Remove automation hints (if any)
     cleanse_automation_artifacts(project_root)
+
+    # Strengthen README quality and ensure title is project-only (no dates)
+    display_title = strip_date_from_name(project_name).replace("-", " ").title()
+    try:
+        ensure_readme_quality(project_root, display_title, field, language)
+    except Exception:
+        pass
 
     # Gate push on tests passing
     print("Running tests to validate project before push...")
