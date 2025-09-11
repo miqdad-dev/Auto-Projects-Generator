@@ -231,37 +231,281 @@ def write_blocks(blocks: list[tuple[str, str]], project_root: pathlib.Path, root
     return written
 
 
-def fallback_minimal_project(project_root: pathlib.Path, title: str) -> None:
-    (project_root / "src").mkdir(parents=True, exist_ok=True)
-    (project_root / "tests").mkdir(parents=True, exist_ok=True)
-    (project_root / "README.md").write_text(
-        f"# {title}\n\n"
-        "A small event-driven state machine with tests.\n\n"
-        "## Run\n\n"
-        "python -m pytest -q\n\n"
-        "## Overview\n\n"
-        "Implements a minimal state machine with valid transitions.\n",
-        encoding="utf-8",
-    )
-    (project_root / "src" / "app.py").write_text(
-        "class Machine:\n"
-        "    def __init__(self):\n        self.state='idle'\n"
-        "    def send(self, event):\n"
-        "        if self.state=='idle' and event=='start':\n            self.state='running'\n"
-        "        elif self.state=='running' and event=='stop':\n            self.state='idle'\n"
-        "        else:\n            raise ValueError('invalid transition')\n",
-        encoding="utf-8",
-    )
-    (project_root / "tests" / "test_app.py").write_text(
-        "from src.app import Machine\n\n"
-        "def test_machine():\n"
-        "    m = Machine()\n"
-        "    m.send('start')\n"
-        "    assert m.state=='running'\n"
-        "    m.send('stop')\n"
-        "    assert m.state=='idle'\n",
-        encoding="utf-8",
-    )
+def _w(path: pathlib.Path, content: str) -> None:
+    ensure_parent(path)
+    path.write_text(content, encoding="utf-8")
+
+
+def fallback_frontend_static(project_root: pathlib.Path, title: str) -> None:
+    (project_root / "docs").mkdir(parents=True, exist_ok=True)
+    _w(project_root / "docs" / "index.html", f"""<!doctype html>
+<html lang=\"en\"><head>
+  <meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">
+  <title>{title}</title>
+  <link rel=\"stylesheet\" href=\"style.css\">
+</head><body>
+  <main>
+    <h1>{title}</h1>
+    <p>Interactive demo: click to spawn particles. Use the README for full details.</p>
+    <canvas id=\"c\" width=\"800\" height=\"400\"></canvas>
+  </main>
+  <script src=\"app.js\"></script>
+</body></html>
+""")
+    _w(project_root / "docs" / "style.css", """
+body{font-family:system-ui,Arial,sans-serif;margin:0;background:#0b1221;color:#e9eef7}
+main{max-width:960px;margin:32px auto;padding:16px}
+canvas{display:block;width:100%;background:#0f1730;border:1px solid #1f2a4a}
+""")
+    _w(project_root / "docs" / "app.js", """
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const P=[]; function rnd(n){return Math.random()*n}
+canvas.addEventListener('click',e=>{for(let i=0;i<100;i++){P.push({x:e.offsetX,y:e.offsetY,vx:rnd(4)-2,vy:rnd(4)-2,l:100})}});
+function step(){
+  ctx.fillStyle='#0f1730';ctx.fillRect(0,0,canvas.width,canvas.height);
+  for(const p of P){p.x+=p.vx;p.y+=p.vy;p.vy+=0.02;p.l--;}
+  for(let i=P.length-1;i>=0;i--){if(P[i].l<=0)P.splice(i,1)}
+  ctx.fillStyle='#72e5ff';
+  for(const p of P){ctx.globalAlpha=Math.max(0,p.l/100);ctx.fillRect(p.x,p.y,2,2)}
+  ctx.globalAlpha=1.0;requestAnimationFrame(step)
+}step();
+""")
+    _w(project_root / "README.md", f"""# {title}
+
+A small interactive HTML5 canvas demo published via GitHub Pages.
+
+## Quick Start
+- Open `docs/index.html` in a browser, or after pushing, visit `https://<owner>.github.io/<repo>/`.
+
+## Features
+- Particle system with simple physics and fade-out lifecycle.
+- Responsive canvas and minimal, dependency-free JS.
+
+## Development
+- Edit `docs/app.js` and `docs/style.css` and refresh the page.
+- No build tooling required; static assets only.
+
+## Deployment
+- The generator publishes `docs/` and enables GitHub Pages. If disabled, do this manually:
+  - Settings → Pages → Deploy from a branch: `main`, folder: `/docs`.
+
+## Troubleshooting
+- If the page shows 404 after enabling Pages, wait 1–2 minutes and refresh.
+""")
+
+
+def fallback_backend_fastapi(project_root: pathlib.Path, title: str) -> None:
+    _w(project_root / "requirements.txt", "fastapi==0.112.2\nuvicorn==0.30.6\npytest==8.3.3\nhttpx==0.27.2\n")
+    _w(project_root / "app" / "main.py", """
+from fastapi import FastAPI, HTTPException
+
+app = FastAPI(title="Service")
+
+@app.get("/health")
+def health():
+    return {"status":"ok"}
+
+@app.get("/fibonacci/{n}")
+def fibonacci(n: int):
+    if n < 0 or n > 1000:
+        raise HTTPException(400, "n must be 0..1000")
+    a,b=0,1
+    for _ in range(n):
+        a,b=b,a+b
+    return {"n": n, "value": a}
+""")
+    _w(project_root / "tests" / "test_api.py", """
+from fastapi.testclient import TestClient
+from app.main import app
+
+def test_health():
+    c = TestClient(app)
+    assert c.get('/health').json()['status']=='ok'
+
+def test_fib():
+    c = TestClient(app)
+    assert c.get('/fibonacci/0').json()['value']==0
+    assert c.get('/fibonacci/7').json()['value']==13
+""")
+    _w(project_root / "README.md", f"""# {title}
+
+Production-ready FastAPI microservice with healthcheck and a compute endpoint.
+
+## Architecture
+- FastAPI application (`app/main.py`).
+- Endpoints:
+  - `GET /health` — liveness probe.
+  - `GET /fibonacci/{{n}}` — returns nth Fibonacci number (validated 0..1000).
+
+## Local Run
+- Install: `python -m pip install -r requirements.txt`
+- Start: `uvicorn app.main:app --reload --port 8000`
+- Test: `python -m pytest -q`
+
+## Usage Examples
+- `curl http://localhost:8000/health`
+- `curl http://localhost:8000/fibonacci/10`
+
+## Deployment
+- Dockerfile can be added; typical command:
+  - `uvicorn app.main:app --host 0.0.0.0 --port 8000`
+- Hosting options: Fly.io, Render, Railway, or containers on cloud providers.
+
+## Observability & Hardening
+- Add logging middleware, rate limits, and request validation.
+- Configure timeouts and retries at the client side.
+""")
+
+
+def fallback_data_engineering(project_root: pathlib.Path, title: str) -> None:
+    _w(project_root / "requirements.txt", "pandas==2.2.2\npytest==8.3.3\npyyaml==6.0.2\n")
+    _w(project_root / "data" / "input.csv", """id,value\n1,10\n2,20\n3,30\n""")
+    _w(project_root / "pipeline" / "transform.py", """
+import pandas as pd
+from pathlib import Path
+
+def load(path: Path) -> pd.DataFrame:
+    return pd.read_csv(path)
+
+def transform(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
+    df['double'] = df['value'] * 2
+    return df
+
+def save(df: pd.DataFrame, path: Path) -> None:
+    df.to_csv(path, index=False)
+
+def run(in_path: str, out_path: str) -> None:
+    df = load(Path(in_path))
+    out = transform(df)
+    save(out, Path(out_path))
+
+if __name__ == "__main__":
+    run("data/input.csv", "data/output.csv")
+""")
+    _w(project_root / "tests" / "test_transform.py", """
+from pipeline.transform import transform
+import pandas as pd
+
+def test_transform():
+    df = pd.DataFrame({'id':[1,2], 'value':[5,6]})
+    out = transform(df)
+    assert list(out['double']) == [10,12]
+""")
+    _w(project_root / "README.md", f"""# {title}
+
+Data pipeline that reads CSV input, applies a deterministic transform, and writes CSV output, with tests.
+
+## Run
+- `python -m pip install -r requirements.txt`
+- `python -m pytest -q`
+- `python pipeline/transform.py` (writes `data/output.csv`)
+
+## Architecture
+- `pipeline/transform.py` contains load/transform/save stages.
+- Input data in `data/input.csv`; output in `data/output.csv`.
+
+## Extending
+- Add schema validation, incremental processing, and logging.
+""")
+
+
+def fallback_ml(project_root: pathlib.Path, title: str) -> None:
+    _w(project_root / "requirements.txt", "scikit-learn==1.5.2\nnumpy==1.26.4\npytest==8.3.3\n")
+    _w(project_root / "ml" / "train.py", """
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+
+def train_and_eval(random_state: int = 42) -> float:
+    X, y = load_iris(return_X_y=True)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=random_state)
+    clf = LogisticRegression(max_iter=1000)
+    clf.fit(X_train, y_train)
+    pred = clf.predict(X_test)
+    return accuracy_score(y_test, pred)
+
+if __name__ == "__main__":
+    acc = train_and_eval()
+    print({"accuracy": acc})
+""")
+    _w(project_root / "tests" / "test_ml.py", """
+from ml.train import train_and_eval
+
+def test_accuracy_threshold():
+    acc = train_and_eval()
+    assert acc >= 0.85
+""")
+    _w(project_root / "README.md", f"""# {title}
+
+Logistic regression classifier on the Iris dataset with train/eval and a minimum accuracy test.
+
+## Run
+- `python -m pip install -r requirements.txt`
+- `python -m pytest -q`
+- `python ml/train.py`
+
+## Notes
+- Deterministic split via `random_state`.
+- Extend with feature scaling, pipelines, and model persistence.
+""")
+
+
+def fallback_cli_app(project_root: pathlib.Path, title: str) -> None:
+    _w(project_root / "requirements.txt", "pytest==8.3.3\n")
+    _w(project_root / "src" / "cli.py", """
+import argparse, sys
+
+def solve(s: str) -> str:
+    # Reverse words while preserving whitespace
+    parts = s.split(' ')
+    return ' '.join(w[::-1] for w in parts)
+
+def main(argv=None):
+    p = argparse.ArgumentParser(description="String transformer")
+    p.add_argument('text', help='input text')
+    args = p.parse_args(argv)
+    print(solve(args.text))
+
+if __name__ == '__main__':
+    main()
+""")
+    _w(project_root / "tests" / "test_cli.py", """
+from src.cli import solve
+
+def test_solve():
+    assert solve('hello world') == 'olleh dlrow'
+""")
+    _w(project_root / "README.md", f"""# {title}
+
+Command-line text transformer with tests.
+
+## Run
+- `python -m pip install -r requirements.txt`
+- `python -m pytest -q`
+- `python -m src.cli "some text"`
+""")
+
+
+def fallback_game_static(project_root: pathlib.Path, title: str) -> None:
+    fallback_frontend_static(project_root, title)
+
+
+def fallback_problem_project(field: str, language: str, project_root: pathlib.Path, title: str) -> None:
+    f = field.lower()
+    if "front" in f:
+        return fallback_frontend_static(project_root, title)
+    if "back" in f:
+        return fallback_backend_fastapi(project_root, title)
+    if "data" in f:
+        return fallback_data_engineering(project_root, title)
+    if "machine" in f or "ml" in f:
+        return fallback_ml(project_root, title)
+    if "game" in f:
+        return fallback_game_static(project_root, title)
+    return fallback_cli_app(project_root, title)
 
 
 def run(cmd: list[str], cwd: pathlib.Path | None = None) -> None:
@@ -626,7 +870,7 @@ def main() -> int:
     # Fallback if nothing written
     if written == 0:
         title = f"{project_name}"
-        fallback_minimal_project(project_root, title)
+        fallback_problem_project(field, language, project_root, title)
 
     # Remove automation hints (if any)
     cleanse_automation_artifacts(project_root)
