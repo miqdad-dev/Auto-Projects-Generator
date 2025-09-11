@@ -183,7 +183,7 @@ def build_prompt(field: str, today: str, language: str) -> str:
     extra = (
         f"\n\nField for this run: {field}. Today's UTC date: {today}.\n"
         f"Primary implementation language: {language}. Favor OOP design, especially for Java/Python.\n"
-        f"Output files for a new folder named {today}-<short-slug>.\n"
+        f"Output files for a new folder named {today}-<short-slug>. If you choose to name the folder differently, prefer <project-slug>-MM-DD.\n"
         f"Do not include any references to automation or generators in the files.\n"
         f"Do not include workflows that schedule generation of projects.\n"
         f"README quality must be professional and comprehensive: overview, quickstart, exact commands, examples, architecture, tradeoffs, limitations, testing instructions, and troubleshooting.\n"
@@ -195,6 +195,23 @@ def build_prompt(field: str, today: str, language: str) -> str:
         f"For games: deliver a playable loop and basic controls.\n"
     )
     return f"{codex}\n{extra}"
+
+
+def mm_dd_from_date_str(date_str: str) -> str | None:
+    m = re.match(r"^(\d{4})-(\d{2})-(\d{2})$", date_str)
+    if not m:
+        return None
+    return f"{m.group(2)}-{m.group(3)}"
+
+
+def extract_date_and_slug_from_folder(name: str) -> tuple[str | None, str | None]:
+    # Expect YYYY-MM-DD-<slug>
+    m = re.match(r"^(\d{4}-\d{2}-\d{2})-(.+)$", name)
+    if not m:
+        return None, None
+    date_str = m.group(1)
+    slug = slugify(m.group(2))
+    return date_str, slug
 
 
 def write_blocks(blocks: list[tuple[str, str]], project_root: pathlib.Path, root_prefix_to_strip: str | None = None) -> int:
@@ -568,11 +585,26 @@ def main() -> int:
     blocks = parse_file_blocks(output) if output else []
     # Derive project name from blocks' top folder if present, else synthesize
     top_folder = extract_top_folder(blocks) if blocks else None
+
+    # Determine repo name as <slug>-MM-DD (no year)
+    # Prefer slug/date from the model's top folder if present
+    repo_base: str
     if top_folder:
-        project_name = top_folder
+        d, s = extract_date_and_slug_from_folder(top_folder)
+        if s:
+            mmdd = mm_dd_from_date_str(d) if d else None
+            if not mmdd:
+                mmdd = datetime.now(timezone.utc).strftime("%m-%d")
+            repo_base = f"{s}-{mmdd}"
+        else:
+            # No recognizable date-then-slug; treat the folder as slug
+            s = slugify(top_folder)
+            mmdd = datetime.now(timezone.utc).strftime("%m-%d")
+            repo_base = f"{s}-{mmdd}"
     else:
-        base_slug = slugify(f"{field.split()[0]}-{random.choice(NOUNS)}")
-        project_name = f"{today}-{base_slug}"
+        s = slugify(f"{field.split()[0]}-{random.choice(NOUNS)}")
+        mmdd = datetime.now(timezone.utc).strftime("%m-%d")
+        repo_base = f"{s}-{mmdd}"
 
     # Ensure unique name on GitHub
     def exists_checker(name: str) -> bool:
@@ -581,7 +613,7 @@ def main() -> int:
         except Exception:
             return False
 
-    project_name = next_unique_name(project_name, exists_checker)
+    project_name = next_unique_name(repo_base, exists_checker)
 
     # Create working directory now that name is known
     project_root = tmpdir / project_name
