@@ -48,5 +48,15 @@
     "pages_url": null,
     "description": "Data India",
     "ts": 1757603056
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-india-09-12-2025",
+    "name": "data-india-09-12-2025",
+    "field": "data engineering",
+    "language": "python",
+    "pages_url": null,
+    "description": "Data India",
+    "ts": 1757668163
   }
 ]
