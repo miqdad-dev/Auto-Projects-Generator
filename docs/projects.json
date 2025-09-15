@@ -78,5 +78,15 @@
     "pages_url": null,
     "description": "Data Orion",
     "ts": 1757840876
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "educational-mike-09-15-2025",
+    "name": "educational-mike-09-15-2025",
+    "field": "educational platform",
+    "tech_stack": "php-mysql",
+    "pages_url": null,
+    "description": "Educational Mike",
+    "ts": 1757967696
   }
 ]
