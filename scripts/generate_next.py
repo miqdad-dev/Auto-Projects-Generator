@@ -1158,19 +1158,17 @@ def fallback_game_static(project_root: pathlib.Path, title: str) -> None:
     fallback_frontend_static(project_root, title)
 
 
-def fallback_problem_project(field: str, language: str, project_root: pathlib.Path, title: str) -> None:
-    f = field.lower()
-    if "front" in f:
-        return fallback_frontend_static(project_root, title)
-    if "back" in f:
-        return fallback_backend_fastapi(project_root, title)
-    if "data" in f:
-        return fallback_data_engineering(project_root, title)
-    if "machine" in f or "ml" in f:
-        return fallback_ml(project_root, title)
-    if "game" in f:
+def fallback_problem_project(field: str, tech_stack: str, project_root: pathlib.Path, title: str) -> None:
+    """Create a fallback web project based on field and tech stack."""
+    # For all web projects, create a frontend static project as fallback
+    if "game" in field.lower():
         return fallback_game_static(project_root, title)
-    return fallback_cli_app(project_root, title)
+    elif tech_stack == "php-mysql" or tech_stack == "html-css-javascript-php":
+        return fallback_backend_fastapi(project_root, title)  # Simplified backend
+    elif tech_stack == "java-spring-boot":
+        return fallback_backend_fastapi(project_root, title)  # Simplified backend
+    else:
+        return fallback_frontend_static(project_root, title)  # Default to frontend
 
 
 def run(cmd: list[str], cwd: pathlib.Path | None = None) -> None:
@@ -1420,7 +1418,7 @@ def gh_enable_pages(token: str, api: str, owner: str, repo: str, branch: str, pa
         pass
 
 
-def update_dashboard(owner: str, repo_name: str, field: str, language: str, pages_url: str | None, description: str | None) -> None:
+def update_dashboard(owner: str, repo_name: str, field: str, tech_stack: str, pages_url: str | None, description: str | None) -> None:
     """Append the new project to docs/projects.json in this repo.
     The workflow will commit and push changes after generation.
     """
@@ -1440,7 +1438,7 @@ def update_dashboard(owner: str, repo_name: str, field: str, language: str, page
         "repo": repo_name,
         "name": repo_name,
         "field": field,
-        "language": language,
+        "tech_stack": tech_stack,
         "pages_url": pages_url,
         "description": description or "",
         "ts": int(time.time()),
@@ -1617,7 +1615,7 @@ def main() -> int:
     # Fallback if nothing written
     if written == 0:
         title = f"{project_name}"
-        fallback_problem_project(field, language, project_root, title)
+        fallback_problem_project(field, tech_stack, project_root, title)
 
     # Remove automation hints (if any)
     cleanse_automation_artifacts(project_root)
@@ -1684,7 +1682,7 @@ def main() -> int:
                 print("Could not enable GitHub Pages automatically. You can enable it in repo settings.")
         # Update dashboard in this repo
         try:
-            update_dashboard(gh_owner, project_name, field, language, preview_url, description)
+            update_dashboard(gh_owner, project_name, field, tech_stack, preview_url, description)
         except Exception as de:
             print(f"Dashboard update failed: {de}")
     except Exception as e:
