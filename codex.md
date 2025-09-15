@@ -4,8 +4,8 @@ OBJECTIVE
 - Build a new mini-hard project (beyond trivial examples) from a RANDOM programming field.
 - Include GitHub automation to generate and commit NEW projects daily and every 5 hours.
 
-RANDOM FIELD (choose 1 per run):
-backend api; frontend web/app; systems programming; data engineering; machine learning/ai; distributed systems; devops/infrastructure; databases; networking; security; compilers/interpreters; robotics/iot; game dev; scripting/automation.
+RANDOM PROJECT TYPE (choose 1 per run):
+web game; business website; portfolio website; e-commerce site; blog platform; dashboard application; social media app; productivity tool; educational platform; entertainment website; news portal; booking system; chat application; file sharing platform; online calculator.
 
 OUTPUT FORMAT (STRICT)
 Return ONLY fenced file blocks, each like:
@@ -14,21 +14,45 @@ Return ONLY fenced file blocks, each like:
 <file content>
 ````
 
-REQUIRED FILES
+WEB PROJECT REQUIREMENTS
 
-1. A dated root folder: YYYY-MM-DD-<short-slug>  (use today’s UTC date).
-2. Source code (≥1 meaningful module).
-3. README.md that includes:
+1. A root folder: <short-slug> (NO DATES in folder names).
+2. **Technology Stack** (choose based on project complexity):
+   - **Frontend**: HTML5, CSS3, JavaScript (ES6+)
+   - **Backend** (if needed): PHP with MySQL OR Java with Spring Boot
+   - **Styling**: Modern CSS frameworks (Bootstrap, Tailwind, or custom responsive design)
+   - **Database**: MySQL, PostgreSQL, or SQLite for data storage
+   - **APIs**: RESTful endpoints for dynamic functionality
 
-   * overview
-   * run instructions (exact commands)
-   * example usage
-   * architecture notes & tradeoffs
-4. Tests (unit/integration).
-5. Dockerfile or docker-compose if relevant; otherwise Makefile or task runner.
-6. Small sample data/fixtures if useful.
-7. Lint/format config if appropriate.
-8. A GitHub Actions workflow to schedule generation/commits.
+3. **Project Structure**:
+```
+project-name/
+├── index.html                 # Main entry point
+├── css/
+│   ├── style.css             # Main stylesheet
+│   └── responsive.css        # Mobile responsiveness
+├── js/
+│   ├── main.js              # Core JavaScript functionality
+│   ├── utils.js             # Utility functions
+│   └── api.js               # API interaction (if applicable)
+├── php/ (if backend needed)
+│   ├── config.php           # Database configuration
+│   ├── api/                 # API endpoints
+│   └── includes/            # Shared PHP components
+├── assets/
+│   ├── images/              # Image resources
+│   └── icons/               # Icon files
+├── database/
+│   └── schema.sql           # Database structure (if needed)
+└── README.md                # Comprehensive documentation
+```
+
+4. **Core Features Required**:
+   - **Responsive Design**: Mobile-first, works on all devices
+   - **Interactive Elements**: Forms, buttons, dynamic content
+   - **Modern UI/UX**: Clean, professional design with good user experience
+   - **Functionality**: Core features that solve a real problem
+   - **Data Persistence**: Local storage, session storage, or database integration
 
 AUTOMATION REQUIREMENTS
 
@@ -59,80 +83,57 @@ AUTOMATION REQUIREMENTS
     * optional `MODEL_NAME`
   * embed a robust “file-emitter” prompt that asks the model to output files in the same fenced-filename format, then parse/write them to disk.
 
-QUALITY BAR
+WEB PROJECT DESIGN REQUIREMENTS
 
-* Non-trivial logic (algorithms, concurrency, state machines, streaming, parsers, protocol, indexing, etc.).
-* Keep dependencies minimal. README must be accurate from a clean clone. LOC target: 200–600. Tests must run and be included.
+**Visual Design Variety** (choose different design approach each time):
+- **Modern Minimalist**: Clean lines, white space, subtle shadows, monochromatic color schemes
+- **Colorful & Vibrant**: Bold colors, gradients, playful animations, energetic feel  
+- **Dark Mode**: Dark backgrounds, neon accents, modern tech aesthetic
+- **Corporate Professional**: Blue/gray themes, clean layouts, business-focused
+- **Creative Portfolio**: Unique layouts, artistic elements, showcase-focused
+- **Gaming/Entertainment**: Dynamic backgrounds, interactive elements, engaging visuals
+- **E-commerce**: Product-focused, conversion-optimized, trust-building elements
 
-SPECIAL REQUIREMENTS FOR DATA ENGINEERING / MACHINE LEARNING PROJECTS:
+**Technical Complexity Levels**:
 
-When the selected field is "data engineering" or "machine learning/ai", create a HIGHLY ADVANCED, full-stack project with:
+**LEVEL 1 - Frontend Only (HTML/CSS/JS):**
+- Static websites with interactive JavaScript
+- Local storage for data persistence
+- APIs integration (weather, news, etc.)
+- Complex animations and transitions
+- Games using Canvas or WebGL
 
-**Modern Stack Requirements:**
-- Python 3.11+
-- Apache Kafka (real-time streaming) 
-- Apache Spark (ETL & processing)
-- Airflow or Prefect (orchestration)
-- FastAPI or Flask (API layer)
-- PostgreSQL or MongoDB (storage)
-- Docker + Docker Compose
-- MLflow or Weights & Biases (model tracking)
+**LEVEL 2 - Full-Stack PHP:**
+- PHP backend with MySQL database
+- User authentication and sessions
+- CRUD operations and data management
+- File uploads and media handling
+- RESTful API endpoints
 
-**Professional Structure (root folder: <short-slug> - NO DATES):**
-```
-src/               # Core application code
-├── ingestion/     # Data ingestion modules
-├── processing/    # ETL and data processing
-├── models/        # ML model definitions
-├── api/           # FastAPI service code
-└── monitoring/    # Monitoring and logging
-data/              # Data storage directories
-├── raw/           # Raw ingested data
-├── processed/     # Cleaned and transformed data
-└── models/        # Trained model artifacts
-notebooks/         # Jupyter notebooks
-├── eda/           # Exploratory data analysis
-└── experiments/   # ML experiments
-configs/           # Configuration files
-tests/             # Unit and integration tests
-├── unit/          # Unit tests
-└── integration/   # Integration tests
-pipeline/          # Pipeline definitions
-└── airflow/       # Airflow DAGs
-deployment/        # Deployment configurations
-├── docker-compose.yml
-└── kubernetes/    # K8s manifests
-```
+**LEVEL 3 - Java Enterprise:**
+- Java Spring Boot backend
+- PostgreSQL database with JPA
+- MVC architecture pattern
+- Advanced security and authentication
+- Microservices architecture (when appropriate)
 
-**End-to-End Flow Requirements:**
-1. Real-time data ingestion from external APIs (financial/social media)
-2. Clean, transform, validate data using Spark
-3. Store in PostgreSQL with proper schema design
-4. Train ML models (time series forecasting, classification, or NLP)
-5. Serve predictions via REST API with Swagger docs
-6. Monitor pipeline, log metrics, handle errors gracefully
-7. Orchestrate with Airflow DAGs for end-to-end workflow management
-
-**Core Files Must Include:**
-- requirements.txt + pyproject.toml
-- Dockerfile + docker-compose.yml with all services (Kafka, Spark, Airflow, PostgreSQL, MLflow)
-- Makefile with commands for setup, test, run, deploy
-- .env.example for configuration
-- pytest configuration with 85%+ coverage target
-- GitHub Actions CI/CD workflow for testing and deployment
-- CLI interface using Typer for operations
-- Comprehensive README with architecture diagrams, setup instructions, API docs
+**Problem-Solving Focus** (each project must solve a unique problem):
+- **Productivity**: Task management, time tracking, note-taking
+- **Entertainment**: Games, quizzes, interactive stories
+- **Business**: Inventory management, customer relations, analytics
+- **Education**: Learning platforms, quiz systems, progress tracking
+- **Social**: Community features, sharing, collaboration
+- **Utility**: Calculators, converters, tools, generators
+- **Creative**: Art tools, music players, photo editors
 
 **Quality Standards:**
-- Enterprise-grade architecture with proper separation of concerns
-- Production-ready error handling, logging, and monitoring
-- Comprehensive test coverage (unit + integration tests)
-- Professional documentation with architecture diagrams
-- Docker-based deployment with all services
-- CLI interface for operations and management
-- LOC target: 1500-3000+ (complex, production-grade codebase)
-
-Apply these advanced requirements ONLY when the field is data engineering or machine learning/ai. For other fields, use the standard requirements above.
+- **Responsive Design**: Mobile-first, tablet and desktop optimized
+- **Cross-browser Compatibility**: Works on Chrome, Firefox, Safari, Edge
+- **Performance Optimized**: Fast loading, optimized images, minified code
+- **Accessibility**: ARIA labels, keyboard navigation, screen reader friendly
+- **SEO Optimized**: Meta tags, semantic HTML, structured data
+- **Security**: Input validation, XSS protection, secure data handling
+- **Code Quality**: Clean, commented, organized code structure
 
 DELIVERABLES
 

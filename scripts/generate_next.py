@@ -14,38 +14,40 @@ from datetime import datetime, timezone
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 FIELDS = [
-    "backend api", "frontend web/app", "systems programming", "data engineering", 
-    "machine learning/ai", "distributed systems", "devops/infrastructure", 
-    "databases", "networking", "security", "compilers/interpreters", 
-    "robotics/iot", "game dev", "scripting/automation"
+    "web game", "business website", "portfolio website", "e-commerce site", 
+    "blog platform", "dashboard application", "social media app", "productivity tool", 
+    "educational platform", "entertainment website", "news portal", "booking system", 
+    "chat application", "file sharing platform", "online calculator"
 ]
 
-# Default field weights: data/ML get higher priority for advanced projects
+# Equal weights for web project variety - let randomness create diversity
 FIELD_WEIGHTS_DEFAULT = {
-    "data engineering": 15,
-    "machine learning/ai": 15,
-    "backend api": 5,
-    "frontend web/app": 5,
-    "systems programming": 3,
-    "distributed systems": 4,
-    "devops/infrastructure": 4,
-    "databases": 4,
-    "networking": 2,
-    "security": 3,
-    "compilers/interpreters": 2,
-    "robotics/iot": 2,
-    "game dev": 6,
-    "scripting/automation": 3,
+    "web game": 8,
+    "business website": 6,
+    "portfolio website": 5,
+    "e-commerce site": 7,
+    "blog platform": 6,
+    "dashboard application": 7,
+    "social media app": 8,
+    "productivity tool": 7,
+    "educational platform": 6,
+    "entertainment website": 7,
+    "news portal": 5,
+    "booking system": 6,
+    "chat application": 8,
+    "file sharing platform": 6,
+    "online calculator": 4,
 }
 
-# Weighted language preferences: mostly Java and Python for OOP
-LANGS = [
-    "python", "python", "python",  # heavier weight
-    "java", "java", "java",         # heavier weight
-    "typescript",
-    "javascript",
-    "go",
-    "rust",
+# Web technology stack preferences
+WEB_TECH_STACKS = [
+    "html-css-javascript",
+    "html-css-javascript", 
+    "html-css-javascript",  # Higher weight for frontend-only projects
+    "php-mysql",
+    "php-mysql",           # PHP backend projects
+    "java-spring-boot",    # Java enterprise projects
+    "html-css-javascript-php",  # Mixed stack
 ]
 
 NOUNS = [
@@ -114,8 +116,8 @@ def choose_field() -> str:
     return random.choices(candidates, weights=weights, k=1)[0]
 
 
-def choose_language() -> str:
-    return random.choice(LANGS)
+def choose_web_tech_stack() -> str:
+    return random.choice(WEB_TECH_STACKS)
 
 def next_unique_name(base: str, exists_checker) -> str:
     candidate = base
@@ -193,7 +195,7 @@ def strip_date_from_name(name: str) -> str:
     return n
 
 
-def ensure_readme_quality(project_root: pathlib.Path, project_title: str, field: str, language: str) -> None:
+def ensure_readme_quality(project_root: pathlib.Path, project_title: str, field: str, tech_stack: str) -> None:
     rd = project_root / "README.md"
     if not rd.exists():
         rd.write_text(f"# {project_title}\n\n", encoding="utf-8")
@@ -218,8 +220,8 @@ def ensure_readme_quality(project_root: pathlib.Path, project_title: str, field:
     if missing or len(content) < 800:
         guide = (
             f"\n\n## Overview\n\n"
-            f"{project_title} is a {field} project implemented in {language.capitalize()}. "
-            f"It focuses on clear object-oriented design, maintainability, and practical examples.\n\n"
+            f"{project_title} is a {field} web application built with {tech_stack.replace('-', ', ')}. "
+            f"It provides a modern, responsive user interface with intuitive functionality.\n\n"
             f"## Features\n\n"
             f"- Clear project structure and modular components\n"
             f"- Non-trivial core logic (state machines, parsing, or algorithms)\n"
@@ -320,35 +322,37 @@ def call_anthropic(model: str, prompt: str) -> str:
     return "".join(parts)
 
 
-def build_prompt(field: str, today: str, language: str) -> str:
+def build_prompt(field: str, today: str, tech_stack: str) -> str:
     codex_path = REPO_ROOT / "codex.md"
     codex = codex_path.read_text(encoding="utf-8") if codex_path.exists() else ""
     extra = (
-        f"\n\nField for this run: {field}. Today's UTC date: {today}.\n"
-        f"Assume the role of a Staff/Principal Engineer (20+ years experience) building for companies like Microsoft, Tesla, Google, Meta, or Unity.\n"
-        f"Primary implementation language: {language}. Favor SOLID OOP, clean architecture, and DDD-style layering where it fits.\n"
+        f"\n\nProject Type: {field}. Today's UTC date: {today}.\n"
+        f"Technology Stack: {tech_stack}.\n"
+        f"Assume the role of a Senior Web Developer with expertise in modern web technologies.\n"
+        f"Create a unique, creative solution that solves a real problem with excellent user experience.\n"
         f"Output files for a new folder named <short-slug> (no dates in folder names).\n"
         f"Do not include any references to automation or generators in the files.\n"
         f"Do not include workflows that schedule generation of projects.\n"
-        f"COMPLEX MODE: Production-grade, scalable, and maintainable. Structure the repo with multiple modules/subpackages and clear boundaries.\n"
-        f"REQUIREMENTS (apply as relevant to the chosen field):\n"
-        f"- Clear layering (domain/services/adapters) and separation of concerns; well-named folders and subfolders.\n"
-        f"- Non-trivial algorithms or data structures (e.g., graphs/trees, DP, streaming, concurrency primitives).\n"
-        f"- External API integration with graceful offline fallback for tests; document endpoints/keys/rate limits.\n"
-        f"- Persistence where appropriate: schema + migrations (SQL or migration tool); Postgres preferred (or embedded DB for tests).\n"
-        f"- Caching, pagination, input validation, and error handling patterns.\n"
-        f"- Observability: logging structure and notes for metrics/traces; add health/readiness if a service.\n"
-        f"- Containerization (Dockerfile/docker-compose) and exact run/build/test commands.\n"
-        f"- Robust tests across layers: unit + integration; mock/stub external calls; include sample fixtures and seed data.\n"
-        f"- Security basics (sanitization, least privilege), and note auth integration points.\n"
-        f"README must be executive-quality: Problem, Goals, Architecture (with diagram text), ADRs (key decisions), Setup, Config (.env example), Usage, API/CLI docs, Examples, Testing (unit+integration), Performance notes, Deployment/Hosting (cloud + local), Ops (logs/metrics), Tradeoffs, and Troubleshooting.\n"
-        f"FIELD-SPECIFIC NOTES:\n"
-        f"- Frontend: Prefer Next.js + TypeScript; routing/state mgmt; offline/PWA basics; build to docs/; complex components (tree/table/virtualization).\n"
-        f"- Backend API: Prefer Java 17 + Spring Boot (Gradle); Postgres + Redis via docker-compose; Flyway migrations; REST (+ optional streaming/websocket), background jobs; OpenAPI docs; consider CQRS where natural.\n"
-        f"- App (CLI/Desktop): Python Typer CLI (or Java picocli) with multi-command structure; config files; packaging notes; robust UX for errors.\n"
-        f"- Data Engineering: Python (pandas) with orchestrated ETL/ELT steps; validation; partitioning/metadata; sampling; schema evolution; realistic sources.\n"
-        f"- Machine Learning/AI: Python (scikit-learn and/or PyTorch); public dataset via download script (no large data in repo); EDA notes; train/eval with metrics and reproducibility (seeds).\n"
-        f"- Game Dev: Prefer Phaser.js (2D) or Three.js (3D); gameplay loop with input; basic physics/AI (pathfinding/FSM); levels/scoring; export a web build to docs/.\n"
+        f"\nWEB DEVELOPMENT REQUIREMENTS:\n"
+        f"- **Unique Design**: Choose a different visual style/theme each time (minimalist, colorful, dark mode, corporate, creative, gaming, e-commerce)\n"
+        f"- **Responsive Layout**: Mobile-first design that works perfectly on all devices\n"
+        f"- **Interactive Features**: Rich user interactions, animations, dynamic content\n"
+        f"- **Modern Standards**: HTML5 semantic elements, CSS3 features, ES6+ JavaScript\n"
+        f"- **Problem-Solving**: Address a real-world problem with practical functionality\n"
+        f"- **Performance**: Optimized loading, compressed assets, efficient code\n"
+        f"- **Accessibility**: ARIA labels, keyboard navigation, screen reader support\n"
+        f"- **Security**: Input validation, XSS protection, secure data handling\n"
+        f"\nTECH STACK SPECIFIC:\n"
+        f"- **html-css-javascript**: Pure frontend with local storage, API integration, Canvas/WebGL for games\n"
+        f"- **php-mysql**: Full CRUD operations, user authentication, file uploads, session management\n"
+        f"- **java-spring-boot**: Enterprise architecture, JPA/Hibernate, RESTful APIs, security\n"
+        f"- **html-css-javascript-php**: Hybrid approach with PHP backend and rich frontend\n"
+        f"\nDELIVERABLES:\n"
+        f"- Complete, working website/application\n"
+        f"- Professional README with setup instructions, features, and screenshots\n"
+        f"- Clean, well-commented code structure\n"
+        f"- Database schema (if backend)\n"
+        f"- Deployment instructions\n"
     )
     return f"{codex}\n{extra}"
 
@@ -1534,9 +1538,9 @@ def main() -> int:
     provider = (os.getenv("PROVIDER") or "openai").strip().lower()
     model = os.getenv("MODEL_NAME") or ("gpt-4o" if provider == "openai" else "claude-3-5-sonnet-latest")
 
-    # Choose field and language
+    # Choose field and tech stack
     field = choose_field()
-    language = choose_language()
+    tech_stack = choose_web_tech_stack()
     today = utc_date()
 
     # Resolve GitHub settings
@@ -1554,7 +1558,7 @@ def main() -> int:
     tmpdir = pathlib.Path(tempfile.mkdtemp(prefix="autogen-"))
 
     # Build prompt
-    prompt = build_prompt(field, today, language)
+    prompt = build_prompt(field, today, tech_stack)
 
     # Call provider
     try:
@@ -1621,7 +1625,7 @@ def main() -> int:
     # Strengthen README quality and ensure title is project-only (no dates)
     display_title = strip_date_from_name(project_name).replace("-", " ").title()
     try:
-        ensure_readme_quality(project_root, display_title, field, language)
+        ensure_readme_quality(project_root, display_title, field, tech_stack)
     except Exception:
         pass
 
