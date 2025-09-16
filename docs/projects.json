@@ -88,5 +88,15 @@
     "pages_url": null,
     "description": "Educational Mike",
     "ts": 1757967696
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "news-lima-09-16-2025",
+    "name": "news-lima-09-16-2025",
+    "field": "news portal",
+    "tech_stack": "php-mysql",
+    "pages_url": null,
+    "description": "News Lima",
+    "ts": 1758013809
   }
 ]
