@@ -128,5 +128,15 @@
     "pages_url": null,
     "description": "Booking Foxtrot",
     "ts": 1758359285
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "educational-zulu-09-21-2025",
+    "name": "educational-zulu-09-21-2025",
+    "field": "educational platform",
+    "tech_stack": "php-mysql",
+    "pages_url": null,
+    "description": "Educational Zulu",
+    "ts": 1758445299
   }
 ]
