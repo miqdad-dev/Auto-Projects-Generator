@@ -138,5 +138,15 @@
     "pages_url": null,
     "description": "Educational Zulu",
     "ts": 1758445299
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "blog-kilo-09-22-2025",
+    "name": "blog-kilo-09-22-2025",
+    "field": "blog platform",
+    "tech_stack": "php-mysql",
+    "pages_url": null,
+    "description": "Blog Kilo",
+    "ts": 1758532309
   }
 ]
