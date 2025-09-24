@@ -1640,6 +1640,249 @@ addEventListener('mousemove',e=>{cube.material.color.setHSL((e.clientX/innerWidt
 """
     _w(project_root / "docs" / "index.html", html.replace("__TITLE__", title))
     _w(project_root / "README.md", "# " + title + "\n\nThree.js interactive 3D demo (docs/index.html)." )
+
+
+def fallback_frontend_ts(project_root: pathlib.Path, title: str) -> None:
+    # Minimal Vite + TS scaffold with unit tests (Vitest)
+    _w(project_root / "package.json", """
+{
+  "name": "frontend-app",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "vite": "^5.4.0",
+    "vitest": "^2.0.5",
+    "@vitest/ui": "^2.0.5"
+  }
+}
+""")
+    _w(project_root / "tsconfig.json", """
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "jsx": "react-jsx",
+    "baseUrl": "."
+  },
+  "include": ["src"]
+}
+""")
+    _w(project_root / "index.html", f"""<!doctype html>
+<html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'>
+<title>{title}</title></head>
+<body><div id="app"></div><script type="module" src="/src/main.ts"></script></body></html>
+""")
+    _w(project_root / "src" / "main.ts", """
+const app = document.getElementById('app')!;
+app.innerHTML = `<h1>Hello from TypeScript App</h1>`;
+""")
+    _w(project_root / "tests" / "basic.test.ts", """
+import { describe, it, expect } from 'vitest'
+
+describe('sanity', () => {
+  it('adds', () => { expect(1+1).toBe(2) })
+})
+""")
+    _w(project_root / "README.md", "# " + title + "\n\nVite + TypeScript starter with Vitest. Run `npm i` then `npm run dev`." )
+
+
+def fallback_backend_springboot(project_root: pathlib.Path, title: str) -> None:
+    _w(project_root / "pom.xml", """
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.portfolio</groupId>
+  <artifactId>service</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <properties>
+    <java.version>17</java.version>
+    <spring-boot.version>3.3.3</spring-boot.version>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+      <version>2.6.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+""")
+    _w(project_root / "src" / "main" / "java" / "com" / "portfolio" / "Application.java", """
+package com.portfolio;
+import org.springframework.boot.SpringApplication;import org.springframework.boot.autoconfigure.SpringBootApplication;
+@SpringBootApplication
+public class Application { public static void main(String[] args){ SpringApplication.run(Application.class, args);} }
+""")
+    _w(project_root / "src" / "main" / "java" / "com" / "portfolio" / "HelloController.java", """
+package com.portfolio;
+import org.springframework.web.bind.annotation.*;
+record Greet(String message){}
+@RestController
+public class HelloController{
+  @GetMapping("/health") public String health(){ return "ok"; }
+  @GetMapping("/greet/{name}") public Greet greet(@PathVariable String name){ return new Greet("Hello, "+name); }
+}
+""")
+    _w(project_root / "src" / "main" / "resources" / "application.properties", """
+spring.application.name=service
+management.endpoints.web.exposure.include=health,info
+""")
+    _w(project_root / "src" / "main" / "resources" / "db" / "migration" / "V1__init.sql", """
+-- example migration
+-- create table example(id int);
+""")
+    _w(project_root / "openapi.yaml", """
+openapi: 3.0.0
+info:
+  title: Service API
+  version: 1.0.0
+paths:
+  /health:
+    get:
+      responses:
+        '200': { description: OK }
+  /greet/{name}:
+    get:
+      parameters:
+        - in: path
+          name: name
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: OK }
+""")
+    _w(project_root / "src" / "test" / "java" / "com" / "portfolio" / "HelloControllerTest.java", """
+package com.portfolio;
+import org.junit.jupiter.api.Test;import static org.assertj.core.api.Assertions.*;
+import org.springframework.boot.test.context.SpringBootTest;import org.springframework.beans.factory.annotation.Autowired;import org.springframework.boot.test.web.client.TestRestTemplate;import org.springframework.http.ResponseEntity;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class HelloControllerTest{
+ @Autowired TestRestTemplate rest;
+ @Test void health(){ ResponseEntity<String> r = rest.getForEntity("/health", String.class); assertThat(r.getBody()).contains("ok"); }
+}
+""")
+    _w(project_root / "README.md", "# " + title + "\n\nSpring Boot API with OpenAPI, Flyway, and tests. Run `mvn -q spring-boot:run`." )
+
+
+def fallback_data_dbt_ge(project_root: pathlib.Path, title: str) -> None:
+    _w(project_root / "requirements.txt", "dbt-core==1.8.5\ngreat_expectations==0.18.15\npandas==2.2.2\npytest==8.3.3\n")
+    _w(project_root / "dbt_project.yml", """
+name: demo_dbt
+version: 1.0.0
+profile: default
+model-paths: ["models"]
+models:
+  demo_dbt:
+    +materialized: view
+""")
+    _w(project_root / "models" / "example.sql", """
+select 1 as id, 'alpha' as name
+""")
+    _w(project_root / "models" / "schema.yml", """
+version: 2
+models:
+  - name: example
+    tests:
+      - not_null:
+          column_name: id
+""")
+    _w(project_root / "great_expectations" / ".gitkeep", "")
+    _w(project_root / "src" / "transform.py", """
+import pandas as pd
+def transform(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy(); df['name_len'] = df['name'].str.len(); return df
+""")
+    _w(project_root / "tests" / "test_transform.py", """
+import pandas as pd
+from src.transform import transform
+def test_transform():
+    df = pd.DataFrame({'id':[1,2], 'name':['a','abcd']})
+    out = transform(df)
+    assert list(out['name_len']) == [1,4]
+""")
+    _w(project_root / "README.md", "# " + title + "\n\nData pipeline skeleton with dbt and Great Expectations placeholders; includes a Python transform with tests.")
+
+
+def fallback_ml_strict(project_root: pathlib.Path, title: str) -> None:
+    _w(project_root / "requirements.txt", "scikit-learn==1.5.2\nnumpy==1.26.4\npandas==2.2.2\npytest==8.3.3\n")
+    _w(project_root / "src" / "data" / "loader.py", """
+from sklearn.datasets import load_iris as sk_load_iris
+def load_xy():
+    return sk_load_iris(return_X_y=True)
+""")
+    _w(project_root / "src" / "models" / "clf.py", """
+from sklearn.linear_model import LogisticRegression
+def make_model():
+    return LogisticRegression(max_iter=1000)
+""")
+    _w(project_root / "src" / "training" / "train.py", """
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from src.data.loader import load_xy
+from src.models.clf import make_model
+def train_and_eval(seed: int = 42) -> float:
+    X,y = load_xy(); Xtr,Xte,Ytr,Yte = train_test_split(X,y,test_size=0.2,random_state=seed)
+    m = make_model(); m.fit(Xtr,Ytr); return accuracy_score(Yte, m.predict(Xte))
+if __name__ == '__main__':
+    print({'accuracy': train_and_eval()})
+""")
+    _w(project_root / "tests" / "test_eval.py", """
+from src.training.train import train_and_eval
+def test_accuracy():
+    assert train_and_eval() >= 0.85
+""")
+    _w(project_root / "models" / "model-card.md", """
+# Model Card
+## Intended Use
+Educational demo for classification.
+## Metrics
+Evaluated on iris with accuracy >= 0.85.
+## Risks/Limitations
+Small dataset, not production-ready.
+""")
+    _w(project_root / "README.md", "# " + title + "\n\nML skeleton with deterministic train/eval, tests, and model card.")
 def fallback_frontend_markdown_editor(project_root: pathlib.Path, title: str) -> None:
     (project_root / "docs").mkdir(parents=True, exist_ok=True)
     _w(project_root / "docs" / "index.html", f"""<!doctype html>
@@ -1743,18 +1986,18 @@ def fallback_problem_project(field: str, tech_stack: str, project_root: pathlib.
     if fld == "algorithms/systems":
         return fallback_cpp_cli(project_root, title)
     if fld == "backend":
-        # Prefer Java CLI with tests to avoid infra; Python FastAPI fallback exists already
-        return fallback_java_cli(project_root, title)
+        # Prefer Spring Boot API with OpenAPI & tests
+        return fallback_backend_springboot(project_root, title)
     if fld == "data science/ml":
-        return fallback_ml(project_root, title)
+        return fallback_ml_strict(project_root, title)
     if fld == "data engineering":
-        return fallback_data_engineering(project_root, title)
+        return fallback_data_dbt_ge(project_root, title)
     if fld == "game dev 3d":
         return fallback_three_js(project_root, title)
     if fld == "game dev 2d":
         return fallback_game_static(project_root, title)
     if fld == "frontend":
-        return random.choice([fallback_frontend_markdown_editor, fallback_frontend_color_tool, fallback_frontend_charts_dashboard])(project_root, title)
+        return fallback_frontend_ts(project_root, title)
     # Default safe
     return fallback_frontend_static(project_root, title)
 
