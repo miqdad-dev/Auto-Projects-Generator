@@ -168,5 +168,16 @@
     "pages_url": "https://miqdad-dev.github.io/news-mike-09-24-2025/",
     "description": "News Mike",
     "ts": 1758715329
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-foxtrot-09-24-2025",
+    "name": "frontend-foxtrot-09-24-2025",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-foxtrot-09-24-2025/",
+    "description": "Frontend Foxtrot",
+    "ts": 1758730394
   }
 ]
