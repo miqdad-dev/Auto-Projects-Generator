@@ -66,16 +66,44 @@ jobs:
           python scripts/generate_next.py
 
       - name: Commit dashboard updates
+        shell: bash
         run: |
+          set -euo pipefail
           if ! git diff --quiet -- docs; then
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
+
+            # Make sure we are up to date before committing
+            git fetch origin
+            git pull --rebase origin main || true
+
             git add docs
             git commit -m "chore(dashboard): update projects list" || echo "No changes to commit"
-            # Rebase onto remote main to avoid non-fast-forward errors, then push
-            git fetch origin
-            git rebase origin/main || (git rebase --abort && echo "Rebase not needed")
-            git push origin HEAD:main || (git pull --rebase origin main && git push origin HEAD:main)
+
+            # Try normal push
+            if git push origin HEAD:main; then
+              echo "Pushed dashboard changes."
+            else
+              echo "Non-fast-forward push rejected. Attempting rebase/merge and re-push..."
+              # Attempt rebase
+              git fetch origin
+              if git rebase origin/main; then
+                git push origin HEAD:main && exit 0
+              fi
+              # If rebase fails, abort and try a merge
+              git rebase --abort || true
+              git merge --no-edit origin/main || true
+              if git push origin HEAD:main; then
+                exit 0
+              fi
+              # As a last resort: restage only docs changes atop remote main without forcing
+              echo "Retry by re-staging docs on top of origin/main"
+              git fetch origin
+              git reset --mixed origin/main
+              git add docs
+              git commit -m "chore(dashboard): update projects list (restaged)" || true
+              git push origin HEAD:main
+            fi
           else
             echo "No dashboard changes."
           fi
