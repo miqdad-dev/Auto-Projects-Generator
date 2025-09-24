@@ -8,6 +8,23 @@ on:
   schedule:
     - cron: "0 9 * * *"       # daily at 09:00 UTC
   workflow_dispatch:
+    inputs:
+      domain:
+        description: "Domain override"
+        required: false
+        type: choice
+        options:
+          - frontend
+          - backend
+          - data engineering
+          - data science/ml
+          - algorithms/systems
+          - game dev 2d
+          - game dev 3d
+      seed:
+        description: "Sampling seed"
+        required: false
+        type: string
 
 jobs:
   generate:
@@ -62,6 +79,9 @@ jobs:
           FREQUENCY_PENALTY: ${{ vars.FREQUENCY_PENALTY || '0.4' }}
           MAX_REROLLS: ${{ vars.MAX_REROLLS || '3' }}
           SIMILARITY_THRESHOLD: ${{ vars.SIMILARITY_THRESHOLD || '0.75' }}
+          # On-demand overrides
+          DOMAIN_OVERRIDE: ${{ inputs.domain }}
+          SEED: ${{ inputs.seed }}
         run: |
           python scripts/generate_next.py
 
