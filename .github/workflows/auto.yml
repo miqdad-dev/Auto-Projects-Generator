@@ -50,6 +50,12 @@ jobs:
           ENABLE_DATA_FETCH: ${{ vars.ENABLE_DATA_FETCH || '1' }}
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+          # Diversity controls
+          TEMP: ${{ vars.TEMP || '0.9' }}
+          PRESENCE_PENALTY: ${{ vars.PRESENCE_PENALTY || '0.6' }}
+          FREQUENCY_PENALTY: ${{ vars.FREQUENCY_PENALTY || '0.4' }}
+          MAX_REROLLS: ${{ vars.MAX_REROLLS || '3' }}
+          SIMILARITY_THRESHOLD: ${{ vars.SIMILARITY_THRESHOLD || '0.75' }}
         run: |
           python scripts/generate_next.py
 

@@ -32,13 +32,22 @@ Automates creation of a new mini-hard project every 5 hours and daily using Open
 ## Environment Variables
 - `PROVIDER` in `{openai,anthropic}` (default: `openai`)
 - `MODEL_NAME` (default: `gpt-4o` for OpenAI; `claude-3-5-sonnet-latest` for Anthropic)
-- `OUTPUT_TOKENS` (optional) — Max response tokens for the model (default: 6000 for OpenAI, 8000 for Anthropic) to support larger, more complex projects.
+- `OUTPUT_TOKENS` (optional) – Max response tokens for the model (default: 6000 for OpenAI, 8000 for Anthropic) to support larger, more complex projects.
 - `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` (as applicable)
-- Optional `TOPIC_PLAN` — CSV list to bias selection (e.g., `security,compilers,networking`).
-- `GH_PAT` — GitHub Personal Access Token with `repo` scope (required for CI repo creation)
-- `GITHUB_OWNER` — GitHub username/owner (optional; auto-detected if omitted)
-- `GITHUB_VISIBILITY` — `public` or `private` (default: `public`)
- - `FIELD_WEIGHTS` (optional) — CSV `field:weight` pairs to override selection bias (e.g., `data engineering:12,machine learning/ai:12,game dev:12`). When unset, defaults bias data/ML/games to ~10x.
+- Optional `TOPIC_PLAN` – CSV list to bias selection (e.g., `security,compilers,networking`).
+- `GH_PAT` – GitHub Personal Access Token with `repo` scope (required for CI repo creation)
+- `GITHUB_OWNER` – GitHub username/owner (optional; auto-detected if omitted)
+- `GITHUB_VISIBILITY` – `public` or `private` (default: `public`)
+ - `FIELD_WEIGHTS` (optional) – CSV `field:weight` pairs to override selection bias (e.g., `data engineering:12,machine learning/ai:12,game dev:12`). When unset, defaults bias data/ML/games to ~10x.
+
+### Diversity Controls (optional)
+- `TEMP` – Sampling temperature (default: `0.8`).
+- `PRESENCE_PENALTY` – Encourage new tokens (default: `0.5`).
+- `FREQUENCY_PENALTY` – Reduce repetition (default: `0.3`).
+- `SEED` – Optional deterministic seed if supported by the provider.
+- `MAX_REROLLS` – Extra attempts if parsing fails (default: `2`).
+- `SIMILARITY_THRESHOLD` – Reject/regenerate if too similar to recent runs (default: `0.8`).
+- `NOVELTY_HISTORY_COUNT` – How many past runs to keep in `.autogen/state.json` (default: `50`).
 
 ## Output Quality Guarantees
 - Strong, professional README in each generated project: overview, exact run commands, examples, architecture and tradeoffs, limitations, testing, and troubleshooting.

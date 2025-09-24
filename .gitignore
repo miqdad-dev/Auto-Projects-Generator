@@ -29,6 +29,7 @@ pnpm-lock.yaml
 
 # Autogen state
 .autogen/
+dry_runs/
 
 # OS
 Thumbs.db

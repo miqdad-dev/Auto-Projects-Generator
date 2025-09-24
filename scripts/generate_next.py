@@ -9,6 +9,7 @@ import subprocess
 import tempfile
 import shutil
 from datetime import datetime, timezone
+from hashlib import sha1
 
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[1]
@@ -145,15 +146,88 @@ def _is_masked_or_empty(value: str | None) -> bool:
 
 FENCE_RE = re.compile(r"(`{3,})([^\n\r`]+)\r?\n(.*?)\r?\n\1", re.DOTALL)
 
+# Flexible fences like ```lang with a leading file marker in the body
+LANG_FENCE_RE = re.compile(r"(`{3,})([a-zA-Z0-9_+\-]+)\r?\n(.*?)\r?\n\1", re.DOTALL)
+
+STYLE_TAGS = [
+    "modern minimalist",
+    "colorful vibrant",
+    "dark mode",
+    "corporate professional",
+    "creative portfolio",
+    "gaming entertainment",
+    "e-commerce",
+]
+
+
+def _extract_path_from_leading_lines(body: str) -> str | None:
+    # Inspect first few non-empty lines for a path/file marker
+    hints = ("path:", "file:", "filename:", "// path:", "// file:", "# path:", "# file:")
+    seen = 0
+    for raw in body.splitlines():
+        line = raw.strip()
+        if not line:
+            continue
+        seen += 1
+        low = line.lower()
+        for h in hints:
+            if low.startswith(h):
+                try:
+                    return line.split(":", 1)[1].strip()
+                except Exception:
+                    pass
+        if low.startswith("<!--") and ("path:" in low or "file:" in low):
+            try:
+                inner = low.strip("<!-> ")
+                return inner.split(":", 1)[1].strip()
+            except Exception:
+                pass
+        if seen >= 5:
+            break
+    return None
+
 
 def parse_file_blocks(text: str) -> list[tuple[str, str]]:
-    blocks = []
+    blocks: list[tuple[str, str]] = []
+    # Strict: ```path/filename
     for m in FENCE_RE.finditer(text):
         path = m.group(2).strip()
         content = m.group(3)
-        if path:
+        if path and "/" in path:
             blocks.append((path, content))
-    return blocks
+    # Flexible: ```lang + leading file marker
+    for m in LANG_FENCE_RE.finditer(text):
+        header = m.group(2).strip()
+        body = m.group(3)
+        if "/" in header:
+            blocks.append((header, body))
+            continue
+        p = _extract_path_from_leading_lines(body)
+        if p:
+            # trim the first marker line from content
+            trimmed = []
+            skipped = False
+            for raw in body.splitlines():
+                low = raw.strip().lower()
+                if not skipped and (
+                    low.startswith("path:") or low.startswith("file:") or low.startswith("filename:") or
+                    low.startswith("// path:") or low.startswith("// file:") or low.startswith("# path:") or low.startswith("# file:") or
+                    (low.startswith("<!--") and ("path:" in low or "file:" in low))
+                ):
+                    skipped = True
+                    continue
+                trimmed.append(raw)
+            blocks.append((p, "\n".join(trimmed)))
+    # De-dup
+    seen: set[tuple[str, int]] = set()
+    uniq: list[tuple[str, str]] = []
+    for p, c in blocks:
+        key = (p, len(c))
+        if key in seen:
+            continue
+        seen.add(key)
+        uniq.append((p, c))
+    return uniq
 
 
 def extract_top_folder(blocks: list[tuple[str, str]]) -> str | None:
@@ -280,6 +354,13 @@ def ensure_parent(path: pathlib.Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
 
 
+def _float_env(name: str, default: float) -> float:
+    try:
+        return float(os.getenv(name, str(default)).strip())
+    except Exception:
+        return default
+
+
 def call_openai(model: str, prompt: str) -> str:
     from openai import OpenAI
 
@@ -288,14 +369,22 @@ def call_openai(model: str, prompt: str) -> str:
         raise RuntimeError("Missing OPENAI_API_KEY")
     client = OpenAI(api_key=api_key)
     max_out = int(os.getenv("OUTPUT_TOKENS", "6000"))
+    temperature = _float_env("TEMP", 0.8)
+    presence = _float_env("PRESENCE_PENALTY", 0.5)
+    frequency = _float_env("FREQUENCY_PENALTY", 0.3)
+    seed_env = os.getenv("SEED")
+    seed = int(seed_env) if seed_env and seed_env.isdigit() else None
     resp = client.chat.completions.create(
         model=model or "gpt-4o",
         messages=[
             {"role": "system", "content": "You are an elite code generator."},
             {"role": "user", "content": prompt},
         ],
-        temperature=0.4,
+        temperature=temperature,
+        presence_penalty=presence,
+        frequency_penalty=frequency,
         max_tokens=max_out,
+        **({"seed": seed} if seed is not None else {})
     )
     return resp.choices[0].message.content or ""
 
@@ -312,7 +401,7 @@ def call_anthropic(model: str, prompt: str) -> str:
     msg = client.messages.create(
         model=model,
         max_tokens=max_out,
-        temperature=0.4,
+        temperature=_float_env("TEMP", 0.8),
         messages=[{"role": "user", "content": prompt}],
     )
     parts = []
@@ -322,17 +411,21 @@ def call_anthropic(model: str, prompt: str) -> str:
     return "".join(parts)
 
 
-def build_prompt(field: str, today: str, tech_stack: str) -> str:
+def build_prompt(field: str, today: str, tech_stack: str, style: str, recent_avoid: list[str]) -> str:
     codex_path = REPO_ROOT / "codex.md"
     codex = codex_path.read_text(encoding="utf-8") if codex_path.exists() else ""
+    avoid_clause = "\n".join(f"- Avoid repeating: {a}" for a in recent_avoid)
     extra = (
         f"\n\nProject Type: {field}. Today's UTC date: {today}.\n"
-        f"Technology Stack: {tech_stack}.\n"
+        f"Technology Stack: {tech_stack}. Visual Style: {style}.\n"
         f"Assume the role of a Senior Web Developer with expertise in modern web technologies.\n"
         f"Create a unique, creative solution that solves a real problem with excellent user experience.\n"
         f"Output files for a new folder named <short-slug> (no dates in folder names).\n"
         f"Do not include any references to automation or generators in the files.\n"
         f"Do not include workflows that schedule generation of projects.\n"
+        f"Do not implement: particle systems, Fibonacci APIs, or basic todo lists.\n"
+        f"Ensure novel features and architecture different from common templates.\n"
+        f"Diversity constraints:\n{avoid_clause}\n"
         f"\nWEB DEVELOPMENT REQUIREMENTS:\n"
         f"- **Unique Design**: Choose a different visual style/theme each time (minimalist, colorful, dark mode, corporate, creative, gaming, e-commerce)\n"
         f"- **Responsive Layout**: Mobile-first design that works perfectly on all devices\n"
@@ -1158,17 +1251,112 @@ def fallback_game_static(project_root: pathlib.Path, title: str) -> None:
     fallback_frontend_static(project_root, title)
 
 
+def fallback_frontend_markdown_editor(project_root: pathlib.Path, title: str) -> None:
+    (project_root / "docs").mkdir(parents=True, exist_ok=True)
+    _w(project_root / "docs" / "index.html", f"""<!doctype html>
+<html lang=\"en\"><head>
+  <meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">
+  <title>{title}</title>
+  <link rel=\"stylesheet\" href=\"style.css\">
+</head><body>
+  <main>
+    <h1>{title}</h1>
+    <textarea id=\"md\" placeholder=\"Write Markdown...\"></textarea>
+    <div id=\"out\"></div>
+  </main>
+  <script src=\"https://cdn.jsdelivr.net/npm/marked/marked.min.js\"></script>
+  <script src=\"app.js\"></script>
+</body></html>
+""")
+    _w(project_root / "docs" / "style.css", """
+body{font-family:system-ui,Arial,sans-serif;margin:0;background:#101315;color:#f5f7fb}
+main{max-width:980px;margin:24px auto;padding:12px}
+textarea{width:100%;height:220px;padding:10px;border-radius:6px;border:1px solid #2a2f3a;background:#0c0f12;color:#e6ecf5}
+#out{margin-top:12px;padding:12px;border:1px solid #2a2f3a;border-radius:6px;background:#0c0f12}
+code,pre{background:#11151b}
+""")
+    _w(project_root / "docs" / "app.js", """
+const md = document.getElementById('md');
+const out = document.getElementById('out');
+md.addEventListener('input',()=>{out.innerHTML = marked.parse(md.value)});
+md.value = '# Hello\n\n- Live Markdown preview' ;
+out.innerHTML = marked.parse(md.value);
+""")
+    _w(project_root / "README.md", "# " + title + "\n\nLive Markdown editor with preview. Open docs/index.html.")
+
+
+def fallback_frontend_color_tool(project_root: pathlib.Path, title: str) -> None:
+    (project_root / "docs").mkdir(parents=True, exist_ok=True)
+    _w(project_root / "docs" / "index.html", f"""<!doctype html>
+<html lang=\"en\"><head>
+  <meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">
+  <title>{title}</title>
+  <link rel=\"stylesheet\" href=\"style.css\">
+</head><body>
+  <main>
+    <h1>{title}</h1>
+    <input type=\"color\" id=\"picker\"><input id=\"hex\" placeholder=\"#RRGGBB\">
+    <div id=\"palette\"></div>
+  </main>
+  <script src=\"app.js\"></script>
+</body></html>
+""")
+    _w(project_root / "docs" / "style.css", """
+body{font-family:system-ui,Arial,sans-serif;margin:0;background:#f6f7fb;color:#222}
+main{max-width:960px;margin:24px auto;padding:12px}
+#palette{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:12px}
+.sw{height:80px;border-radius:6px;border:1px solid #ddd;display:flex;align-items:end;justify-content:space-between;padding:6px;font-size:12px}
+""")
+    _w(project_root / "docs" / "app.js", """
+const p = document.getElementById('picker');
+const h = document.getElementById('hex');
+const pal = document.getElementById('palette');
+function addSwatch(hex){
+  const d=document.createElement('div');d.className='sw';d.style.background=hex;d.innerHTML=`<span>${hex}</span><button>copy</button>`;d.querySelector('button').onclick=()=>navigator.clipboard.writeText(hex);pal.prepend(d)
+}
+p.addEventListener('input',()=>{h.value=p.value;addSwatch(p.value)});
+h.addEventListener('change',()=>{const v=h.value.startsWith('#')?h.value:'#'+h.value;addSwatch(v)});
+""")
+    _w(project_root / "README.md", "# " + title + "\n\nColor palette generator with copy-to-clipboard. Open docs/index.html.")
+
+
+def fallback_frontend_charts_dashboard(project_root: pathlib.Path, title: str) -> None:
+    (project_root / "docs").mkdir(parents=True, exist_ok=True)
+    _w(project_root / "docs" / "index.html", f"""<!doctype html>
+<html lang=\"en\"><head>
+  <meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">
+  <title>{title}</title>
+  <link rel=\"stylesheet\" href=\"style.css\">
+</head><body>
+  <main>
+    <h1>{title}</h1>
+    <canvas id=\"line\" width=\"800\" height=\"300\"></canvas>
+  </main>
+  <script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>
+  <script src=\"app.js\"></script>
+</body></html>
+""")
+    _w(project_root / "docs" / "style.css", """
+body{font-family:system-ui,Arial,sans-serif;margin:0;background:#fff;color:#222}
+main{max-width:980px;margin:24px auto;padding:12px}
+""")
+    _w(project_root / "docs" / "app.js", """
+const ctx=document.getElementById('line');
+const data=Array.from({length:30},(_,i)=>({x:i,y:Math.round(50+30*Math.sin(i/3)+Math.random()*10)}));
+new Chart(ctx,{type:'line',data:{datasets:[{label:'Metric',data,borderColor:'#3b82f6',fill:false}]},options:{parsing:false,scales:{x:{type:'linear'}}}});
+""")
+    _w(project_root / "README.md", "# " + title + "\n\nMini chart dashboard using Chart.js. Open docs/index.html.")
+
+
 def fallback_problem_project(field: str, tech_stack: str, project_root: pathlib.Path, title: str) -> None:
-    """Create a fallback web project based on field and tech stack."""
-    # For all web projects, create a frontend static project as fallback
-    if "game" in field.lower():
-        return fallback_game_static(project_root, title)
-    elif tech_stack == "php-mysql" or tech_stack == "html-css-javascript-php":
-        return fallback_backend_fastapi(project_root, title)  # Simplified backend
-    elif tech_stack == "java-spring-boot":
-        return fallback_backend_fastapi(project_root, title)  # Simplified backend
-    else:
-        return fallback_frontend_static(project_root, title)  # Default to frontend
+    """Diversified fallback selection to avoid repetitive outputs."""
+    pick = random.choice([
+        fallback_frontend_static,
+        fallback_frontend_markdown_editor,
+        fallback_frontend_color_tool,
+        fallback_frontend_charts_dashboard,
+    ])
+    return pick(project_root, title)
 
 
 def run(cmd: list[str], cwd: pathlib.Path | None = None) -> None:
@@ -1401,6 +1589,85 @@ def prepare_static_site(project_root: pathlib.Path) -> str | None:
     return None
 
 
+# --- Novelty tracking and similarity ---
+
+STATE_PATH = REPO_ROOT / ".autogen" / "state.json"
+
+
+def load_state() -> dict:
+    if STATE_PATH.exists():
+        try:
+            return json.loads(STATE_PATH.read_text(encoding="utf-8"))
+        except Exception:
+            return {}
+    return {}
+
+
+def save_state(state: dict) -> None:
+    STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    STATE_PATH.write_text(json.dumps(state, indent=2), encoding="utf-8")
+
+
+def tokenize(text: str) -> set[str]:
+    words = re.findall(r"[a-zA-Z]{3,}", (text or "").lower())
+    grams = set()
+    for i in range(len(words) - 1):
+        grams.add(words[i] + " " + words[i + 1])
+    return grams
+
+
+def project_signature(project_root: pathlib.Path) -> dict:
+    rels: list[str] = []
+    for p in project_root.rglob("*"):
+        if p.is_file():
+            try:
+                rels.append(str(p.relative_to(project_root)).replace("\\", "/"))
+            except Exception:
+                pass
+    rels.sort()
+    tree_hash = sha1("\n".join(rels).encode()).hexdigest()
+    rd = project_root / "README.md"
+    readme = rd.read_text(encoding="utf-8", errors="ignore") if rd.exists() else ""
+    grams = list(tokenize(readme))
+    hints = {
+        "has_pkg": (project_root / "package.json").exists(),
+        "has_requirements": (project_root / "requirements.txt").exists(),
+        "has_pom": (project_root / "pom.xml").exists(),
+    }
+    return {"tree": tree_hash, "grams": grams, "hints": hints}
+
+
+def jaccard(a: set[str], b: set[str]) -> float:
+    if not a and not b:
+        return 0.0
+    return len(a & b) / max(1, len(a | b))
+
+
+def similarity(sig_a: dict, sig_b: dict) -> float:
+    grams_a = set(sig_a.get("grams", []))
+    grams_b = set(sig_b.get("grams", []))
+    gram_sim = jaccard(grams_a, grams_b)
+    tree_sim = 1.0 if sig_a.get("tree") == sig_b.get("tree") else 0.0
+    return 0.7 * gram_sim + 0.3 * tree_sim
+
+
+def record_project(state: dict, meta: dict) -> dict:
+    items = state.get("history", [])
+    items.append(meta)
+    keep = int(os.getenv("NOVELTY_HISTORY_COUNT", "50"))
+    state["history"] = items[-keep:]
+    return state
+
+
+def recent_avoid_list(state: dict, limit: int = 5) -> list[str]:
+    out: list[str] = []
+    for h in (state.get("history") or [])[-limit:]:
+        out.append(h.get("title") or h.get("repo") or "")
+        out.append(h.get("field") or "")
+        out.append(h.get("tech_stack") or "")
+    return [x for x in out if x]
+
+
 def gh_enable_pages(token: str, api: str, owner: str, repo: str, branch: str, path: str) -> None:
     import requests
     payload = {"source": {"branch": branch, "path": path}}
@@ -1536,9 +1803,10 @@ def main() -> int:
     provider = (os.getenv("PROVIDER") or "openai").strip().lower()
     model = os.getenv("MODEL_NAME") or ("gpt-4o" if provider == "openai" else "claude-3-5-sonnet-latest")
 
-    # Choose field and tech stack
+    # Choose field, tech stack, and style
     field = choose_field()
     tech_stack = choose_web_tech_stack()
+    style = random.choice(STYLE_TAGS)
     today = utc_date()
 
     # Resolve GitHub settings
@@ -1555,23 +1823,41 @@ def main() -> int:
     # Temp base dir for the new repo (not inside this repo)
     tmpdir = pathlib.Path(tempfile.mkdtemp(prefix="autogen-"))
 
-    # Build prompt
-    prompt = build_prompt(field, today, tech_stack)
+    # Load novelty state and build prompt
+    state = load_state()
+    recent_avoid = recent_avoid_list(state)
+    prompt = build_prompt(field, today, tech_stack, style, recent_avoid)
 
-    # Call provider
-    try:
-        if provider == "openai":
-            output = call_openai(model, prompt)
-        elif provider == "anthropic":
-            output = call_anthropic(model, prompt)
-        else:
-            raise RuntimeError(f"Unsupported PROVIDER: {provider}")
-    except Exception as e:
-        output = ""
-        print(f"Provider call failed: {e}")
+    # Call provider with rerolls if parsing fails
+    max_rerolls = int(os.getenv("MAX_REROLLS", "2"))
+    attempt = 0
+    output = ""
+    blocks: list[tuple[str, str]] = []
+    while attempt <= max_rerolls:
+        try:
+            if provider == "openai":
+                output = call_openai(model, prompt)
+            elif provider == "anthropic":
+                output = call_anthropic(model, prompt)
+            else:
+                raise RuntimeError(f"Unsupported PROVIDER: {provider}")
+        except Exception as e:
+            print(f"Provider call failed (attempt {attempt+1}): {e}")
+            output = ""
+
+        blocks = parse_file_blocks(output) if output else []
+        if blocks:
+            break
+        attempt += 1
+        # tweak selection to encourage variety
+        field = choose_field()
+        tech_stack = choose_web_tech_stack()
+        style = random.choice([s for s in STYLE_TAGS if s != style] or STYLE_TAGS)
+        recent_avoid = recent_avoid_list(state)
+        prompt = build_prompt(field, today, tech_stack, style, recent_avoid)
+        print(f"Rerolling with new parameters (attempt {attempt+1}/{max_rerolls+1})...")
 
     # Parse and write blocks
-    blocks = parse_file_blocks(output) if output else []
     # Derive project name from blocks' top folder if present, else synthesize
     top_folder = extract_top_folder(blocks) if blocks else None
 
@@ -1615,7 +1901,26 @@ def main() -> int:
     # Fallback if nothing written
     if written == 0:
         title = f"{project_name}"
+        print("No valid blocks parsed; using diversified fallback template.")
         fallback_problem_project(field, tech_stack, project_root, title)
+
+    # Novelty similarity check before tests/push
+    try:
+        sig = project_signature(project_root)
+        thresh = float(os.getenv("SIMILARITY_THRESHOLD", "0.8"))
+        similar = False
+        for h in state.get("history", [])[-10:]:
+            hsig = h.get("signature") or {}
+            if similarity(sig, hsig) >= thresh:
+                similar = True
+                break
+        if similar and attempt <= max_rerolls:
+            print("High similarity to recent projects; regenerating fallback variant to diversify.")
+            shutil.rmtree(project_root)
+            project_root.mkdir(parents=True, exist_ok=True)
+            fallback_problem_project(field, tech_stack, project_root, strip_date_from_name(project_name).title())
+    except Exception as e:
+        print(f"Similarity check failed: {e}")
 
     # Remove automation hints (if any)
     cleanse_automation_artifacts(project_root)
@@ -1638,6 +1943,38 @@ def main() -> int:
     if not detect_and_run_tests(project_root):
         print("Tests failed or could not be executed; skipping push.")
         return 3
+
+    # Optional dry-run: copy out the project and record history, skip GitHub
+    if (os.getenv("DRY_RUN", "0").strip().lower() in ("1", "true", "yes")):
+        try:
+            # Record novelty history
+            try:
+                title_clean = strip_date_from_name(project_name).replace("-", " ").title()
+                meta = {
+                    "ts": int(time.time()),
+                    "repo": project_name,
+                    "title": title_clean,
+                    "field": field,
+                    "tech_stack": tech_stack,
+                    "style": style,
+                    "signature": project_signature(project_root),
+                }
+                state = record_project(state, meta)
+                save_state(state)
+            except Exception as he:
+                print(f"History save failed (dry run): {he}")
+
+            out_dir = os.getenv("DRY_RUN_DIR", "dry_runs").strip()
+            dest_base = REPO_ROOT / out_dir
+            dest = dest_base / project_name
+            dest_base.mkdir(parents=True, exist_ok=True)
+            if dest.exists():
+                shutil.rmtree(dest)
+            shutil.copytree(project_root, dest)
+            print(f"DRY_RUN: Project copied to {dest}")
+            return 0
+        except Exception as de:
+            print(f"Dry run export failed: {de}")
 
     # Prepare GitHub Pages if this is a static site
     pages_path = prepare_static_site(project_root)
@@ -1685,6 +2022,23 @@ def main() -> int:
             update_dashboard(gh_owner, project_name, field, tech_stack, preview_url, description)
         except Exception as de:
             print(f"Dashboard update failed: {de}")
+
+        # Save novelty history
+        try:
+            title_clean = strip_date_from_name(project_name).replace("-", " ").title()
+            meta = {
+                "ts": int(time.time()),
+                "repo": project_name,
+                "title": title_clean,
+                "field": field,
+                "tech_stack": tech_stack,
+                "style": style,
+                "signature": project_signature(project_root),
+            }
+            state = record_project(state, meta)
+            save_state(state)
+        except Exception as he:
+            print(f"History save failed: {he}")
     except Exception as e:
         print(f"GitHub push failed: {e}")
         return 2
