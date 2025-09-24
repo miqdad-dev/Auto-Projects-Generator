@@ -179,5 +179,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-foxtrot-09-24-2025/",
     "description": "Frontend Foxtrot",
     "ts": 1758730394
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-orion-09-24-2025",
+    "name": "frontend-orion-09-24-2025",
+    "field": "frontend",
+    "tech_stack": "php-basic",
+    "language": "php",
+    "pages_url": "https://miqdad-dev.github.io/frontend-orion-09-24-2025/",
+    "description": "Frontend Orion",
+    "ts": 1758730660
   }
 ]
