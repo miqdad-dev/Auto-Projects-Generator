@@ -2353,6 +2353,12 @@ def main() -> int:
     except Exception:
         pass
 
+    # Apply professional core scaffold (files, CI, templates)
+    try:
+        apply_core_scaffold(project_root, field, tech_stack)
+    except Exception as se:
+        print(f"Scaffold application failed: {se}")
+
     # Optionally fetch datasets/assets before tests
     try:
         prepare_data_and_assets(project_root)
