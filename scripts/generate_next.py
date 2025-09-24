@@ -15,40 +15,37 @@ from hashlib import sha1
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[1]
 
 FIELDS = [
-    "web game", "business website", "portfolio website", "e-commerce site", 
-    "blog platform", "dashboard application", "social media app", "productivity tool", 
-    "educational platform", "entertainment website", "news portal", "booking system", 
-    "chat application", "file sharing platform", "online calculator"
+    # Portfolio domains (mapped via rotation):
+    "frontend",               # SPA/interactive UI (JS/Three.js)
+    "backend",                # API/server (Java or Python)
+    "data engineering",       # pipelines/ETL
+    "data science/ml",        # Kaggle + model training
+    "algorithms/systems",     # C++/CLI
+    "game dev 2d",            # Canvas 2D
+    "game dev 3d",            # Three.js 3D
 ]
 
 # Equal weights for web project variety - let randomness create diversity
 FIELD_WEIGHTS_DEFAULT = {
-    "web game": 8,
-    "business website": 6,
-    "portfolio website": 5,
-    "e-commerce site": 7,
-    "blog platform": 6,
-    "dashboard application": 7,
-    "social media app": 8,
-    "productivity tool": 7,
-    "educational platform": 6,
-    "entertainment website": 7,
-    "news portal": 5,
-    "booking system": 6,
-    "chat application": 8,
-    "file sharing platform": 6,
-    "online calculator": 4,
+    "frontend": 5,
+    "backend": 5,
+    "data engineering": 5,
+    "data science/ml": 5,
+    "algorithms/systems": 4,
+    "game dev 2d": 4,
+    "game dev 3d": 4,
 }
 
 # Web technology stack preferences
 WEB_TECH_STACKS = [
     "html-css-javascript",
-    "html-css-javascript", 
-    "html-css-javascript",  # Higher weight for frontend-only projects
-    "php-mysql",
-    "php-mysql",           # PHP backend projects
-    "java-spring-boot",    # Java enterprise projects
-    "html-css-javascript-php",  # Mixed stack
+    "java-maven",            # Java CLI/API via Maven
+    "python-fastapi",        # Python backend
+    "python-ml",             # Python ML/DS
+    "cpp-cmake",             # C++ CLI
+    "html-css-javascript-3d",# Three.js
+    "html-css-javascript-2d",# Canvas 2D
+    "php-basic",             # PHP (LLM may output; no fallback uses PHP)
 ]
 
 NOUNS = [
@@ -86,6 +83,13 @@ def slugify(text: str) -> str:
 
 
 def choose_field() -> str:
+    # Rotation by weekday to cover domains regularly (override with DOMAIN_OVERRIDE)
+    dom_override = os.getenv("DOMAIN_OVERRIDE", "").strip().lower()
+    if dom_override and dom_override in [f.lower() for f in FIELDS]:
+        for f in FIELDS:
+            if f.lower() == dom_override:
+                return f
+    # Plan filter
     plan = os.getenv("TOPIC_PLAN", "").strip()
     # Start from either a planned subset or full set
     if plan:
@@ -119,6 +123,23 @@ def choose_field() -> str:
 
 def choose_web_tech_stack() -> str:
     return random.choice(WEB_TECH_STACKS)
+
+
+def rotate_field_by_weekday(default_choice: str) -> str:
+    # Map weekday to domain to showcase breadth Mon..Sun
+    wd = datetime.now(timezone.utc).weekday()  # 0=Mon
+    rotation = [
+        "frontend",        # Mon
+        "backend",         # Tue
+        "data engineering",# Wed
+        "data science/ml", # Thu
+        "algorithms/systems", # Fri
+        "game dev 2d",     # Sat
+        "game dev 3d",     # Sun
+    ]
+    picked = rotation[wd]
+    # If plan filtered it out, fallback to default
+    return picked if picked in FIELDS else default_choice
 
 def next_unique_name(base: str, exists_checker) -> str:
     candidate = base
@@ -415,6 +436,53 @@ def build_prompt(field: str, today: str, tech_stack: str, style: str, recent_avo
     codex_path = REPO_ROOT / "codex.md"
     codex = codex_path.read_text(encoding="utf-8") if codex_path.exists() else ""
     avoid_clause = "\n".join(f"- Avoid repeating: {a}" for a in recent_avoid)
+    # Domain-specific guidance
+    domain_req = []
+    fld = field.lower()
+    if fld == "backend":
+        domain_req += [
+            "- Build a real API with non-trivial logic and validation.",
+            "- In Java (Maven) or Python FastAPI; include tests (JUnit/pytest).",
+            "- Provide exact run/test commands and sample curl calls.",
+        ]
+    elif fld == "data engineering":
+        domain_req += [
+            "- Ingest, transform, and validate a small dataset (CSV).",
+            "- Include a Makefile with data/prepare targets if helpful.",
+            "- Add tests that validate transforms on sample data.",
+        ]
+    elif fld == "data science/ml":
+        domain_req += [
+            "- Fetch dataset via Kaggle API when credentials present; fallback to sklearn sample.",
+            "- Implement train/eval with a metric target and a brief report in README.",
+            "- Include tests that assert a minimum accuracy or model behavior.",
+        ]
+    elif fld == "algorithms/systems":
+        domain_req += [
+            "- Implement a C++ CLI solving a specific problem (parsing, scheduling, graph).",
+            "- Provide CMakeLists.txt and a 'test' target (ctest) or simple asserts.",
+            "- Include complexity notes and edge case handling.",
+        ]
+    elif fld == "game dev 3d":
+        domain_req += [
+            "- Use Three.js (CDN) to implement a 3D scene with interaction.",
+            "- Add keyboard/mouse controls and basic UI (score, HUD).",
+            "- Make it mobile-friendly and performant.",
+        ]
+    elif fld == "game dev 2d":
+        domain_req += [
+            "- Use Canvas 2D to implement a small playable game loop (collision, scoring).",
+            "- Add keyboard controls and simple level progression.",
+            "- Include README instructions and a screenshot or GIF if possible.",
+        ]
+    elif fld == "frontend":
+        domain_req += [
+            "- Build a responsive SPA with data fetching and state management.",
+            "- Include keyboard accessibility and ARIA where relevant.",
+            "- Provide a docs/ static build for GitHub Pages.",
+        ]
+
+    domain_text = "\n".join(domain_req)
     extra = (
         f"\n\nProject Type: {field}. Today's UTC date: {today}.\n"
         f"Technology Stack: {tech_stack}. Visual Style: {style}.\n"
@@ -426,6 +494,7 @@ def build_prompt(field: str, today: str, tech_stack: str, style: str, recent_avo
         f"Do not implement: particle systems, Fibonacci APIs, or basic todo lists.\n"
         f"Ensure novel features and architecture different from common templates.\n"
         f"Diversity constraints:\n{avoid_clause}\n"
+        f"\nDOMAIN-SPECIFIC REQUIREMENTS:\n{domain_text}\n"
         f"\nWEB DEVELOPMENT REQUIREMENTS:\n"
         f"- **Unique Design**: Choose a different visual style/theme each time (minimalist, colorful, dark mode, corporate, creative, gaming, e-commerce)\n"
         f"- **Responsive Layout**: Mobile-first design that works perfectly on all devices\n"
@@ -1254,6 +1323,103 @@ def fallback_game_static(project_root: pathlib.Path, title: str) -> None:
     fallback_frontend_static(project_root, title)
 
 
+# New portfolio fallbacks
+def fallback_cpp_cli(project_root: pathlib.Path, title: str) -> None:
+    _w(project_root / "CMakeLists.txt", """
+cmake_minimum_required(VERSION 3.10)
+project(PortfolioCli)
+set(CMAKE_CXX_STANDARD 17)
+add_executable(app src/main.cpp)
+enable_testing()
+add_test(NAME run COMMAND app sample)
+""")
+    _w(project_root / "src" / "main.cpp", """
+#include <bits/stdc++.h>
+using namespace std;
+// Simple problem: compute shortest path lengths using BFS in an unweighted graph
+int main(int argc, char** argv){
+    ios::sync_with_stdio(false); cin.tie(nullptr);
+    int n=5; vector<vector<int>> g={{1,2},{0,3},{0,3},{1,2,4},{3}}; // sample graph
+    vector<int> dist(n, -1); queue<int> q; dist[0]=0; q.push(0);
+    while(!q.empty()){int u=q.front();q.pop(); for(int v: g[u]) if(dist[v]==-1){dist[v]=dist[u]+1; q.push(v);} }
+    for(int i=0;i<n;i++){ cout<<dist[i]<<(i+1==n?'\n':' ');} return 0; }
+""")
+    _w(project_root / "Makefile", """
+.PHONY: build test
+build:
+	cmake -S . -B build && cmake --build build -j
+test: build
+	cd build && ctest --output-on-failure
+""")
+    _w(project_root / "README.md", "# " + title + "\n\nC++ BFS shortest paths demo. Build with CMake; run `make test`." )
+
+
+def fallback_java_cli(project_root: pathlib.Path, title: str) -> None:
+    _w(project_root / "pom.xml", """
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.portfolio</groupId>
+  <artifactId>app</artifactId>
+  <version>1.0.0</version>
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>5.10.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.5</version>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+""")
+    _w(project_root / "src" / "main" / "java" / "com" / "portfolio" / "App.java", """
+package com.portfolio;
+public class App {
+    public static int gcd(int a, int b){ return b==0? Math.abs(a): gcd(b, a%b); }
+    public static void main(String[] args){ System.out.println(gcd(48,18)); }
+}
+""")
+    _w(project_root / "src" / "test" / "java" / "com" / "portfolio" / "AppTest.java", """
+package com.portfolio;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+public class AppTest{
+  @Test void testGcd(){ assertEquals(6, App.gcd(48,18)); }
+}
+""")
+    _w(project_root / "README.md", "# " + title + "\n\nJava CLI with GCD function and JUnit test. Build: `mvn -q test`." )
+
+
+def fallback_three_js(project_root: pathlib.Path, title: str) -> None:
+    (project_root / "docs").mkdir(parents=True, exist_ok=True)
+    _w(project_root / "docs" / "index.html", f"""<!doctype html>
+<html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'>
+<title>{title}</title><style>body,html,canvas{{margin:0;height:100%;overflow:hidden;background:#0b0f17}}</style></head>
+<body><canvas id='c'></canvas><script src='https://unpkg.com/three@0.160.0/build/three.min.js'></script>
+<script>const c=document.getElementById('c');const r=new THREE.WebGLRenderer({canvas:c,antialias:true});
+const s=()=>{const w=innerWidth,h=innerHeight;r.setSize(w,h)};addEventListener('resize',s);s();
+const scene=new THREE.Scene();const cam=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,100);cam.position.z=3;
+const geo=new THREE.BoxGeometry(1,1,1);const mat=new THREE.MeshStandardMaterial({color:0x44aa88});const cube=new THREE.Mesh(geo,mat);scene.add(cube);
+scene.add(new THREE.AmbientLight(0x8899aa,1));const dl=new THREE.DirectionalLight(0xffffff,1);dl.position.set(5,5,5);scene.add(dl);
+let t=0;function loop(){t+=0.01; cube.rotation.x=t; cube.rotation.y=t*0.7; r.render(scene,cam); requestAnimationFrame(loop)} loop();
+addEventListener('mousemove',e=>{cube.material.color.setHSL((e.clientX/innerWidth),0.6,0.5)});
+</script></body></html>
+""")
+    _w(project_root / "README.md", "# " + title + "\n\nThree.js interactive 3D demo (docs/index.html)." )
 def fallback_frontend_markdown_editor(project_root: pathlib.Path, title: str) -> None:
     (project_root / "docs").mkdir(parents=True, exist_ok=True)
     _w(project_root / "docs" / "index.html", f"""<!doctype html>
@@ -1352,14 +1518,25 @@ new Chart(ctx,{type:'line',data:{datasets:[{label:'Metric',data,borderColor:'#3b
 
 
 def fallback_problem_project(field: str, tech_stack: str, project_root: pathlib.Path, title: str) -> None:
-    """Diversified fallback selection to avoid repetitive outputs."""
-    pick = random.choice([
-        fallback_frontend_static,
-        fallback_frontend_markdown_editor,
-        fallback_frontend_color_tool,
-        fallback_frontend_charts_dashboard,
-    ])
-    return pick(project_root, title)
+    """Domain-aware diversified fallback selection."""
+    fld = field.lower()
+    if fld == "algorithms/systems":
+        return fallback_cpp_cli(project_root, title)
+    if fld == "backend":
+        # Prefer Java CLI with tests to avoid infra; Python FastAPI fallback exists already
+        return fallback_java_cli(project_root, title)
+    if fld == "data science/ml":
+        return fallback_ml(project_root, title)
+    if fld == "data engineering":
+        return fallback_data_engineering(project_root, title)
+    if fld == "game dev 3d":
+        return fallback_three_js(project_root, title)
+    if fld == "game dev 2d":
+        return fallback_game_static(project_root, title)
+    if fld == "frontend":
+        return random.choice([fallback_frontend_markdown_editor, fallback_frontend_color_tool, fallback_frontend_charts_dashboard])(project_root, title)
+    # Default safe
+    return fallback_frontend_static(project_root, title)
 
 
 def run(cmd: list[str], cwd: pathlib.Path | None = None) -> None:
@@ -1703,12 +1880,33 @@ def update_dashboard(owner: str, repo_name: str, field: str, tech_stack: str, pa
                 items = []
         except Exception:
             items = []
+    # Guess primary language from files written
+    def guess_language() -> str | None:
+        pr = None
+        try:
+            pr = REPO_ROOT / "dry_runs" / repo_name  # dry run case
+        except Exception:
+            pr = None
+        # Better: just inspect docs directory in this repo update (not available). Fallback to tech_stack heuristic.
+        if tech_stack.startswith("java"):
+            return "java"
+        if tech_stack.startswith("python"):
+            return "python"
+        if tech_stack.startswith("cpp"):
+            return "c++"
+        if "javascript" in tech_stack:
+            return "javascript"
+        if "php" in tech_stack:
+            return "php"
+        return None
+
     entry = {
         "owner": owner,
         "repo": repo_name,
         "name": repo_name,
         "field": field,
         "tech_stack": tech_stack,
+        "language": guess_language() or "",
         "pages_url": pages_url,
         "description": description or "",
         "ts": int(time.time()),
@@ -1806,8 +2004,8 @@ def main() -> int:
     provider = (os.getenv("PROVIDER") or "openai").strip().lower()
     model = os.getenv("MODEL_NAME") or ("gpt-4o" if provider == "openai" else "claude-3-5-sonnet-latest")
 
-    # Choose field, tech stack, and style
-    field = choose_field()
+    # Choose field via rotation, tech stack, and style
+    field = rotate_field_by_weekday(choose_field())
     tech_stack = choose_web_tech_stack()
     style = random.choice(STYLE_TAGS)
     today = utc_date()
