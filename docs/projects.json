@@ -158,5 +158,15 @@
     "pages_url": null,
     "description": "E Commerce Kilo",
     "ts": 1758705002
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "news-mike-09-24-2025",
+    "name": "news-mike-09-24-2025",
+    "field": "news portal",
+    "tech_stack": "java-spring-boot",
+    "pages_url": "https://miqdad-dev.github.io/news-mike-09-24-2025/",
+    "description": "News Mike",
+    "ts": 1758715329
   }
 ]
