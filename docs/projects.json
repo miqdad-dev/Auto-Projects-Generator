@@ -201,5 +201,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-oscar-09-24-2025/",
     "description": "Game Oscar",
     "ts": 1758731622
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-zulu-09-24-2025",
+    "name": "game-zulu-09-24-2025",
+    "field": "game dev 2d",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": "https://miqdad-dev.github.io/game-zulu-09-24-2025/",
+    "description": "Game Zulu",
+    "ts": 1758732011
   }
 ]
