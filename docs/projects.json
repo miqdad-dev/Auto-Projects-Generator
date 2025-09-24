@@ -148,5 +148,15 @@
     "pages_url": null,
     "description": "Blog Kilo",
     "ts": 1758532309
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "e-commerce-kilo-09-24-2025",
+    "name": "e-commerce-kilo-09-24-2025",
+    "field": "e-commerce site",
+    "tech_stack": "php-mysql",
+    "pages_url": null,
+    "description": "E Commerce Kilo",
+    "ts": 1758705002
   }
 ]
