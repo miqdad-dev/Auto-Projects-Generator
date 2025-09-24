@@ -1406,9 +1406,9 @@ public class AppTest{
 
 def fallback_three_js(project_root: pathlib.Path, title: str) -> None:
     (project_root / "docs").mkdir(parents=True, exist_ok=True)
-    _w(project_root / "docs" / "index.html", f"""<!doctype html>
+    html = """<!doctype html>
 <html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'>
-<title>{title}</title><style>body,html,canvas{{margin:0;height:100%;overflow:hidden;background:#0b0f17}}</style></head>
+<title>__TITLE__</title><style>body,html,canvas{margin:0;height:100%;overflow:hidden;background:#0b0f17}</style></head>
 <body><canvas id='c'></canvas><script src='https://unpkg.com/three@0.160.0/build/three.min.js'></script>
 <script>const c=document.getElementById('c');const r=new THREE.WebGLRenderer({canvas:c,antialias:true});
 const s=()=>{const w=innerWidth,h=innerHeight;r.setSize(w,h)};addEventListener('resize',s);s();
@@ -1418,7 +1418,8 @@ scene.add(new THREE.AmbientLight(0x8899aa,1));const dl=new THREE.DirectionalLigh
 let t=0;function loop(){t+=0.01; cube.rotation.x=t; cube.rotation.y=t*0.7; r.render(scene,cam); requestAnimationFrame(loop)} loop();
 addEventListener('mousemove',e=>{cube.material.color.setHSL((e.clientX/innerWidth),0.6,0.5)});
 </script></body></html>
-""")
+"""
+    _w(project_root / "docs" / "index.html", html.replace("__TITLE__", title))
     _w(project_root / "README.md", "# " + title + "\n\nThree.js interactive 3D demo (docs/index.html)." )
 def fallback_frontend_markdown_editor(project_root: pathlib.Path, title: str) -> None:
     (project_root / "docs").mkdir(parents=True, exist_ok=True)
