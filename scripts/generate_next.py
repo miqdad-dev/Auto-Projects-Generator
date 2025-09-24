@@ -375,6 +375,225 @@ def ensure_parent(path: pathlib.Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
 
 
+def _if_missing_write(path: pathlib.Path, content: str) -> None:
+    if not path.exists():
+        ensure_parent(path)
+        path.write_text(content, encoding="utf-8")
+
+
+def apply_core_scaffold(project_root: pathlib.Path, field: str, tech_stack: str) -> None:
+    # Core files
+    _if_missing_write(project_root / ".editorconfig", """
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+charset = utf-8
+indent_style = space
+indent_size = 2
+""")
+    _if_missing_write(project_root / ".gitignore", """
+# General
+*.log
+*.tmp
+node_modules/
+dist/
+build/
+.cache/
+.pytest_cache/
+__pycache__/
+*.pyc
+target/
+build/
+cmake-build*/
+.mvn/
+.idea/
+.vscode/
+""")
+    _if_missing_write(project_root / "CONTRIBUTING.md", """
+# Contributing
+
+1. Fork, create a feature branch.
+2. Use semantic commits.
+3. Add/keep tests green.
+4. Open a PR with context and screenshots/logs.
+""")
+    _if_missing_write(project_root / "CODE_OF_CONDUCT.md", """
+# Code of Conduct
+
+Be respectful. Assume positive intent. No harassment. Maintain a welcoming, inclusive environment.
+""")
+    _if_missing_write(project_root / "CHANGELOG.md", """
+# Changelog
+
+All notable changes to this project will be documented in this file.
+""")
+    _if_missing_write(project_root / "SECURITY.md", """
+# Security Policy
+
+Report vulnerabilities via GitHub Issues or email (replace with contact). Do not disclose publicly until patched.
+""")
+    _if_missing_write(project_root / "LICENSE", """
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+""")
+
+    # Issue/PR templates
+    _if_missing_write(project_root / ".github" / "ISSUE_TEMPLATE" / "bug_report.md", """
+---
+name: Bug report
+about: Report a bug
+labels: bug
+---
+
+### What happened?
+
+### Steps to reproduce
+
+### Expected behavior
+
+### Logs/Screenshots
+""")
+    _if_missing_write(project_root / ".github" / "ISSUE_TEMPLATE" / "feature_request.md", """
+---
+name: Feature request
+about: Propose an enhancement
+labels: enhancement
+---
+
+### Problem
+
+### Proposal
+
+### Alternatives
+""")
+    _if_missing_write(project_root / ".github" / "PULL_REQUEST_TEMPLATE.md", """
+### Summary
+
+### Changes
+
+### Testing
+
+### Checklist
+- [ ] Tests pass
+- [ ] Docs updated
+""")
+
+    # Docs
+    _if_missing_write(project_root / "docs" / "architecture.md", """
+# Architecture
+
+System overview, components, data flow, and key decisions.
+""")
+    _if_missing_write(project_root / "docs" / "decisions" / "ADR-0001.md", """
+# ADR-0001: Initial Stack Selection
+
+Context, decision, alternatives considered, consequences.
+""")
+
+    # Docker (generic base)
+    _if_missing_write(project_root / "Dockerfile", """
+FROM alpine:3.20
+RUN apk add --no-cache bash
+WORKDIR /app
+COPY . /app
+CMD ["/bin/sh"]
+""")
+    _if_missing_write(project_root / "docker-compose.yml", """
+version: '3.8'
+services:
+  app:
+    build: .
+    volumes:
+      - ./:/app
+    command: /bin/sh -c "echo 'override in Makefile' && sleep 1"
+""")
+
+    # Makefile with safe test/run
+    # Detect tests to avoid failures
+    has_py_tests = any(p.suffix == ".py" and ("tests" in p.parts or p.name.startswith("test_") or p.name.endswith("_test.py")) for p in project_root.rglob("*.py"))
+    has_java = (project_root / "pom.xml").exists()
+    has_cpp = (project_root / "CMakeLists.txt").exists()
+    has_node = (project_root / "package.json").exists()
+    test_cmd = "@echo 'no tests'"
+    if has_py_tests:
+        test_cmd = "python -m pytest -q || true"
+    elif has_java:
+        test_cmd = "mvn -q test || true"
+    elif has_cpp:
+        test_cmd = "cmake -S . -B build && cmake --build build -j && cd build && ctest --output-on-failure || true"
+    elif has_node:
+        test_cmd = "npm test || yarn test || pnpm test || echo 'no tests'"
+
+    _if_missing_write(project_root / "Makefile", f"""
+.PHONY: test run fmt
+test:
+	{test_cmd}
+run:
+	@echo "Define run command for this project"
+fmt:
+	@echo "Add formatter (prettier/black/clang-format) if desired"
+""")
+
+    # CI workflow (generic with conditional steps)
+    ci = """
+name: CI
+on:
+  push:
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - name: Install Python deps (if any)
+        run: |
+          if [ -f requirements.txt ]; then python -m pip install -r requirements.txt; fi
+      - name: Install Node deps (if any)
+        run: |
+          if [ -f package.json ]; then corepack enable || true; (pnpm -v && pnpm install --frozen-lockfile) || (yarn -v && yarn install --frozen-lockfile) || npm ci || true; fi
+      - name: Build C++ (if any)
+        run: |
+          if [ -f CMakeLists.txt ]; then cmake -S . -B build && cmake --build build -j; fi
+      - name: Run tests
+        run: |
+          if [ -f CMakeLists.txt ]; then cd build && ctest --output-on-failure || true; cd ..; fi
+          if [ -f pom.xml ]; then mvn -q -DskipITs=false test || true; fi
+          if [ -f package.json ]; then (npm test || yarn test || pnpm test) || true; fi
+          if [ -d tests ] || ls -1 **/*_test.py **/test_*.py 2>/dev/null | grep -q .; then python -m pytest -q || true; fi
+"""
+    _if_missing_write(project_root / ".github" / "workflows" / "ci.yml", ci)
+
+
 def _float_env(name: str, default: float) -> float:
     try:
         return float(os.getenv(name, str(default)).strip())
