@@ -245,5 +245,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Romeo",
     "ts": 1758877784
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-foxtrot-09-27-2025",
+    "name": "data-foxtrot-09-27-2025",
+    "field": "data engineering",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Foxtrot",
+    "ts": 1758964070
   }
 ]
