@@ -267,5 +267,16 @@
     "pages_url": null,
     "description": "Backend Yankee",
     "ts": 1759050488
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-orion-09-29-2025",
+    "name": "frontend-orion-09-29-2025",
+    "field": "frontend",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/frontend-orion-09-29-2025/",
+    "description": "Frontend Orion",
+    "ts": 1759137086
   }
 ]
