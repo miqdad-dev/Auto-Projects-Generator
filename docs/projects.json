@@ -278,5 +278,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-orion-09-29-2025/",
     "description": "Frontend Orion",
     "ts": 1759137086
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "algorithms-systems-vega-09-30-2025",
+    "name": "algorithms-systems-vega-09-30-2025",
+    "field": "algorithms/systems",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": null,
+    "description": "Algorithms Systems Vega",
+    "ts": 1759223400
   }
 ]
