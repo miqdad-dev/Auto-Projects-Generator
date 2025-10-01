@@ -289,5 +289,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Vega",
     "ts": 1759223400
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-whiskey-10-01-2025",
+    "name": "data-whiskey-10-01-2025",
+    "field": "data science/ml",
+    "tech_stack": "php-basic",
+    "language": "php",
+    "pages_url": null,
+    "description": "Data Whiskey",
+    "ts": 1759309820
   }
 ]
