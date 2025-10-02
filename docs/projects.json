@@ -300,5 +300,16 @@
     "pages_url": null,
     "description": "Data Whiskey",
     "ts": 1759309820
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-vega-10-02-2025",
+    "name": "data-vega-10-02-2025",
+    "field": "data science/ml",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Vega",
+    "ts": 1759396172
   }
 ]
