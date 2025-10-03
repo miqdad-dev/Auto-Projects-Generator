@@ -311,5 +311,16 @@
     "pages_url": null,
     "description": "Data Vega",
     "ts": 1759396172
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-zulu-10-03-2025",
+    "name": "game-zulu-10-03-2025",
+    "field": "game dev 3d",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-zulu-10-03-2025/",
+    "description": "Game Zulu",
+    "ts": 1759482554
   }
 ]
