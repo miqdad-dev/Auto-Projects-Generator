@@ -388,5 +388,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Nova",
     "ts": 1760001005
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-echo-10-10-2025",
+    "name": "game-echo-10-10-2025",
+    "field": "game dev 2d",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": "https://miqdad-dev.github.io/game-echo-10-10-2025/",
+    "description": "Game Echo",
+    "ts": 1760087425
   }
 ]
