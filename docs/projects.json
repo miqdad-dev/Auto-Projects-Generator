@@ -399,5 +399,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-echo-10-10-2025/",
     "description": "Game Echo",
     "ts": 1760087425
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "backend-xray-10-11-2025",
+    "name": "backend-xray-10-11-2025",
+    "field": "backend",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Backend Xray",
+    "ts": 1760173688
   }
 ]
