@@ -421,5 +421,16 @@
     "pages_url": null,
     "description": "Data Uniform",
     "ts": 1760884322
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-juliet-10-19-2025",
+    "name": "game-juliet-10-19-2025",
+    "field": "game dev 2d",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-juliet-10-19-2025/",
+    "description": "Game Juliet",
+    "ts": 1760884655
   }
 ]
