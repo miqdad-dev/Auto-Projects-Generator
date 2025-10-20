@@ -432,5 +432,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-juliet-10-19-2025/",
     "description": "Game Juliet",
     "ts": 1760884655
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-lima-10-20-2025",
+    "name": "data-lima-10-20-2025",
+    "field": "data engineering",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": null,
+    "description": "Data Lima",
+    "ts": 1760951496
   }
 ]
