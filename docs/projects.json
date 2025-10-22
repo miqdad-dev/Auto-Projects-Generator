@@ -454,5 +454,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-ember-10-21-2025/",
     "description": "Game Ember",
     "ts": 1761037867
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-kilo-10-22-2025",
+    "name": "frontend-kilo-10-22-2025",
+    "field": "frontend",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/frontend-kilo-10-22-2025/",
+    "description": "Frontend Kilo",
+    "ts": 1761124300
   }
 ]
