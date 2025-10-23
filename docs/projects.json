@@ -465,5 +465,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-kilo-10-22-2025/",
     "description": "Frontend Kilo",
     "ts": 1761124300
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "backend-whiskey-10-23-2025",
+    "name": "backend-whiskey-10-23-2025",
+    "field": "backend",
+    "tech_stack": "php-basic",
+    "language": "php",
+    "pages_url": null,
+    "description": "Backend Whiskey",
+    "ts": 1761210672
   }
 ]
