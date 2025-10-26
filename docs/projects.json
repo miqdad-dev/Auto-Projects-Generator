@@ -498,5 +498,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Sierra",
     "ts": 1761383286
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-november-10-26-2025",
+    "name": "data-november-10-26-2025",
+    "field": "data science/ml",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data November",
+    "ts": 1761469685
   }
 ]
