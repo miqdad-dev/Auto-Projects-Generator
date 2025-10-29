@@ -531,5 +531,16 @@
     "pages_url": null,
     "description": "Data Atlas",
     "ts": 1761642619
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "backend-nova-10-29-2025",
+    "name": "backend-nova-10-29-2025",
+    "field": "backend",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": null,
+    "description": "Backend Nova",
+    "ts": 1761729012
   }
 ]
