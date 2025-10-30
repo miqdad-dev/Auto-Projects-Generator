@@ -542,5 +542,16 @@
     "pages_url": null,
     "description": "Backend Nova",
     "ts": 1761729012
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "algorithms-systems-charlie-10-30-2025",
+    "name": "algorithms-systems-charlie-10-30-2025",
+    "field": "algorithms/systems",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": null,
+    "description": "Algorithms Systems Charlie",
+    "ts": 1761815414
   }
 ]
