@@ -564,5 +564,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Vega",
     "ts": 1761901802
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-xray-11-01-2025",
+    "name": "data-xray-11-01-2025",
+    "field": "data science/ml",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": null,
+    "description": "Data Xray",
+    "ts": 1761988118
   }
 ]
