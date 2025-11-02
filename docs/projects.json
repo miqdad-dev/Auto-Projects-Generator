@@ -575,5 +575,16 @@
     "pages_url": null,
     "description": "Data Xray",
     "ts": 1761988118
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-bravo-11-02-2025",
+    "name": "data-bravo-11-02-2025",
+    "field": "data science/ml",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": null,
+    "description": "Data Bravo",
+    "ts": 1762074470
   }
 ]
