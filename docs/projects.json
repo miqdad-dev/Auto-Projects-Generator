@@ -619,5 +619,16 @@
     "pages_url": null,
     "description": "Data Alpha",
     "ts": 1762333868
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-vega-11-06-2025",
+    "name": "data-vega-11-06-2025",
+    "field": "data engineering",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": null,
+    "description": "Data Vega",
+    "ts": 1762420248
   }
 ]
