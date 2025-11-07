@@ -630,5 +630,16 @@
     "pages_url": null,
     "description": "Data Vega",
     "ts": 1762420248
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "backend-india-11-07-2025",
+    "name": "backend-india-11-07-2025",
+    "field": "backend",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": null,
+    "description": "Backend India",
+    "ts": 1762506612
   }
 ]
