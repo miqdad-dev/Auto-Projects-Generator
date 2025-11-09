@@ -652,5 +652,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-golf-11-08-2025/",
     "description": "Game Golf",
     "ts": 1762592888
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "backend-charlie-11-09-2025",
+    "name": "backend-charlie-11-09-2025",
+    "field": "backend",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": null,
+    "description": "Backend Charlie",
+    "ts": 1762679304
   }
 ]
