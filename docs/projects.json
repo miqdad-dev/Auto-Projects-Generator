@@ -674,5 +674,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Orion",
     "ts": 1762765927
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "algorithms-systems-ember-11-11-2025",
+    "name": "algorithms-systems-ember-11-11-2025",
+    "field": "algorithms/systems",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Algorithms Systems Ember",
+    "ts": 1762852232
   }
 ]
