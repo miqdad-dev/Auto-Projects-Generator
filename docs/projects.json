@@ -685,5 +685,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Ember",
     "ts": 1762852232
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-mike-11-12-2025",
+    "name": "data-mike-11-12-2025",
+    "field": "data science/ml",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Mike",
+    "ts": 1762938690
   }
 ]
