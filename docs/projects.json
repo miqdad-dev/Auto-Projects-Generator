@@ -718,5 +718,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-charlie-11-14-2025/",
     "description": "Game Charlie",
     "ts": 1763111416
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "backend-november-11-15-2025",
+    "name": "backend-november-11-15-2025",
+    "field": "backend",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Backend November",
+    "ts": 1763197704
   }
 ]
