@@ -729,5 +729,16 @@
     "pages_url": null,
     "description": "Backend November",
     "ts": 1763197704
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-tango-11-16-2025",
+    "name": "game-tango-11-16-2025",
+    "field": "game dev 3d",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/game-tango-11-16-2025/",
+    "description": "Game Tango",
+    "ts": 1763284121
   }
 ]
