@@ -740,5 +740,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-tango-11-16-2025/",
     "description": "Game Tango",
     "ts": 1763284121
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-echo-11-17-2025",
+    "name": "data-echo-11-17-2025",
+    "field": "data engineering",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": null,
+    "description": "Data Echo",
+    "ts": 1763370825
   }
 ]
