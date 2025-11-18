@@ -751,5 +751,16 @@
     "pages_url": null,
     "description": "Data Echo",
     "ts": 1763370825
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-whiskey-11-18-2025",
+    "name": "data-whiskey-11-18-2025",
+    "field": "data science/ml",
+    "tech_stack": "php-basic",
+    "language": "php",
+    "pages_url": null,
+    "description": "Data Whiskey",
+    "ts": 1763457092
   }
 ]
