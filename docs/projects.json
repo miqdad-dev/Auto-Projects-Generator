@@ -762,5 +762,16 @@
     "pages_url": null,
     "description": "Data Whiskey",
     "ts": 1763457092
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "algorithms-systems-hotel-11-19-2025",
+    "name": "algorithms-systems-hotel-11-19-2025",
+    "field": "algorithms/systems",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Algorithms Systems Hotel",
+    "ts": 1763543471
   }
 ]
