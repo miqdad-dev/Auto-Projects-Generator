@@ -795,5 +795,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-uniform-11-21-2025/",
     "description": "Game Uniform",
     "ts": 1763716208
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-ember-11-22-2025",
+    "name": "data-ember-11-22-2025",
+    "field": "data science/ml",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": null,
+    "description": "Data Ember",
+    "ts": 1763802535
   }
 ]
