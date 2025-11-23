@@ -806,5 +806,16 @@
     "pages_url": null,
     "description": "Data Ember",
     "ts": 1763802535
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-whiskey-11-23-2025",
+    "name": "frontend-whiskey-11-23-2025",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-whiskey-11-23-2025/",
+    "description": "Frontend Whiskey",
+    "ts": 1763888923
   }
 ]
