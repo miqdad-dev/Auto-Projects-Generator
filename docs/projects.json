@@ -817,5 +817,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-whiskey-11-23-2025/",
     "description": "Frontend Whiskey",
     "ts": 1763888923
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-tango-11-24-2025",
+    "name": "data-tango-11-24-2025",
+    "field": "data engineering",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": null,
+    "description": "Data Tango",
+    "ts": 1763975596
   }
 ]
