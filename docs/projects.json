@@ -828,5 +828,16 @@
     "pages_url": null,
     "description": "Data Tango",
     "ts": 1763975596
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-zulu-11-25-2025",
+    "name": "frontend-zulu-11-25-2025",
+    "field": "frontend",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": "https://miqdad-dev.github.io/frontend-zulu-11-25-2025/",
+    "description": "Frontend Zulu",
+    "ts": 1764061955
   }
 ]
