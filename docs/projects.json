@@ -839,5 +839,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-zulu-11-25-2025/",
     "description": "Frontend Zulu",
     "ts": 1764061955
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "algorithms-systems-golf-11-26-2025",
+    "name": "algorithms-systems-golf-11-26-2025",
+    "field": "algorithms/systems",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": null,
+    "description": "Algorithms Systems Golf",
+    "ts": 1764148306
   }
 ]
