@@ -850,5 +850,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Golf",
     "ts": 1764148306
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-yankee-11-27-2025",
+    "name": "frontend-yankee-11-27-2025",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-yankee-11-27-2025/",
+    "description": "Frontend Yankee",
+    "ts": 1764234651
   }
 ]
