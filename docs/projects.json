@@ -861,5 +861,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-yankee-11-27-2025/",
     "description": "Frontend Yankee",
     "ts": 1764234651
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-victor-11-28-2025",
+    "name": "frontend-victor-11-28-2025",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-victor-11-28-2025/",
+    "description": "Frontend Victor",
+    "ts": 1764321052
   }
 ]
