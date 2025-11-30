@@ -883,5 +883,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-quebec-11-29-2025/",
     "description": "Game Quebec",
     "ts": 1764407348
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "backend-vega-11-30-2025",
+    "name": "backend-vega-11-30-2025",
+    "field": "backend",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Backend Vega",
+    "ts": 1764493735
   }
 ]
