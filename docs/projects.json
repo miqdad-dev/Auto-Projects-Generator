@@ -894,5 +894,16 @@
     "pages_url": null,
     "description": "Backend Vega",
     "ts": 1764493735
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-lima-12-01-2025",
+    "name": "game-lima-12-01-2025",
+    "field": "game dev 3d",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-lima-12-01-2025/",
+    "description": "Game Lima",
+    "ts": 1764580560
   }
 ]
