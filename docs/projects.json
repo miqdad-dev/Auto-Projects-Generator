@@ -927,5 +927,16 @@
     "pages_url": null,
     "description": "Data Victor",
     "ts": 1764753242
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-uniform-12-04-2025",
+    "name": "frontend-uniform-12-04-2025",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-uniform-12-04-2025/",
+    "description": "Frontend Uniform",
+    "ts": 1764839636
   }
 ]
