@@ -938,5 +938,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-uniform-12-04-2025/",
     "description": "Frontend Uniform",
     "ts": 1764839636
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-atlas-12-05-2025",
+    "name": "frontend-atlas-12-05-2025",
+    "field": "frontend",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": "https://miqdad-dev.github.io/frontend-atlas-12-05-2025/",
+    "description": "Frontend Atlas",
+    "ts": 1764925873
   }
 ]
