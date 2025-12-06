@@ -949,5 +949,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-atlas-12-05-2025/",
     "description": "Frontend Atlas",
     "ts": 1764925873
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-quebec-12-06-2025",
+    "name": "data-quebec-12-06-2025",
+    "field": "data engineering",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": null,
+    "description": "Data Quebec",
+    "ts": 1765012137
   }
 ]
