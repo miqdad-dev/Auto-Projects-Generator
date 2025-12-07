@@ -960,5 +960,16 @@
     "pages_url": null,
     "description": "Data Quebec",
     "ts": 1765012137
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-mike-12-07-2025",
+    "name": "frontend-mike-12-07-2025",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-mike-12-07-2025/",
+    "description": "Frontend Mike",
+    "ts": 1765098529
   }
 ]
