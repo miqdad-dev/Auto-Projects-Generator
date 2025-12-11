@@ -1004,5 +1004,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Kilo",
     "ts": 1765358004
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-atlas-12-11-2025",
+    "name": "game-atlas-12-11-2025",
+    "field": "game dev 3d",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/game-atlas-12-11-2025/",
+    "description": "Game Atlas",
+    "ts": 1765444498
   }
 ]
