@@ -1026,5 +1026,16 @@
     "pages_url": null,
     "description": "Data Kilo",
     "ts": 1765530867
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-whiskey-12-13-2025",
+    "name": "frontend-whiskey-12-13-2025",
+    "field": "frontend",
+    "tech_stack": "php-basic",
+    "language": "php",
+    "pages_url": "https://miqdad-dev.github.io/frontend-whiskey-12-13-2025/",
+    "description": "Frontend Whiskey",
+    "ts": 1765616951
   }
 ]
