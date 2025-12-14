@@ -1037,5 +1037,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-whiskey-12-13-2025/",
     "description": "Frontend Whiskey",
     "ts": 1765616951
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-yankee-12-14-2025",
+    "name": "game-yankee-12-14-2025",
+    "field": "game dev 2d",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-yankee-12-14-2025/",
+    "description": "Game Yankee",
+    "ts": 1765703364
   }
 ]
