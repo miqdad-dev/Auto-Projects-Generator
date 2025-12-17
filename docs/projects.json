@@ -1070,5 +1070,16 @@
     "pages_url": null,
     "description": "Data Echo",
     "ts": 1765876530
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-zulu-12-17-2025",
+    "name": "data-zulu-12-17-2025",
+    "field": "data engineering",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": null,
+    "description": "Data Zulu",
+    "ts": 1765962964
   }
 ]
