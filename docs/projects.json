@@ -1081,5 +1081,16 @@
     "pages_url": null,
     "description": "Data Zulu",
     "ts": 1765962964
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-delta-12-18-2025",
+    "name": "game-delta-12-18-2025",
+    "field": "game dev 2d",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-delta-12-18-2025/",
+    "description": "Game Delta",
+    "ts": 1766049338
   }
 ]
