@@ -1092,5 +1092,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-delta-12-18-2025/",
     "description": "Game Delta",
     "ts": 1766049338
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-victor-12-19-2025",
+    "name": "data-victor-12-19-2025",
+    "field": "data science/ml",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Victor",
+    "ts": 1766135607
   }
 ]
