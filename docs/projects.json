@@ -1114,5 +1114,16 @@
     "pages_url": null,
     "description": "Backend Orion",
     "ts": 1766221764
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-quebec-12-21-2025",
+    "name": "frontend-quebec-12-21-2025",
+    "field": "frontend",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": "https://miqdad-dev.github.io/frontend-quebec-12-21-2025/",
+    "description": "Frontend Quebec",
+    "ts": 1766308157
   }
 ]
