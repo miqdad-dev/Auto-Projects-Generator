@@ -1125,5 +1125,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-quebec-12-21-2025/",
     "description": "Frontend Quebec",
     "ts": 1766308157
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-hotel-12-22-2025",
+    "name": "data-hotel-12-22-2025",
+    "field": "data engineering",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Hotel",
+    "ts": 1766394991
   }
 ]
