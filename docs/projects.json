@@ -1136,5 +1136,16 @@
     "pages_url": null,
     "description": "Data Hotel",
     "ts": 1766394991
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-quebec-12-23-2025",
+    "name": "data-quebec-12-23-2025",
+    "field": "data science/ml",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": null,
+    "description": "Data Quebec",
+    "ts": 1766481271
   }
 ]
