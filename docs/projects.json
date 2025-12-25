@@ -1158,5 +1158,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Orion",
     "ts": 1766567669
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "algorithms-systems-yankee-12-25-2025",
+    "name": "algorithms-systems-yankee-12-25-2025",
+    "field": "algorithms/systems",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Algorithms Systems Yankee",
+    "ts": 1766653950
   }
 ]
