@@ -1169,5 +1169,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Yankee",
     "ts": 1766653950
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-tango-12-26-2025",
+    "name": "data-tango-12-26-2025",
+    "field": "data science/ml",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": null,
+    "description": "Data Tango",
+    "ts": 1766740309
   }
 ]
