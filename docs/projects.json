@@ -1180,5 +1180,16 @@
     "pages_url": null,
     "description": "Data Tango",
     "ts": 1766740309
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "backend-zulu-12-27-2025",
+    "name": "backend-zulu-12-27-2025",
+    "field": "backend",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": null,
+    "description": "Backend Zulu",
+    "ts": 1766826593
   }
 ]
