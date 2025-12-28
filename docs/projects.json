@@ -1191,5 +1191,16 @@
     "pages_url": null,
     "description": "Backend Zulu",
     "ts": 1766826593
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-zulu-12-28-2025",
+    "name": "data-zulu-12-28-2025",
+    "field": "data science/ml",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Zulu",
+    "ts": 1766912972
   }
 ]
