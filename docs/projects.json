@@ -1202,5 +1202,16 @@
     "pages_url": null,
     "description": "Data Zulu",
     "ts": 1766912972
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "algorithms-systems-quebec-12-29-2025",
+    "name": "algorithms-systems-quebec-12-29-2025",
+    "field": "algorithms/systems",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Algorithms Systems Quebec",
+    "ts": 1766999907
   }
 ]
