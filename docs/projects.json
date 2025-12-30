@@ -1213,5 +1213,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Quebec",
     "ts": 1766999907
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-tango-12-30-2025",
+    "name": "frontend-tango-12-30-2025",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-tango-12-30-2025/",
+    "description": "Frontend Tango",
+    "ts": 1767086065
   }
 ]
