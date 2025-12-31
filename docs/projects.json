@@ -1224,5 +1224,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-tango-12-30-2025/",
     "description": "Frontend Tango",
     "ts": 1767086065
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-romeo-12-31-2025",
+    "name": "frontend-romeo-12-31-2025",
+    "field": "frontend",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": "https://miqdad-dev.github.io/frontend-romeo-12-31-2025/",
+    "description": "Frontend Romeo",
+    "ts": 1767172450
   }
 ]
