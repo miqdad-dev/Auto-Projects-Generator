@@ -1235,5 +1235,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-romeo-12-31-2025/",
     "description": "Frontend Romeo",
     "ts": 1767172450
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-bravo-01-01-2026",
+    "name": "frontend-bravo-01-01-2026",
+    "field": "frontend",
+    "tech_stack": "php-basic",
+    "language": "php",
+    "pages_url": "https://miqdad-dev.github.io/frontend-bravo-01-01-2026/",
+    "description": "Frontend Bravo",
+    "ts": 1767258850
   }
 ]
