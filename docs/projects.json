@@ -1246,5 +1246,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-bravo-01-01-2026/",
     "description": "Frontend Bravo",
     "ts": 1767258850
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-sierra-01-02-2026",
+    "name": "frontend-sierra-01-02-2026",
+    "field": "frontend",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": "https://miqdad-dev.github.io/frontend-sierra-01-02-2026/",
+    "description": "Frontend Sierra",
+    "ts": 1767345216
   }
 ]
