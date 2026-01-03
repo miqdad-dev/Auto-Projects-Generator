@@ -1257,5 +1257,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-sierra-01-02-2026/",
     "description": "Frontend Sierra",
     "ts": 1767345216
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-romeo-01-03-2026",
+    "name": "data-romeo-01-03-2026",
+    "field": "data engineering",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Romeo",
+    "ts": 1767431377
   }
 ]
