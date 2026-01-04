@@ -1268,5 +1268,16 @@
     "pages_url": null,
     "description": "Data Romeo",
     "ts": 1767431377
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-juliet-01-04-2026",
+    "name": "frontend-juliet-01-04-2026",
+    "field": "frontend",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/frontend-juliet-01-04-2026/",
+    "description": "Frontend Juliet",
+    "ts": 1767517752
   }
 ]
