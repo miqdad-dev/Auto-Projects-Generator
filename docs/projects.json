@@ -1279,5 +1279,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-juliet-01-04-2026/",
     "description": "Frontend Juliet",
     "ts": 1767517752
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-lima-01-05-2026",
+    "name": "data-lima-01-05-2026",
+    "field": "data science/ml",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Lima",
+    "ts": 1767604800
   }
 ]
