@@ -1312,5 +1312,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-tango-01-07-2026/",
     "description": "Game Tango",
     "ts": 1767777437
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "backend-papa-01-08-2026",
+    "name": "backend-papa-01-08-2026",
+    "field": "backend",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Backend Papa",
+    "ts": 1767863855
   }
 ]
