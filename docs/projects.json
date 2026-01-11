@@ -1345,5 +1345,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-november-01-10-2026/",
     "description": "Game November",
     "ts": 1768036174
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-kilo-01-11-2026",
+    "name": "game-kilo-01-11-2026",
+    "field": "game dev 2d",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/game-kilo-01-11-2026/",
+    "description": "Game Kilo",
+    "ts": 1768122613
   }
 ]
