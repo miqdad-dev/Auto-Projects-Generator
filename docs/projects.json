@@ -1367,5 +1367,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-charlie-01-12-2026/",
     "description": "Game Charlie",
     "ts": 1768209616
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-xray-01-13-2026",
+    "name": "frontend-xray-01-13-2026",
+    "field": "frontend",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/frontend-xray-01-13-2026/",
+    "description": "Frontend Xray",
+    "ts": 1768295829
   }
 ]
