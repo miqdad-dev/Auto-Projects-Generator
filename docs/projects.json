@@ -1378,5 +1378,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-xray-01-13-2026/",
     "description": "Frontend Xray",
     "ts": 1768295829
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-echo-01-14-2026",
+    "name": "data-echo-01-14-2026",
+    "field": "data engineering",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": null,
+    "description": "Data Echo",
+    "ts": 1768382260
   }
 ]
