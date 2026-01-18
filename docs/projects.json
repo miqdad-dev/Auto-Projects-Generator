@@ -1422,5 +1422,16 @@
     "pages_url": null,
     "description": "Backend Whiskey",
     "ts": 1768640990
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-oscar-01-18-2026",
+    "name": "game-oscar-01-18-2026",
+    "field": "game dev 3d",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": "https://miqdad-dev.github.io/game-oscar-01-18-2026/",
+    "description": "Game Oscar",
+    "ts": 1768727425
   }
 ]
