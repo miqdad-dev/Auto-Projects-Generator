@@ -1444,5 +1444,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Atlas",
     "ts": 1768814510
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-papa-01-20-2026",
+    "name": "game-papa-01-20-2026",
+    "field": "game dev 2d",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/game-papa-01-20-2026/",
+    "description": "Game Papa",
+    "ts": 1768900907
   }
 ]
