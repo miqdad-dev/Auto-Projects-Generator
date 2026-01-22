@@ -1466,5 +1466,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-delta-01-21-2026/",
     "description": "Frontend Delta",
     "ts": 1768987249
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-tango-01-22-2026",
+    "name": "frontend-tango-01-22-2026",
+    "field": "frontend",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": "https://miqdad-dev.github.io/frontend-tango-01-22-2026/",
+    "description": "Frontend Tango",
+    "ts": 1769073673
   }
 ]
