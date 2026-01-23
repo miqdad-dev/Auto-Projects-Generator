@@ -1477,5 +1477,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-tango-01-22-2026/",
     "description": "Frontend Tango",
     "ts": 1769073673
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-golf-01-23-2026",
+    "name": "data-golf-01-23-2026",
+    "field": "data science/ml",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Golf",
+    "ts": 1769159883
   }
 ]
