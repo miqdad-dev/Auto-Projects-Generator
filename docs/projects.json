@@ -1499,5 +1499,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-golf-01-24-2026/",
     "description": "Game Golf",
     "ts": 1769245790
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-uniform-01-25-2026",
+    "name": "data-uniform-01-25-2026",
+    "field": "data science/ml",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Uniform",
+    "ts": 1769332252
   }
 ]
