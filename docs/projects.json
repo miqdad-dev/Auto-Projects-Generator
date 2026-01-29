@@ -1543,5 +1543,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Uniform",
     "ts": 1769592135
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-alpha-01-29-2026",
+    "name": "data-alpha-01-29-2026",
+    "field": "data science/ml",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": null,
+    "description": "Data Alpha",
+    "ts": 1769678971
   }
 ]
