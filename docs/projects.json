@@ -1554,5 +1554,16 @@
     "pages_url": null,
     "description": "Data Alpha",
     "ts": 1769678971
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-quebec-01-30-2026",
+    "name": "frontend-quebec-01-30-2026",
+    "field": "frontend",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/frontend-quebec-01-30-2026/",
+    "description": "Frontend Quebec",
+    "ts": 1769765188
   }
 ]
