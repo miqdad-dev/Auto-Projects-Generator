@@ -1565,5 +1565,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-quebec-01-30-2026/",
     "description": "Frontend Quebec",
     "ts": 1769765188
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-foxtrot-01-31-2026",
+    "name": "data-foxtrot-01-31-2026",
+    "field": "data science/ml",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Foxtrot",
+    "ts": 1769850987
   }
 ]
