@@ -1642,5 +1642,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-ember-02-06-2026/",
     "description": "Game Ember",
     "ts": 1770370248
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-november-02-07-2026",
+    "name": "game-november-02-07-2026",
+    "field": "game dev 2d",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/game-november-02-07-2026/",
+    "description": "Game November",
+    "ts": 1770455894
   }
 ]
