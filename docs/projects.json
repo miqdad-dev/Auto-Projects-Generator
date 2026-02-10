@@ -1675,5 +1675,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Uniform",
     "ts": 1770630328
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-quebec-02-10-2026",
+    "name": "game-quebec-02-10-2026",
+    "field": "game dev 3d",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-quebec-02-10-2026/",
+    "description": "Game Quebec",
+    "ts": 1770716752
   }
 ]
