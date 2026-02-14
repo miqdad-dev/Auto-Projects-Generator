@@ -1719,5 +1719,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Xray",
     "ts": 1770975059
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-november-02-14-2026",
+    "name": "game-november-02-14-2026",
+    "field": "game dev 3d",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-november-02-14-2026/",
+    "description": "Game November",
+    "ts": 1771060740
   }
 ]
