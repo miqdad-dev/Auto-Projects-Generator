@@ -1730,5 +1730,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-november-02-14-2026/",
     "description": "Game November",
     "ts": 1771060740
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-ember-02-15-2026",
+    "name": "data-ember-02-15-2026",
+    "field": "data science/ml",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Ember",
+    "ts": 1771147169
   }
 ]
