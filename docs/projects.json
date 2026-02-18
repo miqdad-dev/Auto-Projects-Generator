@@ -1763,5 +1763,16 @@
     "pages_url": null,
     "description": "Backend India",
     "ts": 1771320935
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-atlas-02-18-2026",
+    "name": "frontend-atlas-02-18-2026",
+    "field": "frontend",
+    "tech_stack": "php-basic",
+    "language": "php",
+    "pages_url": "https://miqdad-dev.github.io/frontend-atlas-02-18-2026/",
+    "description": "Frontend Atlas",
+    "ts": 1771407220
   }
 ]
