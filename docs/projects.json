@@ -1774,5 +1774,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-atlas-02-18-2026/",
     "description": "Frontend Atlas",
     "ts": 1771407220
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-oscar-02-19-2026",
+    "name": "frontend-oscar-02-19-2026",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-oscar-02-19-2026/",
+    "description": "Frontend Oscar",
+    "ts": 1771493578
   }
 ]
