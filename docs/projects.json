@@ -1796,5 +1796,16 @@
     "pages_url": null,
     "description": "Data Delta",
     "ts": 1771579743
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-delta-02-21-2026",
+    "name": "game-delta-02-21-2026",
+    "field": "game dev 2d",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/game-delta-02-21-2026/",
+    "description": "Game Delta",
+    "ts": 1771665486
   }
 ]
