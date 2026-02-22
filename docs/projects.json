@@ -1807,5 +1807,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-delta-02-21-2026/",
     "description": "Game Delta",
     "ts": 1771665486
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-golf-02-22-2026",
+    "name": "data-golf-02-22-2026",
+    "field": "data science/ml",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": null,
+    "description": "Data Golf",
+    "ts": 1771751871
   }
 ]
