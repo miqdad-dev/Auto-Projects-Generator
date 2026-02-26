@@ -1851,5 +1851,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-oscar-02-25-2026/",
     "description": "Game Oscar",
     "ts": 1772012394
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "algorithms-systems-tango-02-26-2026",
+    "name": "algorithms-systems-tango-02-26-2026",
+    "field": "algorithms/systems",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": null,
+    "description": "Algorithms Systems Tango",
+    "ts": 1772098549
   }
 ]
