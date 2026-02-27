@@ -1862,5 +1862,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Tango",
     "ts": 1772098549
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-vega-02-27-2026",
+    "name": "frontend-vega-02-27-2026",
+    "field": "frontend",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": "https://miqdad-dev.github.io/frontend-vega-02-27-2026/",
+    "description": "Frontend Vega",
+    "ts": 1772184524
   }
 ]
