@@ -1873,5 +1873,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-vega-02-27-2026/",
     "description": "Frontend Vega",
     "ts": 1772184524
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-kilo-02-28-2026",
+    "name": "frontend-kilo-02-28-2026",
+    "field": "frontend",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/frontend-kilo-02-28-2026/",
+    "description": "Frontend Kilo",
+    "ts": 1772270085
   }
 ]
