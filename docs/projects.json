@@ -1884,5 +1884,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-kilo-02-28-2026/",
     "description": "Frontend Kilo",
     "ts": 1772270085
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-tango-03-01-2026",
+    "name": "frontend-tango-03-01-2026",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-tango-03-01-2026/",
+    "description": "Frontend Tango",
+    "ts": 1772356615
   }
 ]
