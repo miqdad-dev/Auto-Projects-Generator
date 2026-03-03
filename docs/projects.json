@@ -1906,5 +1906,16 @@
     "pages_url": null,
     "description": "Backend Uniform",
     "ts": 1772444102
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-oscar-03-03-2026",
+    "name": "frontend-oscar-03-03-2026",
+    "field": "frontend",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": "https://miqdad-dev.github.io/frontend-oscar-03-03-2026/",
+    "description": "Frontend Oscar",
+    "ts": 1772530152
   }
 ]
