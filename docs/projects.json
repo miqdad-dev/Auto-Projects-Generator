@@ -1917,5 +1917,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-oscar-03-03-2026/",
     "description": "Frontend Oscar",
     "ts": 1772530152
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "algorithms-systems-lima-03-04-2026",
+    "name": "algorithms-systems-lima-03-04-2026",
+    "field": "algorithms/systems",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Algorithms Systems Lima",
+    "ts": 1772616486
   }
 ]
