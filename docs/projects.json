@@ -1928,5 +1928,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Lima",
     "ts": 1772616486
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-sierra-03-05-2026",
+    "name": "frontend-sierra-03-05-2026",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-sierra-03-05-2026/",
+    "description": "Frontend Sierra",
+    "ts": 1772703020
   }
 ]
