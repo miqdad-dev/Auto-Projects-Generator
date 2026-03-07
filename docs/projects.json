@@ -1950,5 +1950,16 @@
     "pages_url": null,
     "description": "Backend Mike",
     "ts": 1772789161
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-lima-03-07-2026",
+    "name": "frontend-lima-03-07-2026",
+    "field": "frontend",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/frontend-lima-03-07-2026/",
+    "description": "Frontend Lima",
+    "ts": 1772875014
   }
 ]
