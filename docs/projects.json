@@ -1961,5 +1961,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-lima-03-07-2026/",
     "description": "Frontend Lima",
     "ts": 1772875014
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-alpha-03-08-2026",
+    "name": "game-alpha-03-08-2026",
+    "field": "game dev 3d",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-alpha-03-08-2026/",
+    "description": "Game Alpha",
+    "ts": 1772961411
   }
 ]
