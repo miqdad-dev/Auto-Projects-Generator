@@ -1972,5 +1972,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-alpha-03-08-2026/",
     "description": "Game Alpha",
     "ts": 1772961411
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-quebec-03-09-2026",
+    "name": "game-quebec-03-09-2026",
+    "field": "game dev 3d",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/game-quebec-03-09-2026/",
+    "description": "Game Quebec",
+    "ts": 1773048914
   }
 ]
