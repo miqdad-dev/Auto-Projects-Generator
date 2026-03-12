@@ -2005,5 +2005,16 @@
     "pages_url": null,
     "description": "Backend Vega",
     "ts": 1773221453
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "backend-november-03-12-2026",
+    "name": "backend-november-03-12-2026",
+    "field": "backend",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Backend November",
+    "ts": 1773307855
   }
 ]
