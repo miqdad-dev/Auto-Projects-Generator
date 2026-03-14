@@ -2027,5 +2027,16 @@
     "pages_url": null,
     "description": "Backend Kilo",
     "ts": 1773394043
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-juliet-03-14-2026",
+    "name": "data-juliet-03-14-2026",
+    "field": "data science/ml",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": null,
+    "description": "Data Juliet",
+    "ts": 1773480049
   }
 ]
