@@ -2038,5 +2038,16 @@
     "pages_url": null,
     "description": "Data Juliet",
     "ts": 1773480049
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-victor-03-15-2026",
+    "name": "game-victor-03-15-2026",
+    "field": "game dev 2d",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/game-victor-03-15-2026/",
+    "description": "Game Victor",
+    "ts": 1773566503
   }
 ]
