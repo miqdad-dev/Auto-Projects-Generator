@@ -2104,5 +2104,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Alpha",
     "ts": 1773998894
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-oscar-03-21-2026",
+    "name": "data-oscar-03-21-2026",
+    "field": "data science/ml",
+    "tech_stack": "php-basic",
+    "language": "php",
+    "pages_url": null,
+    "description": "Data Oscar",
+    "ts": 1774084784
   }
 ]
