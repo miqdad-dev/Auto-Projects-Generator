@@ -2126,5 +2126,16 @@
     "pages_url": null,
     "description": "Data Uniform",
     "ts": 1774171196
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-tango-03-23-2026",
+    "name": "game-tango-03-23-2026",
+    "field": "game dev 3d",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-tango-03-23-2026/",
+    "description": "Game Tango",
+    "ts": 1774259424
   }
 ]
