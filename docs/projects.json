@@ -2137,5 +2137,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-tango-03-23-2026/",
     "description": "Game Tango",
     "ts": 1774259424
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "algorithms-systems-yankee-03-24-2026",
+    "name": "algorithms-systems-yankee-03-24-2026",
+    "field": "algorithms/systems",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": null,
+    "description": "Algorithms Systems Yankee",
+    "ts": 1774345337
   }
 ]
