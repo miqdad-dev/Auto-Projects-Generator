@@ -2170,5 +2170,16 @@
     "pages_url": null,
     "description": "Data Kilo",
     "ts": 1774518534
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-oscar-03-27-2026",
+    "name": "game-oscar-03-27-2026",
+    "field": "game dev 2d",
+    "tech_stack": "php-basic",
+    "language": "php",
+    "pages_url": "https://miqdad-dev.github.io/game-oscar-03-27-2026/",
+    "description": "Game Oscar",
+    "ts": 1774604467
   }
 ]
