@@ -2181,5 +2181,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-oscar-03-27-2026/",
     "description": "Game Oscar",
     "ts": 1774604467
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-vega-03-28-2026",
+    "name": "game-vega-03-28-2026",
+    "field": "game dev 2d",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-vega-03-28-2026/",
+    "description": "Game Vega",
+    "ts": 1774689856
   }
 ]
