@@ -2192,5 +2192,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-vega-03-28-2026/",
     "description": "Game Vega",
     "ts": 1774689856
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-xray-03-29-2026",
+    "name": "data-xray-03-29-2026",
+    "field": "data engineering",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": null,
+    "description": "Data Xray",
+    "ts": 1774776290
   }
 ]
