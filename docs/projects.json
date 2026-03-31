@@ -2214,5 +2214,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-mike-03-30-2026/",
     "description": "Game Mike",
     "ts": 1774865014
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-vega-03-31-2026",
+    "name": "data-vega-03-31-2026",
+    "field": "data science/ml",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": null,
+    "description": "Data Vega",
+    "ts": 1774950730
   }
 ]
