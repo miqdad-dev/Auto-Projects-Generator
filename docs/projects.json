@@ -2225,5 +2225,16 @@
     "pages_url": null,
     "description": "Data Vega",
     "ts": 1774950730
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-vega-04-01-2026",
+    "name": "game-vega-04-01-2026",
+    "field": "game dev 3d",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": "https://miqdad-dev.github.io/game-vega-04-01-2026/",
+    "description": "Game Vega",
+    "ts": 1775037363
   }
 ]
