@@ -2247,5 +2247,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-oscar-04-02-2026/",
     "description": "Game Oscar",
     "ts": 1775123307
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "algorithms-systems-yankee-04-03-2026",
+    "name": "algorithms-systems-yankee-04-03-2026",
+    "field": "algorithms/systems",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Algorithms Systems Yankee",
+    "ts": 1775209277
   }
 ]
