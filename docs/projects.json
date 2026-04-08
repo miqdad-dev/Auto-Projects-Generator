@@ -2280,5 +2280,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-echo-04-07-2026/",
     "description": "Frontend Echo",
     "ts": 1775555717
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-uniform-04-08-2026",
+    "name": "frontend-uniform-04-08-2026",
+    "field": "frontend",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": "https://miqdad-dev.github.io/frontend-uniform-04-08-2026/",
+    "description": "Frontend Uniform",
+    "ts": 1775642142
   }
 ]
