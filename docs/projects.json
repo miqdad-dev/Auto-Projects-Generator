@@ -2291,5 +2291,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-uniform-04-08-2026/",
     "description": "Frontend Uniform",
     "ts": 1775642142
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-bravo-04-10-2026",
+    "name": "frontend-bravo-04-10-2026",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-bravo-04-10-2026/",
+    "description": "Frontend Bravo",
+    "ts": 1775815043
   }
 ]
