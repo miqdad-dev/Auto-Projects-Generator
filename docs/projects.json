@@ -2302,5 +2302,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-bravo-04-10-2026/",
     "description": "Frontend Bravo",
     "ts": 1775815043
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-ember-04-11-2026",
+    "name": "frontend-ember-04-11-2026",
+    "field": "frontend",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/frontend-ember-04-11-2026/",
+    "description": "Frontend Ember",
+    "ts": 1775899718
   }
 ]
