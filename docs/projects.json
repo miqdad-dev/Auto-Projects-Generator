@@ -2357,5 +2357,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-golf-04-16-2026/",
     "description": "Frontend Golf",
     "ts": 1776333870
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-delta-04-17-2026",
+    "name": "game-delta-04-17-2026",
+    "field": "game dev 2d",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": "https://miqdad-dev.github.io/game-delta-04-17-2026/",
+    "description": "Game Delta",
+    "ts": 1776420124
   }
 ]
