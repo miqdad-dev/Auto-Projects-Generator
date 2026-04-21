@@ -2401,5 +2401,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-yankee-04-20-2026/",
     "description": "Game Yankee",
     "ts": 1776680716
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-charlie-04-21-2026",
+    "name": "game-charlie-04-21-2026",
+    "field": "game dev 2d",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/game-charlie-04-21-2026/",
+    "description": "Game Charlie",
+    "ts": 1776766075
   }
 ]
