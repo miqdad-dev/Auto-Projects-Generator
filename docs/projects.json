@@ -2423,5 +2423,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-whiskey-04-22-2026/",
     "description": "Game Whiskey",
     "ts": 1776852432
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "backend-juliet-04-23-2026",
+    "name": "backend-juliet-04-23-2026",
+    "field": "backend",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Backend Juliet",
+    "ts": 1776939087
   }
 ]
