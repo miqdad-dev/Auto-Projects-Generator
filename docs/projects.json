@@ -2456,5 +2456,16 @@
     "pages_url": null,
     "description": "Data Echo",
     "ts": 1777109973
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-sierra-04-26-2026",
+    "name": "game-sierra-04-26-2026",
+    "field": "game dev 3d",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/game-sierra-04-26-2026/",
+    "description": "Game Sierra",
+    "ts": 1777196449
   }
 ]
