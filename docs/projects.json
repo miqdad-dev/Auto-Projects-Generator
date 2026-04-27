@@ -2467,5 +2467,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-sierra-04-26-2026/",
     "description": "Game Sierra",
     "ts": 1777196449
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-delta-04-27-2026",
+    "name": "game-delta-04-27-2026",
+    "field": "game dev 3d",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-delta-04-27-2026/",
+    "description": "Game Delta",
+    "ts": 1777287044
   }
 ]
