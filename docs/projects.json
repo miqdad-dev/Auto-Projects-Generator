@@ -2478,5 +2478,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-delta-04-27-2026/",
     "description": "Game Delta",
     "ts": 1777287044
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-uniform-04-28-2026",
+    "name": "frontend-uniform-04-28-2026",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-uniform-04-28-2026/",
+    "description": "Frontend Uniform",
+    "ts": 1777373451
   }
 ]
