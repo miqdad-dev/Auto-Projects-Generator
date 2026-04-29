@@ -2489,5 +2489,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-uniform-04-28-2026/",
     "description": "Frontend Uniform",
     "ts": 1777373451
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-delta-04-29-2026",
+    "name": "data-delta-04-29-2026",
+    "field": "data engineering",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": null,
+    "description": "Data Delta",
+    "ts": 1777459480
   }
 ]
