@@ -2533,5 +2533,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-mike-05-02-2026/",
     "description": "Frontend Mike",
     "ts": 1777715454
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "backend-bravo-05-03-2026",
+    "name": "backend-bravo-05-03-2026",
+    "field": "backend",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": null,
+    "description": "Backend Bravo",
+    "ts": 1777802241
   }
 ]
