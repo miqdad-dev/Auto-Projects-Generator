@@ -2555,5 +2555,16 @@
     "pages_url": null,
     "description": "Data Mike",
     "ts": 1777891931
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-india-05-05-2026",
+    "name": "data-india-05-05-2026",
+    "field": "data science/ml",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": null,
+    "description": "Data India",
+    "ts": 1777976783
   }
 ]
