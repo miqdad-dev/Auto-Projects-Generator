@@ -2577,5 +2577,16 @@
     "pages_url": null,
     "description": "Data Papa",
     "ts": 1778064748
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-whiskey-05-07-2026",
+    "name": "data-whiskey-05-07-2026",
+    "field": "data science/ml",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": null,
+    "description": "Data Whiskey",
+    "ts": 1778151380
   }
 ]
