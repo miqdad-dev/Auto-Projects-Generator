@@ -2610,5 +2610,16 @@
     "pages_url": null,
     "description": "Data Echo",
     "ts": 1778320710
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-foxtrot-05-10-2026",
+    "name": "frontend-foxtrot-05-10-2026",
+    "field": "frontend",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/frontend-foxtrot-05-10-2026/",
+    "description": "Frontend Foxtrot",
+    "ts": 1778407444
   }
 ]
