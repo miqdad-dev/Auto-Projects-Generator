@@ -2621,5 +2621,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-foxtrot-05-10-2026/",
     "description": "Frontend Foxtrot",
     "ts": 1778407444
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-echo-05-11-2026",
+    "name": "game-echo-05-11-2026",
+    "field": "game dev 3d",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": "https://miqdad-dev.github.io/game-echo-05-11-2026/",
+    "description": "Game Echo",
+    "ts": 1778500406
   }
 ]
