@@ -2632,5 +2632,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-echo-05-11-2026/",
     "description": "Game Echo",
     "ts": 1778500406
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-whiskey-05-12-2026",
+    "name": "game-whiskey-05-12-2026",
+    "field": "game dev 3d",
+    "tech_stack": "php-basic",
+    "language": "php",
+    "pages_url": "https://miqdad-dev.github.io/game-whiskey-05-12-2026/",
+    "description": "Game Whiskey",
+    "ts": 1778584100
   }
 ]
