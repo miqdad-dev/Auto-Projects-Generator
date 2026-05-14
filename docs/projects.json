@@ -2654,5 +2654,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Lima",
     "ts": 1778671318
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-oscar-05-14-2026",
+    "name": "frontend-oscar-05-14-2026",
+    "field": "frontend",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/frontend-oscar-05-14-2026/",
+    "description": "Frontend Oscar",
+    "ts": 1778756780
   }
 ]
