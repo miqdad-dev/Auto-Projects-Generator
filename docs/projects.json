@@ -2665,5 +2665,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-oscar-05-14-2026/",
     "description": "Frontend Oscar",
     "ts": 1778756780
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-alpha-05-15-2026",
+    "name": "data-alpha-05-15-2026",
+    "field": "data science/ml",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Alpha",
+    "ts": 1778843322
   }
 ]
