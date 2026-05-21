@@ -2731,5 +2731,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-orion-05-20-2026/",
     "description": "Frontend Orion",
     "ts": 1779277159
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-charlie-05-21-2026",
+    "name": "game-charlie-05-21-2026",
+    "field": "game dev 3d",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/game-charlie-05-21-2026/",
+    "description": "Game Charlie",
+    "ts": 1779364706
   }
 ]
