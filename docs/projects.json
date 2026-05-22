@@ -2742,5 +2742,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-charlie-05-21-2026/",
     "description": "Game Charlie",
     "ts": 1779364706
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-hotel-05-22-2026",
+    "name": "data-hotel-05-22-2026",
+    "field": "data science/ml",
+    "tech_stack": "php-basic",
+    "language": "php",
+    "pages_url": null,
+    "description": "Data Hotel",
+    "ts": 1779449733
   }
 ]
