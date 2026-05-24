@@ -2764,5 +2764,16 @@
     "pages_url": null,
     "description": "Backend Zulu",
     "ts": 1779531541
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-alpha-05-24-2026",
+    "name": "frontend-alpha-05-24-2026",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-alpha-05-24-2026/",
+    "description": "Frontend Alpha",
+    "ts": 1779618251
   }
 ]
