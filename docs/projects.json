@@ -2786,5 +2786,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-delta-05-25-2026/",
     "description": "Game Delta",
     "ts": 1779711314
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "backend-charlie-05-28-2026",
+    "name": "backend-charlie-05-28-2026",
+    "field": "backend",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Backend Charlie",
+    "ts": 1779970613
   }
 ]
