@@ -2797,5 +2797,16 @@
     "pages_url": null,
     "description": "Backend Charlie",
     "ts": 1779970613
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-bravo-05-29-2026",
+    "name": "game-bravo-05-29-2026",
+    "field": "game dev 2d",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": "https://miqdad-dev.github.io/game-bravo-05-29-2026/",
+    "description": "Game Bravo",
+    "ts": 1780055978
   }
 ]
