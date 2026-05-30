@@ -2808,5 +2808,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-bravo-05-29-2026/",
     "description": "Game Bravo",
     "ts": 1780055978
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-yankee-05-30-2026",
+    "name": "game-yankee-05-30-2026",
+    "field": "game dev 3d",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": "https://miqdad-dev.github.io/game-yankee-05-30-2026/",
+    "description": "Game Yankee",
+    "ts": 1780137683
   }
 ]
