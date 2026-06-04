@@ -2863,5 +2863,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Bravo",
     "ts": 1780491749
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-india-06-04-2026",
+    "name": "data-india-06-04-2026",
+    "field": "data engineering",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": null,
+    "description": "Data India",
+    "ts": 1780573308
   }
 ]
