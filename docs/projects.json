@@ -2896,5 +2896,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-india-06-06-2026/",
     "description": "Frontend India",
     "ts": 1780742849
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-zulu-06-07-2026",
+    "name": "game-zulu-06-07-2026",
+    "field": "game dev 2d",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/game-zulu-06-07-2026/",
+    "description": "Game Zulu",
+    "ts": 1780829902
   }
 ]
