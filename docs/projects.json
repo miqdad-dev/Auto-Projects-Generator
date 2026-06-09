@@ -2918,5 +2918,16 @@
     "pages_url": null,
     "description": "Data Juliet",
     "ts": 1780923247
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-yankee-06-09-2026",
+    "name": "game-yankee-06-09-2026",
+    "field": "game dev 3d",
+    "tech_stack": "php-basic",
+    "language": "php",
+    "pages_url": "https://miqdad-dev.github.io/game-yankee-06-09-2026/",
+    "description": "Game Yankee",
+    "ts": 1781005823
   }
 ]
