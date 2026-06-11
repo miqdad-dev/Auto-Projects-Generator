@@ -2940,5 +2940,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Golf",
     "ts": 1781093452
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "backend-whiskey-06-11-2026",
+    "name": "backend-whiskey-06-11-2026",
+    "field": "backend",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Backend Whiskey",
+    "ts": 1781181271
   }
 ]
