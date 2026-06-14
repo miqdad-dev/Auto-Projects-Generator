@@ -2973,5 +2973,16 @@
     "pages_url": null,
     "description": "Backend Zulu",
     "ts": 1781348795
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-atlas-06-14-2026",
+    "name": "game-atlas-06-14-2026",
+    "field": "game dev 3d",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": "https://miqdad-dev.github.io/game-atlas-06-14-2026/",
+    "description": "Game Atlas",
+    "ts": 1781436049
   }
 ]
