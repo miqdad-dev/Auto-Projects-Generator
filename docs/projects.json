@@ -2984,5 +2984,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-atlas-06-14-2026/",
     "description": "Game Atlas",
     "ts": 1781436049
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-alpha-06-15-2026",
+    "name": "data-alpha-06-15-2026",
+    "field": "data engineering",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Alpha",
+    "ts": 1781535116
   }
 ]
