@@ -3017,5 +3017,16 @@
     "pages_url": null,
     "description": "Backend Juliet",
     "ts": 1781700170
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-romeo-06-18-2026",
+    "name": "game-romeo-06-18-2026",
+    "field": "game dev 2d",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": "https://miqdad-dev.github.io/game-romeo-06-18-2026/",
+    "description": "Game Romeo",
+    "ts": 1781784891
   }
 ]
