@@ -3039,5 +3039,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Kilo",
     "ts": 1781872690
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-nova-06-20-2026",
+    "name": "data-nova-06-20-2026",
+    "field": "data engineering",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": null,
+    "description": "Data Nova",
+    "ts": 1781953540
   }
 ]
