@@ -3050,5 +3050,16 @@
     "pages_url": null,
     "description": "Data Nova",
     "ts": 1781953540
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-zulu-06-21-2026",
+    "name": "frontend-zulu-06-21-2026",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-zulu-06-21-2026/",
+    "description": "Frontend Zulu",
+    "ts": 1782041803
   }
 ]
