@@ -3061,5 +3061,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-zulu-06-21-2026/",
     "description": "Frontend Zulu",
     "ts": 1782041803
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-ember-06-22-2026",
+    "name": "game-ember-06-22-2026",
+    "field": "game dev 3d",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/game-ember-06-22-2026/",
+    "description": "Game Ember",
+    "ts": 1782138004
   }
 ]
