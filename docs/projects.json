@@ -3083,5 +3083,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Whiskey",
     "ts": 1782215376
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-whiskey-06-24-2026",
+    "name": "data-whiskey-06-24-2026",
+    "field": "data science/ml",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Whiskey",
+    "ts": 1782300934
   }
 ]
