@@ -3127,5 +3127,16 @@
     "pages_url": null,
     "description": "Backend Echo",
     "ts": 1782557424
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-november-06-28-2026",
+    "name": "data-november-06-28-2026",
+    "field": "data engineering",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": null,
+    "description": "Data November",
+    "ts": 1782644213
   }
 ]
