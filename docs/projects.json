@@ -3171,5 +3171,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-juliet-07-01-2026/",
     "description": "Frontend Juliet",
     "ts": 1782906456
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "backend-tango-07-02-2026",
+    "name": "backend-tango-07-02-2026",
+    "field": "backend",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": null,
+    "description": "Backend Tango",
+    "ts": 1782991453
   }
 ]
