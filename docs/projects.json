@@ -3193,5 +3193,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-yankee-07-03-2026/",
     "description": "Game Yankee",
     "ts": 1783077727
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-sierra-07-04-2026",
+    "name": "game-sierra-07-04-2026",
+    "field": "game dev 3d",
+    "tech_stack": "php-basic",
+    "language": "php",
+    "pages_url": "https://miqdad-dev.github.io/game-sierra-07-04-2026/",
+    "description": "Game Sierra",
+    "ts": 1783161943
   }
 ]
