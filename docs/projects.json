@@ -3248,5 +3248,16 @@
     "pages_url": null,
     "description": "Data Whiskey",
     "ts": 1783507930
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-whiskey-07-09-2026",
+    "name": "game-whiskey-07-09-2026",
+    "field": "game dev 2d",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-whiskey-07-09-2026/",
+    "description": "Game Whiskey",
+    "ts": 1783597307
   }
 ]
