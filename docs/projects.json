@@ -3292,5 +3292,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-orion-07-12-2026/",
     "description": "Game Orion",
     "ts": 1783851372
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "algorithms-systems-charlie-07-13-2026",
+    "name": "algorithms-systems-charlie-07-13-2026",
+    "field": "algorithms/systems",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": null,
+    "description": "Algorithms Systems Charlie",
+    "ts": 1783943190
   }
 ]
