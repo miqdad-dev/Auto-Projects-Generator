@@ -3303,5 +3303,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Charlie",
     "ts": 1783943190
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-whiskey-07-14-2026",
+    "name": "data-whiskey-07-14-2026",
+    "field": "data science/ml",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Whiskey",
+    "ts": 1784024837
   }
 ]
