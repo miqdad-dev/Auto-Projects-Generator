@@ -3347,5 +3347,16 @@
     "pages_url": null,
     "description": "Backend Ember",
     "ts": 1784284068
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "algorithms-systems-vega-07-18-2026",
+    "name": "algorithms-systems-vega-07-18-2026",
+    "field": "algorithms/systems",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": null,
+    "description": "Algorithms Systems Vega",
+    "ts": 1784369162
   }
 ]
