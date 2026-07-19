@@ -3358,5 +3358,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Vega",
     "ts": 1784369162
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-juliet-07-19-2026",
+    "name": "frontend-juliet-07-19-2026",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-juliet-07-19-2026/",
+    "description": "Frontend Juliet",
+    "ts": 1784456235
   }
 ]
