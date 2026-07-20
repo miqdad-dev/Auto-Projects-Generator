@@ -3369,5 +3369,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-juliet-07-19-2026/",
     "description": "Frontend Juliet",
     "ts": 1784456235
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-bravo-07-20-2026",
+    "name": "game-bravo-07-20-2026",
+    "field": "game dev 2d",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/game-bravo-07-20-2026/",
+    "description": "Game Bravo",
+    "ts": 1784547093
   }
 ]
