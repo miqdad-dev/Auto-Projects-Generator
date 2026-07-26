@@ -3435,5 +3435,16 @@
     "pages_url": null,
     "description": "Data Whiskey",
     "ts": 1784974713
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "backend-golf-07-26-2026",
+    "name": "backend-golf-07-26-2026",
+    "field": "backend",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": null,
+    "description": "Backend Golf",
+    "ts": 1785061516
   }
 ]
