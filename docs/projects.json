@@ -3457,5 +3457,16 @@
     "pages_url": null,
     "description": "Backend Echo",
     "ts": 1785154026
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "backend-india-07-28-2026",
+    "name": "backend-india-07-28-2026",
+    "field": "backend",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": null,
+    "description": "Backend India",
+    "ts": 1785236801
   }
 ]
