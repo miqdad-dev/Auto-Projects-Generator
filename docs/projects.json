@@ -3479,5 +3479,16 @@
     "pages_url": null,
     "description": "Backend Lima",
     "ts": 1785323499
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-ember-07-30-2026",
+    "name": "game-ember-07-30-2026",
+    "field": "game dev 2d",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": "https://miqdad-dev.github.io/game-ember-07-30-2026/",
+    "description": "Game Ember",
+    "ts": 1785408930
   }
 ]
