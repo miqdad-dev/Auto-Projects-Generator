@@ -3490,5 +3490,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-ember-07-30-2026/",
     "description": "Game Ember",
     "ts": 1785408930
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-romeo-07-31-2026",
+    "name": "data-romeo-07-31-2026",
+    "field": "data engineering",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Romeo",
+    "ts": 1785496439
   }
 ]
