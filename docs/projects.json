@@ -3523,5 +3523,16 @@
     "pages_url": null,
     "description": "Backend Juliet",
     "ts": 1785666157
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-xray-08-03-2026",
+    "name": "game-xray-08-03-2026",
+    "field": "game dev 2d",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-xray-08-03-2026/",
+    "description": "Game Xray",
+    "ts": 1785758902
   }
 ]
