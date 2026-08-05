@@ -3545,5 +3545,16 @@
     "pages_url": null,
     "description": "Backend Vega",
     "ts": 1785841952
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-romeo-08-05-2026",
+    "name": "game-romeo-08-05-2026",
+    "field": "game dev 3d",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-romeo-08-05-2026/",
+    "description": "Game Romeo",
+    "ts": 1785928182
   }
 ]
