@@ -3556,5 +3556,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-romeo-08-05-2026/",
     "description": "Game Romeo",
     "ts": 1785928182
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-lima-08-06-2026",
+    "name": "data-lima-08-06-2026",
+    "field": "data engineering",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": null,
+    "description": "Data Lima",
+    "ts": 1786014585
   }
 ]
