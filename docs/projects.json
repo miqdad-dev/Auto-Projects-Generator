@@ -3578,5 +3578,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-bravo-08-07-2026/",
     "description": "Game Bravo",
     "ts": 1786095956
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-bravo-08-08-2026",
+    "name": "game-bravo-08-08-2026",
+    "field": "game dev 2d",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-bravo-08-08-2026/",
+    "description": "Game Bravo",
+    "ts": 1786181051
   }
 ]
