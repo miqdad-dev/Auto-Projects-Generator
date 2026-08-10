@@ -3600,5 +3600,16 @@
     "pages_url": null,
     "description": "Data Ember",
     "ts": 1786267536
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-foxtrot-08-10-2026",
+    "name": "frontend-foxtrot-08-10-2026",
+    "field": "frontend",
+    "tech_stack": "php-basic",
+    "language": "php",
+    "pages_url": "https://miqdad-dev.github.io/frontend-foxtrot-08-10-2026/",
+    "description": "Frontend Foxtrot",
+    "ts": 1786356334
   }
 ]
