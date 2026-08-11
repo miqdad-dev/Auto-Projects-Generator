@@ -3611,5 +3611,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-foxtrot-08-10-2026/",
     "description": "Frontend Foxtrot",
     "ts": 1786356334
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-orion-08-11-2026",
+    "name": "data-orion-08-11-2026",
+    "field": "data engineering",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": null,
+    "description": "Data Orion",
+    "ts": 1786441588
   }
 ]
