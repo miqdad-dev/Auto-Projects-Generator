@@ -3644,5 +3644,16 @@
     "pages_url": null,
     "description": "Data Juliet",
     "ts": 1786614667
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-alpha-08-14-2026",
+    "name": "frontend-alpha-08-14-2026",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-alpha-08-14-2026/",
+    "description": "Frontend Alpha",
+    "ts": 1786700896
   }
 ]
