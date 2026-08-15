@@ -3655,5 +3655,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-alpha-08-14-2026/",
     "description": "Frontend Alpha",
     "ts": 1786700896
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-sierra-08-15-2026",
+    "name": "frontend-sierra-08-15-2026",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-sierra-08-15-2026/",
+    "description": "Frontend Sierra",
+    "ts": 1786785207
   }
 ]
