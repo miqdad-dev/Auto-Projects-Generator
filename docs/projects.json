@@ -3666,5 +3666,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-sierra-08-15-2026/",
     "description": "Frontend Sierra",
     "ts": 1786785207
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-india-08-16-2026",
+    "name": "game-india-08-16-2026",
+    "field": "game dev 3d",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/game-india-08-16-2026/",
+    "description": "Game India",
+    "ts": 1786871650
   }
 ]
