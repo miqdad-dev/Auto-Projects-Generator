@@ -3677,5 +3677,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-india-08-16-2026/",
     "description": "Game India",
     "ts": 1786871650
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-kilo-08-17-2026",
+    "name": "data-kilo-08-17-2026",
+    "field": "data science/ml",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": null,
+    "description": "Data Kilo",
+    "ts": 1786958811
   }
 ]
