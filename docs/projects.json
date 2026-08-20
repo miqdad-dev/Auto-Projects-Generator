@@ -3710,5 +3710,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-papa-08-19-2026/",
     "description": "Frontend Papa",
     "ts": 1787131180
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-yankee-08-20-2026",
+    "name": "data-yankee-08-20-2026",
+    "field": "data engineering",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": null,
+    "description": "Data Yankee",
+    "ts": 1787217636
   }
 ]
