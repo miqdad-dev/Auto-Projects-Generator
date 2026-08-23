@@ -3743,5 +3743,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-alpha-08-22-2026/",
     "description": "Frontend Alpha",
     "ts": 1787390094
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-ember-08-23-2026",
+    "name": "frontend-ember-08-23-2026",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-ember-08-23-2026/",
+    "description": "Frontend Ember",
+    "ts": 1787476486
   }
 ]
