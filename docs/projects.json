@@ -3776,5 +3776,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Zulu",
     "ts": 1787649717
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-uniform-08-26-2026",
+    "name": "frontend-uniform-08-26-2026",
+    "field": "frontend",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": "https://miqdad-dev.github.io/frontend-uniform-08-26-2026/",
+    "description": "Frontend Uniform",
+    "ts": 1787736447
   }
 ]
