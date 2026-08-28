@@ -3798,5 +3798,16 @@
     "pages_url": null,
     "description": "Data Nova",
     "ts": 1787858256
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-ember-08-28-2026",
+    "name": "game-ember-08-28-2026",
+    "field": "game dev 2d",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/game-ember-08-28-2026/",
+    "description": "Game Ember",
+    "ts": 1787948814
   }
 ]
