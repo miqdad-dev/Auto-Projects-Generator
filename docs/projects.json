@@ -3809,5 +3809,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-ember-08-28-2026/",
     "description": "Game Ember",
     "ts": 1787948814
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-kilo-08-29-2026",
+    "name": "data-kilo-08-29-2026",
+    "field": "data science/ml",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": null,
+    "description": "Data Kilo",
+    "ts": 1788012154
   }
 ]
