@@ -3842,5 +3842,16 @@
     "pages_url": null,
     "description": "Data Quebec",
     "ts": 1788193555
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-kilo-09-01-2026",
+    "name": "game-kilo-09-01-2026",
+    "field": "game dev 3d",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-kilo-09-01-2026/",
+    "description": "Game Kilo",
+    "ts": 1788270241
   }
 ]
