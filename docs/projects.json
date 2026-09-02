@@ -3853,5 +3853,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-kilo-09-01-2026/",
     "description": "Game Kilo",
     "ts": 1788270241
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-delta-09-02-2026",
+    "name": "data-delta-09-02-2026",
+    "field": "data engineering",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Delta",
+    "ts": 1788354066
   }
 ]
