@@ -3864,5 +3864,16 @@
     "pages_url": null,
     "description": "Data Delta",
     "ts": 1788354066
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-india-09-03-2026",
+    "name": "frontend-india-09-03-2026",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-india-09-03-2026/",
+    "description": "Frontend India",
+    "ts": 1788440579
   }
 ]
