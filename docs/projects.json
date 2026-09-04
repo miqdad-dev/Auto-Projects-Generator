@@ -3875,5 +3875,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-india-09-03-2026/",
     "description": "Frontend India",
     "ts": 1788440579
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "backend-golf-09-04-2026",
+    "name": "backend-golf-09-04-2026",
+    "field": "backend",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": null,
+    "description": "Backend Golf",
+    "ts": 1788526702
   }
 ]
