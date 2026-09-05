@@ -3886,5 +3886,16 @@
     "pages_url": null,
     "description": "Backend Golf",
     "ts": 1788526702
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-zulu-09-05-2026",
+    "name": "frontend-zulu-09-05-2026",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-zulu-09-05-2026/",
+    "description": "Frontend Zulu",
+    "ts": 1788610205
   }
 ]
