@@ -3941,5 +3941,16 @@
     "pages_url": null,
     "description": "Data Alpha",
     "ts": 1788959511
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-vega-09-10-2026",
+    "name": "frontend-vega-09-10-2026",
+    "field": "frontend",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": "https://miqdad-dev.github.io/frontend-vega-09-10-2026/",
+    "description": "Frontend Vega",
+    "ts": 1789045790
   }
 ]
