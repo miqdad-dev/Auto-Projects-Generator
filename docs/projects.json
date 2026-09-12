@@ -3963,5 +3963,16 @@
     "pages_url": null,
     "description": "Data Oscar",
     "ts": 1789131806
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-vega-09-12-2026",
+    "name": "game-vega-09-12-2026",
+    "field": "game dev 3d",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-vega-09-12-2026/",
+    "description": "Game Vega",
+    "ts": 1789216008
   }
 ]
