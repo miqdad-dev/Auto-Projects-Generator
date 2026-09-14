@@ -3985,5 +3985,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Kilo",
     "ts": 1789306170
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-ember-09-14-2026",
+    "name": "game-ember-09-14-2026",
+    "field": "game dev 3d",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": "https://miqdad-dev.github.io/game-ember-09-14-2026/",
+    "description": "Game Ember",
+    "ts": 1789399072
   }
 ]
