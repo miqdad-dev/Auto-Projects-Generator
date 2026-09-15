@@ -3996,5 +3996,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-ember-09-14-2026/",
     "description": "Game Ember",
     "ts": 1789399072
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-oscar-09-15-2026",
+    "name": "game-oscar-09-15-2026",
+    "field": "game dev 3d",
+    "tech_stack": "python-fastapi",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/game-oscar-09-15-2026/",
+    "description": "Game Oscar",
+    "ts": 1789480491
   }
 ]
