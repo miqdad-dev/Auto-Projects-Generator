@@ -4018,5 +4018,16 @@
     "pages_url": null,
     "description": "Algorithms Systems November",
     "ts": 1789566464
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-papa-09-17-2026",
+    "name": "frontend-papa-09-17-2026",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-papa-09-17-2026/",
+    "description": "Frontend Papa",
+    "ts": 1789652995
   }
 ]
