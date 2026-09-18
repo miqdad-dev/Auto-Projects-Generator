@@ -4029,5 +4029,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-papa-09-17-2026/",
     "description": "Frontend Papa",
     "ts": 1789652995
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-sierra-09-18-2026",
+    "name": "data-sierra-09-18-2026",
+    "field": "data science/ml",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Sierra",
+    "ts": 1789737116
   }
 ]
