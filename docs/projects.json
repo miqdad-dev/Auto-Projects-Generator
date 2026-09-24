@@ -4095,5 +4095,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Whiskey",
     "ts": 1790171645
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-papa-09-24-2026",
+    "name": "frontend-papa-09-24-2026",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-papa-09-24-2026/",
+    "description": "Frontend Papa",
+    "ts": 1790257861
   }
 ]
