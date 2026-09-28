@@ -4139,5 +4139,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-kilo-09-27-2026/",
     "description": "Frontend Kilo",
     "ts": 1790518888
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-nova-09-28-2026",
+    "name": "frontend-nova-09-28-2026",
+    "field": "frontend",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": "https://miqdad-dev.github.io/frontend-nova-09-28-2026/",
+    "description": "Frontend Nova",
+    "ts": 1790615114
   }
 ]
