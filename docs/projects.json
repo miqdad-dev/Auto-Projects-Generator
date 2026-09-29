@@ -4150,5 +4150,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-nova-09-28-2026/",
     "description": "Frontend Nova",
     "ts": 1790615114
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-foxtrot-09-29-2026",
+    "name": "game-foxtrot-09-29-2026",
+    "field": "game dev 2d",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": "https://miqdad-dev.github.io/game-foxtrot-09-29-2026/",
+    "description": "Game Foxtrot",
+    "ts": 1790694598
   }
 ]
