@@ -4183,5 +4183,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Whiskey",
     "ts": 1790869546
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-papa-10-02-2026",
+    "name": "game-papa-10-02-2026",
+    "field": "game dev 2d",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": "https://miqdad-dev.github.io/game-papa-10-02-2026/",
+    "description": "Game Papa",
+    "ts": 1790953641
   }
 ]
