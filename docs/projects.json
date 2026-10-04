@@ -4205,5 +4205,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-tango-10-03-2026/",
     "description": "Game Tango",
     "ts": 1791035964
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-papa-10-04-2026",
+    "name": "data-papa-10-04-2026",
+    "field": "data science/ml",
+    "tech_stack": "java-maven",
+    "language": "java",
+    "pages_url": null,
+    "description": "Data Papa",
+    "ts": 1791124076
   }
 ]
