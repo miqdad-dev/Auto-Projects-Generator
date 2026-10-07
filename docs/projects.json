@@ -4238,5 +4238,16 @@
     "pages_url": null,
     "description": "Algorithms Systems November",
     "ts": 1791300594
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-orion-10-07-2026",
+    "name": "frontend-orion-10-07-2026",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-orion-10-07-2026/",
+    "description": "Frontend Orion",
+    "ts": 1791388263
   }
 ]
