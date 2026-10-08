@@ -4249,5 +4249,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-orion-10-07-2026/",
     "description": "Frontend Orion",
     "ts": 1791388263
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-foxtrot-10-08-2026",
+    "name": "data-foxtrot-10-08-2026",
+    "field": "data engineering",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Foxtrot",
+    "ts": 1791474869
   }
 ]
