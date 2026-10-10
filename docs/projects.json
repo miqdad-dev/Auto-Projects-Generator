@@ -4271,5 +4271,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Papa",
     "ts": 1791560226
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-oscar-10-10-2026",
+    "name": "game-oscar-10-10-2026",
+    "field": "game dev 2d",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/game-oscar-10-10-2026/",
+    "description": "Game Oscar",
+    "ts": 1791643879
   }
 ]
