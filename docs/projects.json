@@ -4293,5 +4293,16 @@
     "pages_url": null,
     "description": "Data Orion",
     "ts": 1791731360
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-vega-10-12-2026",
+    "name": "game-vega-10-12-2026",
+    "field": "game dev 2d",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-vega-10-12-2026/",
+    "description": "Game Vega",
+    "ts": 1791828993
   }
 ]
