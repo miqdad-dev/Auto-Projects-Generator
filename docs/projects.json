@@ -4304,5 +4304,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-vega-10-12-2026/",
     "description": "Game Vega",
     "ts": 1791828993
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-echo-10-13-2026",
+    "name": "frontend-echo-10-13-2026",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-echo-10-13-2026/",
+    "description": "Frontend Echo",
+    "ts": 1791909052
   }
 ]
