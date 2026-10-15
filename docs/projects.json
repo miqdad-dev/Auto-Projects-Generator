@@ -4326,5 +4326,16 @@
     "pages_url": null,
     "description": "Data Oscar",
     "ts": 1791986767
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-november-10-15-2026",
+    "name": "data-november-10-15-2026",
+    "field": "data science/ml",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": null,
+    "description": "Data November",
+    "ts": 1792071843
   }
 ]
