@@ -4337,5 +4337,16 @@
     "pages_url": null,
     "description": "Data November",
     "ts": 1792071843
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-whiskey-10-16-2026",
+    "name": "game-whiskey-10-16-2026",
+    "field": "game dev 2d",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": "https://miqdad-dev.github.io/game-whiskey-10-16-2026/",
+    "description": "Game Whiskey",
+    "ts": 1792157679
   }
 ]
