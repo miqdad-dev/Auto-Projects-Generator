@@ -4381,5 +4381,16 @@
     "pages_url": null,
     "description": "Backend Golf",
     "ts": 1792425349
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-xray-10-20-2026",
+    "name": "game-xray-10-20-2026",
+    "field": "game dev 3d",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-xray-10-20-2026/",
+    "description": "Game Xray",
+    "ts": 1792504454
   }
 ]
