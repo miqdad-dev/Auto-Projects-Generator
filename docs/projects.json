@@ -4425,5 +4425,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Orion",
     "ts": 1792763526
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-whiskey-10-24-2026",
+    "name": "frontend-whiskey-10-24-2026",
+    "field": "frontend",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/frontend-whiskey-10-24-2026/",
+    "description": "Frontend Whiskey",
+    "ts": 1792846678
   }
 ]
