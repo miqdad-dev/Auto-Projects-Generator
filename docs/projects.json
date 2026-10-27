@@ -4458,5 +4458,16 @@
     "pages_url": null,
     "description": "Backend Papa",
     "ts": 1793028733
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-victor-10-27-2026",
+    "name": "game-victor-10-27-2026",
+    "field": "game dev 3d",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-victor-10-27-2026/",
+    "description": "Game Victor",
+    "ts": 1793113076
   }
 ]
