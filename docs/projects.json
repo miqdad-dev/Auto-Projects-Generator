@@ -4491,5 +4491,16 @@
     "pages_url": null,
     "description": "Data Lima",
     "ts": 1793288420
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-uniform-10-30-2026",
+    "name": "frontend-uniform-10-30-2026",
+    "field": "frontend",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": "https://miqdad-dev.github.io/frontend-uniform-10-30-2026/",
+    "description": "Frontend Uniform",
+    "ts": 1793373781
   }
 ]
