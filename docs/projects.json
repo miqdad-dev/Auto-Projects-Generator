@@ -4502,5 +4502,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-uniform-10-30-2026/",
     "description": "Frontend Uniform",
     "ts": 1793373781
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-vega-10-31-2026",
+    "name": "frontend-vega-10-31-2026",
+    "field": "frontend",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": "https://miqdad-dev.github.io/frontend-vega-10-31-2026/",
+    "description": "Frontend Vega",
+    "ts": 1793458336
   }
 ]
