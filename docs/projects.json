@@ -4535,5 +4535,16 @@
     "pages_url": "https://miqdad-dev.github.io/frontend-victor-11-02-2026/",
     "description": "Frontend Victor",
     "ts": 1793645627
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "backend-delta-11-03-2026",
+    "name": "backend-delta-11-03-2026",
+    "field": "backend",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Backend Delta",
+    "ts": 1793723993
   }
 ]
