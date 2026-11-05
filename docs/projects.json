@@ -4557,5 +4557,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Bravo",
     "ts": 1793810308
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-oscar-11-05-2026",
+    "name": "data-oscar-11-05-2026",
+    "field": "data science/ml",
+    "tech_stack": "python-ml",
+    "language": "python",
+    "pages_url": null,
+    "description": "Data Oscar",
+    "ts": 1793897635
   }
 ]
