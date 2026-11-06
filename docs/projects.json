@@ -4568,5 +4568,16 @@
     "pages_url": null,
     "description": "Data Oscar",
     "ts": 1793897635
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "algorithms-systems-quebec-11-06-2026",
+    "name": "algorithms-systems-quebec-11-06-2026",
+    "field": "algorithms/systems",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Algorithms Systems Quebec",
+    "ts": 1793982122
   }
 ]
