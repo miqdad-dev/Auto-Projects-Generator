@@ -4579,5 +4579,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Quebec",
     "ts": 1793982122
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "frontend-xray-11-07-2026",
+    "name": "frontend-xray-11-07-2026",
+    "field": "frontend",
+    "tech_stack": "php-basic",
+    "language": "php",
+    "pages_url": "https://miqdad-dev.github.io/frontend-xray-11-07-2026/",
+    "description": "Frontend Xray",
+    "ts": 1794064459
   }
 ]
