@@ -4645,5 +4645,16 @@
     "pages_url": null,
     "description": "Algorithms Systems November",
     "ts": 1794503389
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "algorithms-systems-ember-11-13-2026",
+    "name": "algorithms-systems-ember-11-13-2026",
+    "field": "algorithms/systems",
+    "tech_stack": "html-css-javascript-3d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Algorithms Systems Ember",
+    "ts": 1794588510
   }
 ]
