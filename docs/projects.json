@@ -4689,5 +4689,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Bravo",
     "ts": 1794855512
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-tango-11-17-2026",
+    "name": "game-tango-11-17-2026",
+    "field": "game dev 2d",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-tango-11-17-2026/",
+    "description": "Game Tango",
+    "ts": 1794938188
   }
 ]
