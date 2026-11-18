@@ -4700,5 +4700,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-tango-11-17-2026/",
     "description": "Game Tango",
     "ts": 1794938188
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "game-november-11-18-2026",
+    "name": "game-november-11-18-2026",
+    "field": "game dev 3d",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": "https://miqdad-dev.github.io/game-november-11-18-2026/",
+    "description": "Game November",
+    "ts": 1795023512
   }
 ]
