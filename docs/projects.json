@@ -4733,5 +4733,16 @@
     "pages_url": "https://miqdad-dev.github.io/game-vega-11-20-2026/",
     "description": "Game Vega",
     "ts": 1795195354
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-romeo-11-21-2026",
+    "name": "data-romeo-11-21-2026",
+    "field": "data engineering",
+    "tech_stack": "html-css-javascript",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Romeo",
+    "ts": 1795278452
   }
 ]
