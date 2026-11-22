@@ -4744,5 +4744,16 @@
     "pages_url": null,
     "description": "Data Romeo",
     "ts": 1795278452
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-india-11-22-2026",
+    "name": "data-india-11-22-2026",
+    "field": "data science/ml",
+    "tech_stack": "php-basic",
+    "language": "php",
+    "pages_url": null,
+    "description": "Data India",
+    "ts": 1795365843
   }
 ]
