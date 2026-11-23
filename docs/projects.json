@@ -4755,5 +4755,16 @@
     "pages_url": null,
     "description": "Data India",
     "ts": 1795365843
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-whiskey-11-23-2026",
+    "name": "data-whiskey-11-23-2026",
+    "field": "data engineering",
+    "tech_stack": "html-css-javascript-2d",
+    "language": "javascript",
+    "pages_url": null,
+    "description": "Data Whiskey",
+    "ts": 1795466315
   }
 ]
