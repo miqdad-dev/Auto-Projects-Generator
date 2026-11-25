@@ -4777,5 +4777,16 @@
     "pages_url": null,
     "description": "Algorithms Systems Vega",
     "ts": 1795549507
+  },
+  {
+    "owner": "miqdad-dev",
+    "repo": "data-papa-11-25-2026",
+    "name": "data-papa-11-25-2026",
+    "field": "data engineering",
+    "tech_stack": "cpp-cmake",
+    "language": "c++",
+    "pages_url": null,
+    "description": "Data Papa",
+    "ts": 1795632726
   }
 ]
